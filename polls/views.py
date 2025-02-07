@@ -55,17 +55,17 @@ class CreateAcct(View):
 
         # Check if fields are blank
         if not user_id:
-            errors['id'] = ["This field can't be blank."]
+            errors['id'] = ["ID field can't be blank."]
         if not first_name:
-            errors['first_name'] = ["This field can't be blank."]
+            errors['first_name'] = ["First Name field can't be blank."]
         if not last_name:
-            errors['last_name'] = ["This field can't be blank."]
+            errors['last_name'] = ["Last Name field can't be blank."]
         if not email:
-            errors['email'] = ["This field can't be blank."]
+            errors['email'] = ["Email field can't be blank."]
         if not password:
-            errors['password'] = ["This field can't be blank."]
+            errors['password'] = ["Password field can't be blank."]
         if not phonenumber:
-            errors['phonenumber'] = ["This field can't be blank."]
+            errors['phonenumber'] = ["Phone number field can't be blank."]
 
         # Validate user ID length
         if len(user_id) > 20:
