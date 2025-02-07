@@ -16,11 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from polls.views import settings_page, sign_out
+from polls import views  # Import your views module
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('settings/', settings_page, name='settings'),
-    path('sign-out/', sign_out, name='sign_out'),
+    path('settings/', views.settings_page, name='settings'),
 
 ]
+

@@ -5,7 +5,7 @@ class Roles(models.TextChoices):
     Event_Manager = 'Event_Manager'
     User = 'User'
 
-class User(models.TextChoices):
+class User(models.Model):
     #id can also be username
     id = models.CharField(max_length=20,primary_key=True)
     first_name = models.CharField(max_length=50)
@@ -14,3 +14,6 @@ class User(models.TextChoices):
     password = models.CharField(max_length=50)
     phone_number = models.IntegerField()
     role = models.CharField(max_length=50, choices=Roles)
+
+    def __str__(self):
+        return self.username

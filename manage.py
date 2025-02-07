@@ -1,12 +1,14 @@
 #!/usr/bin/env python
-"""Django's command-line utility for administrative tasks."""
 import os
 import sys
 
+if __name__ == "__main__":
+    # Add the project directory to the Python path (if needed).
+    sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-def main():
-    """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'EventRadarProject.settings')
+    # Set the default settings module for Django.
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "EventRadarProject.settings")
+
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
@@ -16,7 +18,3 @@ def main():
             "forget to activate a virtual environment?"
         ) from exc
     execute_from_command_line(sys.argv)
-
-
-if __name__ == '__main__':
-    main()
