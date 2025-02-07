@@ -1,5 +1,7 @@
 from django.test import TestCase
 from .models import User, Roles
+from django.urls import reverse
+from django.contrib.auth import get_user_model
 
 
 class CreateAccountTests(TestCase):
@@ -44,3 +46,31 @@ class CreateAccountTests(TestCase):
         duplicate_data['email'] = 'different@example.com'
         response = self.client.post('/create-account/', duplicate_data)
         self.assertEqual(response.status_code, 400)
+
+
+User = get_user_model()
+class SignOutTests(TestCase):
+    def setUp(self):
+        """Set up a test user"""
+        self.user = User.objects.create_user(
+            id='testuser',
+            first_name='Test',
+            last_name='User',
+            email='test@example.com',
+            password='testpassword123',
+            phone_number=1234567890,
+            role='User'
+        )
+        self.client.login(email='test@example.com', password='testpassword123')
+
+    def test_sign_out_success(self):
+        """Test if a logged-in user can successfully sign out"""
+        response = self.client.post(reverse('sign_out'))
+
+        # Ensure the user is redirected after logout
+        self.assertEqual(response.status_code, 302)  # Redirect to 'account_created'
+        self.assertRedirects(response, reverse('account_created'))
+
+        # Ensure user is logged out
+        response = self.client.get(reverse('settings'))
+        self.assertNotIn('_auth_user_id', self.client.session)
