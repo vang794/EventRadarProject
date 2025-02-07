@@ -24,6 +24,6 @@ urlpatterns = [
 
     path('homepage', HomePage.as_view(), name='homepage'),
     path('settings/', SettingPage.as_view(), name='settings'),
-    path('sign-out', sign_out, name='sign_out'),
+    path('sign_out', SettingPage.as_view(), name='sign_out'),
     path('admin/', admin.site.urls),
 ]

@@ -1,4 +1,5 @@
 from django.core.validators import EmailValidator
+from django.contrib.auth.views import logout_then_login
 from django.shortcuts import render
 
 # Create your views here.
@@ -116,10 +117,9 @@ class SettingPage(View):
         return render(request, "SettingPage.html")
 
     def post(self, request):
-        if "logout" in request.POST:
-            request.session.flush()  # Clears all session data
-            return redirect("/")  # Redirects to the root URL (login page)
-        return render(request, "SettingPage.html")  # Reload settings page if no logout request
+        logout_then_login(request)
+        return redirect('login')  # Redirects to the root URL (login page)
+
 
 class sign_out:
     def get(self,request):
