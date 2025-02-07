@@ -1,51 +1,43 @@
-<!--Written by Jonny-->
+<!-- Written by Jonny -->
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Event Radar - Create Account</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Event Radar</h1>
+    <div class="container">
+        <form method="post">
+            {% csrf_token %}
 
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title> Event Radar - Create Account</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
-        <h1>Event Radar</h1>
-        <div class="container">
-            <form method="post">
-                <label for ="first_name">First Name:</label>
-                <input type="text" id="first_name" name = "first_name">
-                <br>
+            <label for="id">ID:</label>
+            <input type="text" id="id" name="id">
+            <br>
 
-                <label for ="last_name">Last Name:</label>
-                <input type="text" id="last_name" name = "last_name">
-                <br>
+            <label for="first_name">First Name:</label>
+            <input type="text" id="first_name" name="first_name">
+            <br>
 
-                <label for ="email">Email:</label>
-                <input type="text" id="email" name = "email">
-                <br>
+            <label for="last_name">Last Name:</label>
+            <input type="text" id="last_name" name="last_name">
+            <br>
 
-                <label for ="confirm email">Confirm Email:</label>
-                <input type="text" id="confirm email" name = "confirm email">
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email">
+            <br>
 
-                <br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+            <br>
 
-                <label for ="password">Password:</label>
-                <input type="text" id="password" name = "password">
 
-                <br>
-
-                <label for ="confirm password">Confirm Password:</label>
-                <input type="text" id="confirm password" name = "confirm password">
-
-                <br>
-                <label for ="first_name">First Name:</label>
-                <input type="text" id="first_name" name = "first_name">
-
-                <br>
-                <button type="Create Account">Create Account</button>
-            </form>
-        </div>
-    </body>
+            <button type="submit">Create Account</button>
+        </form>
+    </div>
+</body>
 </html>

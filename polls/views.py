@@ -10,29 +10,37 @@ from polls.models import User
 
 # Create your views here.
 class LoginAuth(View):
-    """Handles user login authentication."""
 
     def get(self, request):
-        """Display the login page and clear session data."""
         request.session.pop('id', None)  # Remove user ID from session
         return render(request, "login.html")
 
     def post(self, request):
-        pass
+        return redirect("homepage")
 class CreateAcct(View):
     def get(self, request):
-        form = CreateAccountForm()  # Create an empty form instance
+        form = CreateAccountForm()  #Create an empty form instance
         return render(request, "create_account.html", {"form": form})
 
     def post(self, request):
         """Handle form submission and create a new user."""
         form = CreateAccountForm(request.POST)  # Bind form data
         if form.is_valid():
-            form.save()  # Save user to the database
+            user = form.save(commit=False)
+            user.role = 'User'  # Assign role as User (if role is part of the model)
+            user.save()  # Save user to the database
             return redirect("login")  # Redirect to login page after success
 
         # If form is invalid, re-render the page with errors
         return render(request, "create_account.html", {"form": form})
+
+class HomePage(View):
+    """Displays the settings page."""
+    def get(self, request):
+        return render(request, "homepage.html")
+
+    def post(self, request):
+        pass
 class SettingsPage(View):
     """Displays the settings page."""
     def get(self, request):
