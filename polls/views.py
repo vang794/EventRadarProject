@@ -7,6 +7,18 @@ from django.views import View
 from Methods.forms import CreateAccountForm
 from polls.models import User
 
+
+# Create your views here.
+class LoginAuth(View):
+    """Handles user login authentication."""
+
+    def get(self, request):
+        """Display the login page and clear session data."""
+        request.session.pop('id', None)  # Remove user ID from session
+        return render(request, "login.html")
+
+    def post(self, request):
+        pass
 class CreateAcct(View):
     def get(self, request):
         form = CreateAccountForm()  # Create an empty form instance
