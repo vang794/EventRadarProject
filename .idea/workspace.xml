@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9fbadd00-867f-4728-94de-8b6752461042" name="Changes" comment="Did HTML and CSS for settings page to have the log out button." />
+    <list default="true" id="9fbadd00-867f-4728-94de-8b6752461042" name="Changes" comment="Did HTML and CSS for settings page to have the log out button.">
+      <change beforePath="$PROJECT_DIR$/EventRadarProject/templates/SettingPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/EventRadarProject/templates/SettingPage.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,20 +38,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "Jannatul-sign__out",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Jannatul-sign__out&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/EventRadarProject/template/static" />
@@ -132,6 +134,12 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="I first created a template folder and then created a html file for the settings page" />
     <MESSAGE value="Did HTML and CSS for settings page to have the log out button." />
-    <option name="LAST_COMMIT_MESSAGE" value="Did HTML and CSS for settings page to have the log out button." />
+    <MESSAGE value="worked on urls, views, for sign out and settings" />
+    <option name="LAST_COMMIT_MESSAGE" value="worked on urls, views, for sign out and settings" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/EventRadarProject$settings.coverage" NAME="settings Coverage Results" MODIFIED="1738890242422" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/EventRadarProject" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$views.coverage" NAME="views Coverage Results" MODIFIED="1738884251685" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/EventRadarProject" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$urls.coverage" NAME="urls Coverage Results" MODIFIED="1738884262034" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/EventRadarProject" />
   </component>
 </project>
