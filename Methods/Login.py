@@ -4,7 +4,7 @@ class Login:
     def authenticate(self, email, password):
         if self.checkemail(email):
             return self.checkpassword(email, password)
-        return None
+        return False
 
     def checkpassword(self, email, password):
         try:
@@ -16,9 +16,10 @@ class Login:
     def checkemail(self, email):
         return User.objects.filter(email=email).exists()  # Check if email/user exists
 
-    def isBlank(self,email,password):
+    def isNotBlank(self,email,password):
         # Check if fields are blank
         if not email:
             return False
         if not password:
             return False
+        return True

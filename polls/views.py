@@ -28,8 +28,9 @@ class LoginAuth(View):
 
         login = Login()
         # Check if fields are blank
-        if not login.isBlank(email,password):
-            if login.authenticate(email, password):
+        if not login.isNotBlank(email, password):
+            return render(request, "login.html", {"error": "Invalid email or password"})
+        elif login.authenticate(email, password):
                 user = User.objects.get(email=email)
                 request.session['email'] = user.email
                 return redirect("homepage")
