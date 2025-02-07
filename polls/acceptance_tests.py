@@ -1,72 +1,57 @@
 from django.test import TestCase
 from django.urls import reverse
-from .models import User, Roles
+from polls.models import Roles
 
-class CreateAccountAcceptanceTests(TestCase):
-    def test_user_can_create_account_through_form(self):
-        """test that a user can create an account through the web interface"""
-        response = self.client.get(reverse('create_account'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'polls/create_account.html')
-        
-        form_data = {
-            'username': 'newuser123',
-            'first_name': 'John',
-            'last_name': 'Doe',
-            'email': 'john@example.com',
-            'password': 'securepass123',
+class SignOutAcceptanceTests(TestCase):
+    def setUp(self):
+        """crreate a test user and log them in before each test """
+        self.user_data = {
+            'username': 'testuser',
+            'first_name': 'Test',
+            'last_name': 'User',
+            'email': 'test@example.com',
+            'password': 'testpass123',
             'phone_number': '1234567890',
             'role': Roles.User
         }
-        
-        response = self.client.post(reverse('create_account'), form_data)
-        self.assertRedirects(response, reverse('account_created'))
-        
-        self.assertTrue(User.objects.filter(id='newuser123').exists())
-        
-    def test_user_sees_error_for_duplicate_username(self):
-        """test that appropriate error is shown when trying to create account with existing username"""
-        existing_user = {
-            'username': 'existinguser',
-            'first_name': 'Jane',
-            'last_name': 'Doe',
-            'email': 'jane@example.com',
-            'password': 'password123',
-            'phone_number': '9876543210',
-            'role': Roles.User
-        }
-        self.client.post(reverse('create_account'), existing_user)
-        
-        duplicate_data = existing_user.copy()
-        duplicate_data['email'] = 'different@example.com'
-        
-        response = self.client.post(reverse('create_account'), duplicate_data)
-        self.assertEqual(response.status_code, 200)
-        self.assertFormError(response, 'form', 'username', 'Username already exists')
-        
-    def test_user_sees_error_for_missing_required_fields(self):
-        """Test that appropriate errors are shown when required fields are missing"""
-        incomplete_data = {
-            'username': 'newuser',
-            'email': 'new@example.com'
-        }
-        
-        response = self.client.post(reverse('create_account'), incomplete_data)
+        self.client.post(reverse('create_account'), self.user_data)
+        self.client.login(username='testuser', password='testpass123')
+
+    def test_user_can_sign_out(self):
+        """Test that a loggedin user can successfully sign out"""
+        response = self.client.get(reverse('home'))
         self.assertEqual(response.status_code, 200)
         
-        self.assertFormError(response, 'form', 'first_name', 'This field is required')
-        self.assertFormError(response, 'form', 'last_name', 'This field is required')
-        self.assertFormError(response, 'form', 'password', 'This field is required')
-        self.assertFormError(response, 'form', 'phone_number', 'This field is required')
+        response = self.client.get(reverse('sign_out'))
+        self.assertRedirects(response, reverse('login'))
         
-    def test_create_account_page_shows_correct_form(self):
-        """Test that the create account page shows all required fields"""
-        response = self.client.get(reverse('create_account'))
+        response = self.client.get(reverse('home'))
+        self.assertRedirects(response, f"{reverse('login')}?next={reverse('home')}")
+
+    def test_sign_out_clears_session(self):
+        """test that signing out clears the users session"""
+        self.assertIn('_auth_user_id', self.client.session)
         
-        self.assertContains(response, 'Username')
-        self.assertContains(response, 'First name')
-        self.assertContains(response, 'Last name')
-        self.assertContains(response, 'Email')
-        self.assertContains(response, 'Password')
-        self.assertContains(response, 'Phone number')
-        self.assertContains(response, 'Role') 
+        self.client.get(reverse('sign_out'))
+        
+        self.assertNotIn('_auth_user_id', self.client.session)
+
+    def test_signed_out_user_redirected_to_login(self):
+        """test that a signeout user is redirected to login when accessing protected pages"""
+        self.client.get(reverse('sign_out'))
+        
+        protected_urls = ['home', 'profile', 'dashboard']
+        
+        for url in protected_urls:
+            response = self.client.get(reverse(url))
+            self.assertRedirects(
+                response, 
+                f"{reverse('login')}?next={reverse(url)}"
+            )
+
+    def test_already_signed_out_user_can_access_sign_out(self):
+        """Test that accessing signout when already signed out doesnt cause errors"""
+        self.client.get(reverse('sign_out'))
+        
+        response = self.client.get(reverse('sign_out'))
+        self.assertRedirects(response, reverse('login'))
