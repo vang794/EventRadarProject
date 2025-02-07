@@ -7,7 +7,7 @@
     <title>Event Radar - Login</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="static/styles.css">
 </head>
 <body>
     <div class="container">
@@ -31,18 +31,11 @@
             <br>
 
              <!-- Display form errors if any -->
-            {% if form.errors %}
-                <div class="error">
-                    <p>Please correct the errors below:</p>
-                    <ul>
-                        {% for field in form %}
-                            {% for error in field.errors %}
-                                <li>{{ error }}</li>
-                            {% endfor %}
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
+          {% if error %}
+            <div class="error">
+                <p>{{ error }}</p>
+            </div>
+        {% endif %}
 
             <p><b>New to Event Radar?</b>
                 <a href="{% url 'create' %}" class="create-link">Create an account here</a>

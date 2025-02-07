@@ -5,7 +5,8 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.views import View
 from django.core.exceptions import ValidationError
-#from Methods.Login import Login
+
+from Methods.Login import Login
 from Methods.forms import CreateAccountForm
 from polls.models import User
 import re
@@ -19,7 +20,21 @@ class LoginAuth(View):
         return render(request, "login.html")
 
     def post(self, request):
-        return redirect("homepage")
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        # Initialize errors dictionary
+        errors = {}
+
+        login = Login()
+        # Check if fields are blank
+        if not login.isBlank(email,password):
+            if login.authenticate(email, password):
+                user = User.objects.get(email=email)
+                request.session['email'] = user.email
+                return redirect("homepage")
+        else:
+            return render(request, "login.html", {"error": "Invalid email or password"})  # Show error message
 class CreateAcct(View):
     def get(self, request):
         form = CreateAccountForm()  # Create an empty form instance
@@ -71,7 +86,6 @@ class CreateAcct(View):
             if not phone_pattern.match(phonenumber):
                 errors['phonenumber'] = ["Enter a valid 10-digit phone number."]
 
-        # If there are errors, re-render the form with the errors
         if errors:
             return render(request, "create_account.html", {"errors": errors, "user_data": request.POST})
 
@@ -81,30 +95,30 @@ class CreateAcct(View):
             first_name=first_name,
             last_name=last_name,
             email=email,
-            password=password,  # Consider hashing the password before saving
+            password=password,
             phone_number=phonenumber,
-            role='User'  # Assign the default role as 'User'
+            role='User'  # Default role is User
         )
         user.save()
 
         return redirect("login")
 class HomePage(View):
-    """Displays the settings page."""
+    #Homepage
     def get(self, request):
         return render(request, "homepage.html")
 
     def post(self, request):
         pass
-class SettingsPage(View):
+class SettingPage(View):
     """Displays the settings page."""
     def get(self, request):
-        return render(request, "settings.html")
+        return render(request, "SettingPage.html")
 
     def post(self, request):
         if "logout" in request.POST:
             request.session.flush()  # Clears all session data
             return redirect("/")  # Redirects to the root URL (login page)
-        return render(request, "settings.html")  # Reload settings page if no logout request
+        return render(request, "SettingPage.html")  # Reload settings page if no logout request
 
 class sign_out:
     def get(self,request):
