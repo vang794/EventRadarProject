@@ -14,12 +14,17 @@
     <div class="container">
         <form method="post">
             {% csrf_token %}
-            <!-- Display form errors if any -->
-            {% if form.errors %}
-                <div class="error">
-                    <p>Please correct the errors below:</p>
-                </div>
-            {% endif %}
+        <!-- Display form errors if any -->
+            {% if errors %}
+    <div class="error">
+        <p>Please correct the errors below:</p>
+        {% for field, error_list in errors.items %}
+            {% for error in error_list %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        {% endfor %}
+    </div>
+{% endif %}
 
             <label for="id">ID:</label>
             <input type="text" id="id" name="id">
@@ -39,6 +44,10 @@
 
             <label for="password">Password:</label>
             <input type="password" id="password" name="password">
+            <br>
+
+            <label for="phonenumber">Phone Number:</label>
+            <input type="phonenumber" id="phonenumber" name="phonenumber">
             <br>
 
 
