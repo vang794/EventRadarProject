@@ -1,6 +1,7 @@
 from django.test import TestCase
 from .models import User, Roles
 
+
 class CreateAccountTests(TestCase):
     def test_create_valid_user_account(self):
         """Test creating a user account with valid data"""

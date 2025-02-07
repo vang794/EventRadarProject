@@ -16,7 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from polls.views import settings_page, sign_out
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('settings/', settings_page, name='settings'),
+    path('sign-out/', sign_out, name='sign_out'),
+
 ]

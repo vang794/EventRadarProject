@@ -1,3 +1,4 @@
+from django.contrib.auth import logout
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from .forms import CreateAccountForm
@@ -15,3 +16,11 @@ def create_account(request):
 
 def account_created(request):
     return render(request, 'polls/account_created.html')
+
+def settings_page(request):
+    return render(request, 'SettingPage.html')
+
+def sign_out(request):
+    logout(request)  # Ends the user's session
+    return redirect(reverse('account_created'))
+

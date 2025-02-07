@@ -1,0 +1,223 @@
+Index: EventRadarProject/urls.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\"\"\"\nURL configuration for EventRadarProject project.\n\nThe `urlpatterns` list routes URLs to views. For more information please see:\n    https://docs.djangoproject.com/en/5.1/topics/http/urls/\nExamples:\nFunction views\n    1. Add an import:  from my_app import views\n    2. Add a URL to urlpatterns:  path('', views.home, name='home')\nClass-based views\n    1. Add an import:  from other_app.views import Home\n    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')\nIncluding another URLconf\n    1. Import the include() function: from django.urls import include, path\n    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))\n\"\"\"\nfrom django.contrib import admin\nfrom django.urls import path\n\nurlpatterns = [\n    path('admin/', admin.site.urls),\n]\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/EventRadarProject/urls.py b/EventRadarProject/urls.py
+--- a/EventRadarProject/urls.py	(revision 750abb3a42edce177fcd28c635c0f41a89c23fa2)
++++ b/EventRadarProject/urls.py	(date 1738882975449)
+@@ -16,7 +16,11 @@
+ """
+ from django.contrib import admin
+ from django.urls import path
++from .views import settings_page
++
+ 
+ urlpatterns = [
+     path('admin/', admin.site.urls),
++    path('settings/', settings_page, name='settings'),
++
+ ]
+Index: EventRadarProject/template/settings.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Settings</title>\n    <link rel=\"stylesheet\" href=\"static/styles.css\">\n</head>\n<body>\n\n    <div class=\"settings-container\">\n        <h2>Settings</h2>\n        <div class=\"settings-options\">\n            <p>Profile Settings</p>\n            <p>Notifications</p>\n            <p>Privacy</p>\n        </div>\n        <button id=\"signout-btn\" class=\"logout-button\">Sign Out</button>\n    </div>\n\n    <script src=\"script.js\"></script>\n\n</body>\n</html>\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/EventRadarProject/template/settings.html b/EventRadarProject/template/settings.html
+--- a/EventRadarProject/template/settings.html	(revision 750abb3a42edce177fcd28c635c0f41a89c23fa2)
++++ b/EventRadarProject/template/settings.html	(date 1738884100928)
+@@ -4,7 +4,7 @@
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Settings</title>
+-    <link rel="stylesheet" href="static/styles.css">
++    <link rel="stylesheet" href="{% static 'styles.css' %}">
+ </head>
+ <body>
+ 
+@@ -15,10 +15,14 @@
+             <p>Notifications</p>
+             <p>Privacy</p>
+         </div>
+-        <button id="signout-btn" class="logout-button">Sign Out</button>
++
++        <!-- Django Form for Sign Out -->
++        <form action="{% url 'logout' %}" method="post">
++            {% csrf_token %}
++            <button type="submit" class="logout-button">Sign Out</button>
++        </form>
++
+     </div>
+ 
+-    <script src="script.js"></script>
+-
+ </body>
+ </html>
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"9fbadd00-867f-4728-94de-8b6752461042\" name=\"Changes\" comment=\"Did HTML and CSS for settings page to have the log out button.\" />\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"FileTemplateManagerImpl\">\n    <option name=\"RECENT_TEMPLATES\">\n      <list>\n        <option value=\"HTML File\" />\n      </list>\n    </option>\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\n      <map>\n        <entry key=\"$PROJECT_DIR$\" value=\"main\" />\n      </map>\n    </option>\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"MarkdownSettingsMigration\">\n    <option name=\"stateVersion\" value=\"1\" />\n  </component>\n  <component name=\"ProjectColorInfo\">{\n  &quot;associatedIndex&quot;: 3\n}</component>\n  <component name=\"ProjectId\" id=\"2sYq5sL3OXgTm8W9lDAp91I5azw\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\"><![CDATA[{\n  \"keyToString\": {\n    \"DefaultHtmlFileTemplate\": \"HTML File\",\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\n    \"WebServerToolWindowFactoryState\": \"false\",\n    \"git-widget-placeholder\": \"Jannatul-sign__out\",\n    \"node.js.detected.package.eslint\": \"true\",\n    \"node.js.detected.package.tslint\": \"true\",\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\n    \"vue.rearranger.settings.migration\": \"true\"\n  }\n}]]></component>\n  <component name=\"RecentsManager\">\n    <key name=\"MoveFile.RECENT_KEYS\">\n      <recent name=\"$PROJECT_DIR$/EventRadarProject/template/static\" />\n    </key>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"9fbadd00-867f-4728-94de-8b6752461042\" name=\"Changes\" comment=\"\" />\n      <created>1738642678356</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1738642678356</updated>\n      <workItem from=\"1738642684187\" duration=\"1913000\" />\n      <workItem from=\"1738777467982\" duration=\"603000\" />\n      <workItem from=\"1738864898249\" duration=\"1608000\" />\n      <workItem from=\"1738866564699\" duration=\"2241000\" />\n    </task>\n    <task id=\"LOCAL-00001\" summary=\"I first created a template folder and then created a html file for the settings page\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1738643707227</created>\n      <option name=\"number\" value=\"00001\" />\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1738643707227</updated>\n    </task>\n    <task id=\"LOCAL-00002\" summary=\"I first created a template folder and then created a html file for the settings page\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1738644449718</created>\n      <option name=\"number\" value=\"00002\" />\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1738644449718</updated>\n    </task>\n    <task id=\"LOCAL-00003\" summary=\"I first created a template folder and then created a html file for the settings page\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1738644491882</created>\n      <option name=\"number\" value=\"00003\" />\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1738644491882</updated>\n    </task>\n    <task id=\"LOCAL-00004\" summary=\"Did HTML and CSS for settings page to have the log out button.\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1738880919654</created>\n      <option name=\"number\" value=\"00004\" />\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1738880919654</updated>\n    </task>\n    <option name=\"localTasksCounter\" value=\"5\" />\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"3\" />\n  </component>\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State>\n              <option name=\"FILTERS\">\n                <map>\n                  <entry key=\"branch\">\n                    <value>\n                      <list>\n                        <option value=\"origin/Jannatul-sign_out\" />\n                      </list>\n                    </value>\n                  </entry>\n                </map>\n              </option>\n            </State>\n          </value>\n        </entry>\n      </map>\n    </option>\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <MESSAGE value=\"I first created a template folder and then created a html file for the settings page\" />\n    <MESSAGE value=\"Did HTML and CSS for settings page to have the log out button.\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Did HTML and CSS for settings page to have the log out button.\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 750abb3a42edce177fcd28c635c0f41a89c23fa2)
++++ b/.idea/workspace.xml	(date 1738884557993)
+@@ -4,16 +4,29 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="9fbadd00-867f-4728-94de-8b6752461042" name="Changes" comment="Did HTML and CSS for settings page to have the log out button." />
++    <list default="true" id="9fbadd00-867f-4728-94de-8b6752461042" name="Changes" comment="Did HTML and CSS for settings page to have the log out button.">
++      <change afterPath="$PROJECT_DIR$/EventRadarProject/views.py" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/polls/sign_out_unit_test.py" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/EventRadarProject/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/EventRadarProject/settings.py" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/EventRadarProject/template/settings.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/settings.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/EventRadarProject/template/static/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/template/static/styles.css" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/EventRadarProject/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/EventRadarProject/urls.py" afterDir="false" />
++    </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+     <option name="LAST_RESOLUTION" value="IGNORE" />
++  </component>
++  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
++    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+   </component>
+   <component name="FileTemplateManagerImpl">
+     <option name="RECENT_TEMPLATES">
+       <list>
+         <option value="HTML File" />
++        <option value="Python Script" />
++        <option value="Python Unit Test" />
+       </list>
+     </option>
+   </component>
+@@ -36,22 +49,26 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "DefaultHtmlFileTemplate": "HTML File",
+-    "RunOnceActivity.OpenProjectViewOnStart": "true",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "WebServerToolWindowFactoryState": "false",
+-    "git-widget-placeholder": "Jannatul-sign__out",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.detected.package.tslint": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.tslint": "(autodetect)",
+-    "vue.rearranger.settings.migration": "true"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
++    &quot;git-widget-placeholder&quot;: &quot;Jannatul-sign__out&quot;,
++    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
++    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
++    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
++    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PythonContentEntriesConfigurable&quot;,
++    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="RecentsManager">
+     <key name="MoveFile.RECENT_KEYS">
++      <recent name="$PROJECT_DIR$" />
++      <recent name="$PROJECT_DIR$/EventRadarProject/template" />
++      <recent name="$PROJECT_DIR$/EventRadarProject" />
+       <recent name="$PROJECT_DIR$/EventRadarProject/template/static" />
+     </key>
+   </component>
+@@ -66,7 +83,8 @@
+       <workItem from="1738642684187" duration="1913000" />
+       <workItem from="1738777467982" duration="603000" />
+       <workItem from="1738864898249" duration="1608000" />
+-      <workItem from="1738866564699" duration="2241000" />
++      <workItem from="1738866564699" duration="3416000" />
++      <workItem from="1738883453122" duration="1098000" />
+     </task>
+     <task id="LOCAL-00001" summary="I first created a template folder and then created a html file for the settings page">
+       <option name="closed" value="true" />
+@@ -100,7 +118,15 @@
+       <option name="project" value="LOCAL" />
+       <updated>1738880919654</updated>
+     </task>
+-    <option name="localTasksCounter" value="5" />
++    <task id="LOCAL-00005" summary="Did HTML and CSS for settings page to have the log out button.">
++      <option name="closed" value="true" />
++      <created>1738882514487</created>
++      <option name="number" value="00005" />
++      <option name="presentableId" value="LOCAL-00005" />
++      <option name="project" value="LOCAL" />
++      <updated>1738882514488</updated>
++    </task>
++    <option name="localTasksCounter" value="6" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -134,4 +160,8 @@
+     <MESSAGE value="Did HTML and CSS for settings page to have the log out button." />
+     <option name="LAST_COMMIT_MESSAGE" value="Did HTML and CSS for settings page to have the log out button." />
+   </component>
++  <component name="com.intellij.coverage.CoverageDataManagerImpl">
++    <SUITE FILE_PATH="coverage/EventRadarProject$views.coverage" NAME="views Coverage Results" MODIFIED="1738884251685" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/EventRadarProject" />
++    <SUITE FILE_PATH="coverage/EventRadarProject$urls.coverage" NAME="urls Coverage Results" MODIFIED="1738884262034" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/EventRadarProject" />
++  </component>
+ </project>
+\ No newline at end of file
+Index: polls/sign_out_unit_test.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/polls/sign_out_unit_test.py b/polls/sign_out_unit_test.py
+new file mode 100644
+--- /dev/null	(date 1738883737020)
++++ b/polls/sign_out_unit_test.py	(date 1738883737020)
+@@ -0,0 +1,10 @@
++import unittest
++
++
++class MyTestCase(unittest.TestCase):
++    def test_something(self):
++        self.assertEqual(True, False)  # add assertion here
++
++
++if __name__ == '__main__':
++    unittest.main()
+Index: EventRadarProject/views.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/EventRadarProject/views.py b/EventRadarProject/views.py
+new file mode 100644
+--- /dev/null	(date 1738884557700)
++++ b/EventRadarProject/views.py	(date 1738884557700)
+@@ -0,0 +1,16 @@
++from django.shortcuts import render
++from django.contrib.auth import logout
++from django.shortcuts import redirect
++from django.views.decorators.csrf import csrf_protect
++
++
++def settings_page(request):
++    return render(request, 'settings.html')
++
++
++@csrf_protect
++def sign_out(request):
++    if request.method == "POST":
++        logout(request)
++        return redirect('login')  # Redirect to login page after logout
++    return redirect('settings')  # If accessed via GET, stay on settings page
