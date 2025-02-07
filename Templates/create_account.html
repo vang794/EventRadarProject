@@ -1,0 +1,57 @@
+<!-- Written by Jonny -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Event Radar - Create Account</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+<body>
+    <h1>Event Radar</h1>
+    <div class="container">
+        <form method="post">
+            {% csrf_token %}
+        <!-- Display form errors if any -->
+            {% if errors %}
+    <div class="error">
+        <p>Please correct the errors below:</p>
+        {% for field, error_list in errors.items %}
+            {% for error in error_list %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        {% endfor %}
+    </div>
+{% endif %}
+
+            <label for="id">ID:</label>
+            <input type="text" id="id" name="id">
+            <br>
+
+            <label for="first_name">First Name:</label>
+            <input type="text" id="first_name" name="first_name">
+            <br>
+
+            <label for="last_name">Last Name:</label>
+            <input type="text" id="last_name" name="last_name">
+            <br>
+
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email">
+            <br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+            <br>
+
+            <label for="phonenumber">Phone Number:</label>
+            <input type="phonenumber" id="phonenumber" name="phonenumber">
+            <br>
+
+            <button type="submit">Create Account</button>
+        </form>
+    </div>
+</body>
+</html>

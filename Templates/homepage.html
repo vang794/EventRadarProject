@@ -8,7 +8,7 @@
         <title> Event Radar - Login</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="../static/css/styles.css">
     </head>
     <body>
         <h1>Event Radar</h1>
@@ -17,7 +17,7 @@
             <div class="top_bar">
                 <input type="text" placeholder="Location">
                 <input type="text" placeholder="Radius">
-                <a href = ""><!--put link to settings page here-->><button type="settings">Settings</button></a>
+                <button><a href="{% url 'settings' %}">Settings</a></button>
             </div> 
         </form>
         
