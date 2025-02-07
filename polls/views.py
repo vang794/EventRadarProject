@@ -112,7 +112,6 @@ class HomePage(View):
     def post(self, request):
         pass
 class SettingPage(View):
-    """Displays the settings page."""
     def get(self, request):
         return render(request, "SettingPage.html")
 
