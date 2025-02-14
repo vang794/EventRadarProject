@@ -10,36 +10,24 @@
     <link rel="stylesheet" href="../static/css/styles.css">
 </head>
 <body>
+    <h1>Event Radar</h1>
     <div class="container">
-        <h1>Event Radar</h1>
-
-        <form method="POST">
+        <form method="post" action="{% url 'login' %}">
             {% csrf_token %}
-
             <label for="email">Email:</label>
-            <input type="text" id="email" name="email">
-
-            <br>
+            <input type="email" id="email" name="email" required><br><br>
 
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password">
-
-            <br>
+            <input type="password" id="password" name="password" required><br><br>
 
             <button type="submit">Login</button>
+            {% if error %}
+                <div class="error">
+                    <p>{{ error }}</p>
+                </div>
+            {% endif %}
 
-            <br>
-
-             <!-- Display form errors if any -->
-          {% if error %}
-            <div class="error">
-                <p>{{ error }}</p>
-            </div>
-        {% endif %}
-
-            <p><b>New to Event Radar?</b>
-                <a href="{% url 'create' %}" class="create-link">Create an account here</a>
-            </p>
+            <p>Don't have an account? <a href="{% url 'create_account' %}">Create one</a></p>
         </form>
     </div>
 </body>
