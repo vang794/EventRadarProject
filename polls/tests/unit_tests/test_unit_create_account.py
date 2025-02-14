@@ -6,13 +6,13 @@ class CreateAccountTests(TestCase):
     def test_create_valid_user_account(self):
         """Test creating a user account with valid data"""
         user_data = {
-            'id': 'testuser1',
+            'username': 'testuser1',
             'first_name': 'John',
             'last_name': 'Doe',
             'email': 'john@example.com',
             'password': 'securepass123',
             'phone_number': 1234567890,
-            'role': Roles.User
+            'role': Roles.USER
         }
         response = self.client.post('/create-account/', user_data)
         self.assertEqual(response.status_code, 201)
@@ -20,7 +20,7 @@ class CreateAccountTests(TestCase):
     def test_create_account_missing_required_fields(self):
         """Test creating an account with missing required fields"""
         incomplete_data = {
-            'id': 'testuser2',
+            'username': 'testuser2',
             'email': 'incomplete@example.com'
         }
         response = self.client.post('/create-account/', incomplete_data)
@@ -29,13 +29,13 @@ class CreateAccountTests(TestCase):
     def test_create_account_duplicate_username(self):
         """Test creating an account with an existing username"""
         user_data = {
-            'id': 'existinguser',
+            'username': 'existinguser',
             'first_name': 'Jane',
             'last_name': 'Doe',
             'email': 'jane@example.com',
             'password': 'password123',
             'phone_number': 9876543210,
-            'role': Roles.User
+            'role': Roles.USER
         }
         response = self.client.post('/create-account/', user_data)
         self.assertEqual(response.status_code, 201)

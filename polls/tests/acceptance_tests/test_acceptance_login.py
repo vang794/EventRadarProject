@@ -9,7 +9,7 @@ class LogInAcceptanceTests(TestCase):
         """Create a test user before each test."""
         self.client = Client()
         self.user_data = {
-            'id': 'testuser',
+            'username': 'testuser',
             'first_name': 'Test',
             'last_name': 'User',
             'email': 'test@example.com',
@@ -53,7 +53,7 @@ class LogInAcceptanceTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
         # Login with wrong username and password
-        response = self.client.post(reverse("login"), {'id': "wronguser", 'password': "wrongpass"}, follow=True)
+        response = self.client.post(reverse("login"), {'username': "wronguser", 'password': "wrongpass"}, follow=True)
 
         # Make sure authentication fails
         self.assertFalse(self.login.checkpassword("wronguser", "wrongpass"),

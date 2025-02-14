@@ -1,5 +1,5 @@
 from django.test import TestCase
-from polls.models import User
+from polls.models import User, Roles
 from Methods.Login import Login
 
 class TestLogin(TestCase):
@@ -7,8 +7,12 @@ class TestLogin(TestCase):
     def setUp(self):
         # Create a test user before each test
         self.user = User.objects.create(
+            username="testuser",
             email="testuser@example.com",
-            password="testpassword"
+            password="testpassword",
+            first_name="Test",
+            last_name="User",
+            role=Roles.USER
         )
         self.login = Login()
     def tearDown(self):
