@@ -39,12 +39,12 @@ class LoginAuth(View):
             return render(request, "login.html", {"error": "Invalid email or password"})  # Show error message
 class CreateAcct(View):
     def get(self, request):
-        form = CreateAccountForm()  # Create an empty form instance
+        form = CreateAccountForm()
         return render(request, "create_account.html", {"form": form})
 
     def post(self, request):
         # Extract form data
-        user_id = request.POST.get('id')
+        username = request.POST.get('username')
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         email = request.POST.get('email')
@@ -55,8 +55,8 @@ class CreateAcct(View):
         errors = {}
 
         # Check if fields are blank
-        if not user_id:
-            errors['id'] = ["ID field can't be blank."]
+        if not username:
+            errors['username'] = ["Username field can't be blank."]
         if not first_name:
             errors['first_name'] = ["First Name field can't be blank."]
         if not last_name:
@@ -68,9 +68,13 @@ class CreateAcct(View):
         if not phonenumber:
             errors['phonenumber'] = ["Phone number field can't be blank."]
 
-        # Validate user ID length
-        if len(user_id) > 20:
-            errors['id'] = ["ID cannot be more than 20 characters."]
+        # Validate username length
+        if len(username) > 20:
+            errors['username'] = ["Username cannot be more than 20 characters."]
+
+        # Check if the username already exists
+        if User.objects.filter(username=username).exists():
+            errors['username'] = ["This username is already in use."]
 
         # Check if the email already exists
         if User.objects.filter(email=email).exists():
@@ -93,7 +97,7 @@ class CreateAcct(View):
 
         # Create a new user if no errors
         user = User(
-            id=user_id,
+            username=username,
             first_name=first_name,
             last_name=last_name,
             email=email,
