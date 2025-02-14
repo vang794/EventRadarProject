@@ -1,4 +1,3 @@
-<!-- Written by Jonny -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,9 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../static/css/styles.css">
 </head>
-<body>
-    <div class="container">
-        <h1>Event Radar</h1>
+<body class="login-page"> <!-- Added class for scoping -->
+    <div class="login-container">
+    <div class="logo-container">
+        <img src="https://media.discordapp.net/attachments/1338237719314305025/1339314646863183912/eventradar_logo.png?ex=67af96f7&is=67ae4577&hm=092d99176b1f68bfe66fb66ec030dcd6efce4f78036fec1c73fdb22b88b14880&=&format=webp&quality=lossless&width=500&height=150"
+        alt="Event Radar Logo" class="logo">
+    </div>
+
 
         <form method="POST">
             {% csrf_token %}
