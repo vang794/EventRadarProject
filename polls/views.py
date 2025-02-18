@@ -12,6 +12,7 @@ from Methods.forms import CreateAccountForm
 from polls.models import User
 import re
 
+from Methods.sendgrid_email import send_confirmation_email
 
 # Create your views here.
 class LoginAuth(View):
@@ -48,6 +49,7 @@ class CreateAcct(View):
             user = form.save(commit=False)
             user.role = 'User'
             user.save()
+            send_confirmation_email(user)
             return redirect("login")
         else:
             return render(request, "create_account.html", {"form": form})
