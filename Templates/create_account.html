@@ -12,44 +12,9 @@
 <body>
     <h1>Event Radar</h1>
     <div class="container">
-        <form method="post">
+        <form method="post" action="{% url 'create_account' %}">
             {% csrf_token %}
-        <!-- Display form errors if any -->
-            {% if errors %}
-    <div class="error">
-        <p>Please correct the errors below:</p>
-        {% for field, error_list in errors.items %}
-            {% for error in error_list %}
-                <p>{{ error }}</p>
-            {% endfor %}
-        {% endfor %}
-    </div>
-{% endif %}
-
-            <label for="id">ID:</label>
-            <input type="text" id="id" name="id">
-            <br>
-
-            <label for="first_name">First Name:</label>
-            <input type="text" id="first_name" name="first_name">
-            <br>
-
-            <label for="last_name">Last Name:</label>
-            <input type="text" id="last_name" name="last_name">
-            <br>
-
-            <label for="email">Email:</label>
-            <input type="text" id="email" name="email">
-            <br>
-
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password">
-            <br>
-
-            <label for="phonenumber">Phone Number:</label>
-            <input type="phonenumber" id="phonenumber" name="phonenumber">
-            <br>
-
+            {{ form.as_p }}
             <button type="submit">Create Account</button>
         </form>
     </div>
