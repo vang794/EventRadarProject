@@ -12,10 +12,8 @@ from Methods.forms import CreateAccountForm
 from polls.models import User
 import re
 
-from Methods.change_account_details import change_account_details  # Import function
-from django.contrib import messages
+from Methods.change_account_details import change_account_details 
 
-from Methods.change_account_details import change_account_details
 
 from Methods.sendgrid_email import send_confirmation_email
 
