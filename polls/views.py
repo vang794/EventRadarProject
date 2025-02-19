@@ -12,6 +12,9 @@ from Methods.forms import CreateAccountForm
 from polls.models import User
 import re
 
+from Methods.change_account_details import change_account_details  # Import function
+from django.contrib import messages
+
 
 # Create your views here.
 class LoginAuth(View):
@@ -116,8 +119,49 @@ class SettingPage(View):
         return render(request, "SettingPage.html")
 
     def post(self, request):
-        logout_then_login(request)
-        return redirect('login')  # Redirects to the root URL (login page)
+        if "logout" in request.POST:
+            logout_then_login(request)
+            return redirect('login')  # Redirects to the root URL (login page)
+        
+        if "update_email" in request.POST:
+            new_email = request.POST.get("email") #clicked on
+            if new_email: #user entered something
+                result = change_account_details(request.user, new_email=new_email)
+                if result: 
+                    return render(request, "SettingPage.html", {"success": "Your email has been updated successfully"})
+                else:
+                    return render(request, "SettingPage.html", {"error": "Failed to update your email"})
+
+        elif "update_username" in request.POST:
+            new_username = request.POST.get("username")
+            if new_username:
+                result = change_account_details(request.user, new_username=new_username)
+                if result: 
+                    return render(request, "SettingPage.html", {"success": "Your username has been updated successfully"})
+                else:
+                    return render(request, "SettingPage.html", {"error": "Failed to update your username"})
+
+        elif "update_first_name" in request.POST:
+            new_first_name = request.POST.get("first_name")
+            if new_first_name:
+                result = change_account_details(request.user, new_first_name=new_first_name)
+                if result: 
+                    return render(request, "SettingPage.html", {"success": "Your first name has been updated successfully"})
+                else:
+                    return render(request, "SettingPage.html", {"error": "Failed to update your first name"})
+
+        elif "update_last_name" in request.POST:
+            new_last_name = request.POST.get("last_name")
+            if new_last_name:
+                result = change_account_details(request.user, new_last_name=new_last_name)
+                if result: 
+                    return render(request, "SettingPage.html", {"success": "Your last name has been updated successfully"})
+                else:
+                    return render(request, "SettingPage.html", {"error": "Failed to update your last name"})
+
+        #reloads page if there was an update
+        if account_details_changed:
+            return redirect("settings")
 
 
 class sign_out:

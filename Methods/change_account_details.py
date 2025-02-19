@@ -1,8 +1,5 @@
 from polls.models import User   #imports user model from poll app
 
-#Notes: 
-    #check for number of times user resets things -may be problematic for testing
-
 #for email validation
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
