@@ -37,3 +37,94 @@ h1, form {
 .logout-button:hover {
     background-color: #26136b;
 }
+
+/* Logo Positioning */
+.logo-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    max-width: 250px;
+}
+/* Login page specific styles */
+.login-page {
+    background: linear-gradient(rgba(106, 45, 175, 0.8), rgba(76, 35, 122, 0.8)),
+                url('https://media.discordapp.net/attachments/1338237719314305025/1339314646577975296/aerial-clean-top-view-of-the-night-time-city-map-with-street-and-river-001-vector.jpg?ex=67af96f7&is=67ae4577&hm=78c3fc215c1fe08641b437983583c3d32774c514bae644dbe51ec984bf90b498&=&format=webp&width=1332&height=888');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2rem 3rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+    width: 90%;
+    max-width: 450px;
+}
+
+.login-logo {
+    max-width: 250px;
+    margin: 0 auto 1.5rem;
+    display: block;
+}
+
+/* Purple Header Section */
+.login-header {
+    background: #7a3bda;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Update existing login form styles */
+.login-container label {
+    display: block;
+    text-align: left;
+    margin: 10px 0 5px;
+    color: #4a2b7a;
+    font-weight: 500;
+}
+
+.login-container input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0d6f5;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.login-container button {
+    background: #7a3bda;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    width: 100%;
+    margin: 20px 0;
+    transition: background 0.3s ease;
+}
+
+.login-container button:hover {
+    background: #5d2a9e;
+}
+
+.create-link {
+    color: #7a3bda !important;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.error {
+    color: #dc3545;
+    background: #ffe6e9;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 15px 0;
+}

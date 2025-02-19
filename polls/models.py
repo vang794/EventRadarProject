@@ -7,7 +7,7 @@ class Roles(models.TextChoices):
     USER = 'User', 'User'
 
 class User(models.Model):
-    id = models.CharField(max_length=20, primary_key=True, unique=True)
+    username = models.CharField(max_length=20, primary_key=True, unique=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField(max_length=50, unique=True)

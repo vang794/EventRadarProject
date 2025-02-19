@@ -10,10 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
+import dotenv
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+dotenv.load_dotenv(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
@@ -128,3 +130,11 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_PASSWORD = os.environ.get('SENDGRID_API_KEY')
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 465
+DEFAULT_FROM_EMAIL = 'Event Radar <hackba74@uwm.edu>'
+SERVER_EMAIL = 'Event Radar <hackba74@uwm.edu>'
+EMAIL_HOST_USER = 'apikey'
