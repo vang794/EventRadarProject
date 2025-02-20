@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 
 # Create your models here.
@@ -7,7 +8,8 @@ class Roles(models.TextChoices):
     USER = 'User', 'User'
 
 class User(models.Model):
-    username = models.CharField(max_length=20, primary_key=True, unique=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
+    username = models.CharField(max_length=20, unique=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField(max_length=50, unique=True)
