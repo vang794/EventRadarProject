@@ -138,3 +138,7 @@ EMAIL_PORT = 465
 DEFAULT_FROM_EMAIL = 'Event Radar <hackba74@uwm.edu>'
 SERVER_EMAIL = 'Event Radar <hackba74@uwm.edu>'
 EMAIL_HOST_USER = 'apikey'
+
+# Customizing the email content for password reset
+PASSWORD_RESET_EMAIL_HTML = 'registration/password_reset_email.html'
+PASSWORD_RESET_EMAIL = 'registration/password_reset_email.txt'
