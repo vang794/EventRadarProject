@@ -45,9 +45,13 @@ def change_account_details(user, new_email=None, new_username=None, new_first_na
         if not new_last_name.isalpha(): #only allows letters
             return False
         user.last_name = new_last_name
-        #updated_fields.append("last_name")
+        updated_fields.append("last_name")
+
+    if updated_fields:
+        user.save(update_fields=updated_fields)#only saves updated fields
+        user.refresh_from_db() 
+        return True
     
-    user.save(update_fields=updated_fields) #only saves updated fields
-    return True
+    return False
     
 
