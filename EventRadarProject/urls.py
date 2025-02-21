@@ -22,6 +22,9 @@ from django.urls import path
 from Methods.reset import CustomPasswordResetView
 from polls.views import LoginAuth, CreateAcct, SettingPage, sign_out, HomePage
 
+#for id
+import uuid
+
 from django.conf.urls.static import static
 from django.conf import settings
 
