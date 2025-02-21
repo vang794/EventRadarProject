@@ -1,17 +1,25 @@
-<!-- Written by Jonny -->
-<!DOCTYPE html>
+<!-- Written by Jonny & Expanded by Carolyn-->
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Event Radar - Create Account</title>
-    <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../static/css/styles.css">
+    <meta name="description" content="Event Radar - Password Reset">
+    <title>Event Radar - Password Reset</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
-<body>
-    <h1>Event Radar</h1>
-    <div class="container">
+<div class="barofcolour">
+<body class="reset-body">
+    <div class="logo-container">
+    <img id="logo" src="/static/media/eventradar_logo2.png" alt="Event Radar Logo">
+    </div>
+
+    <div class="reset-title">
+        <h3> Create an Account!</h3>
+    </div>
+
+    <div class="center-box">
         <form method="post" action="{% url 'create_account' %}">
             {% csrf_token %}
             {{ form.as_p }}
@@ -19,4 +27,5 @@
         </form>
     </div>
 </body>
+</div>
 </html>
