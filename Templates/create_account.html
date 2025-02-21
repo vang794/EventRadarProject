@@ -1,5 +1,6 @@
-<!-- Written by Jonny & Expanded by Carolyn-->
+<!-- Written by Jonny & Expanded by Carolyn -->
 {% load static %}
+
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -9,17 +10,18 @@
     <title>Event Radar - Password Reset</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
-<div class="barofcolour">
-       <p></p>
-     <p></p>
-     <p></p>
+
 <body class="reset-body">
+    <div class="barofcolour">
+        <p></p><p></p><p></p>
+    </div>
+
     <div class="logo-container">
-    <img id="logo" src="/static/media/eventradar_logo2.png" alt="Event Radar Logo">
+        <img id="logo" src="/static/media/eventradar_logo2.png" alt="Event Radar Logo">
     </div>
 
     <div class="reset-title">
-        <h3> Create an Account!</h3>
+        <h3>Create an Account!</h3>
     </div>
 
     <div class="center-box">
@@ -27,11 +29,9 @@
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit">Create Account</button>
-             <p><a href="{% url 'login' %}" class="create-link">Go back to login page</a></p>
-
+            <p><a href="{% url 'login' %}" class="create-link">Go back to login page</a></p>
         </form>
-        
     </div>
 </body>
-</div>
+
 </html>
