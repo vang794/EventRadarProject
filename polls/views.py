@@ -67,9 +67,9 @@ class HomePage(View):
         pass
 class SettingPage(View):
     def get(self, request):
-        user_id = request.session.get("user_id")
-        if not user_id:
-            return redirect("login") #redirect if unauthenticated
+        #user_id = request.session.get("user_id")
+        #if not user_id:
+            #return redirect("login") #redirect if unauthenticated
         return render(request, "SettingPage.html")
         
     def post(self, request):
