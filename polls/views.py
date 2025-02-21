@@ -12,6 +12,12 @@ from Methods.forms import CreateAccountForm
 from polls.models import User
 import re
 
+#For resetting password
+from django.contrib.auth import views as auth_views
+from django.shortcuts import render
+from django.http import HttpResponse
+from django.contrib.auth.forms import PasswordResetForm
+
 from Methods.sendgrid_email import send_confirmation_email
 
 # Create your views here.
@@ -74,3 +80,16 @@ class sign_out:
         pass
     def post(self,request):
         pass
+
+#Override auth_views.PasswordResetView
+#class CustomPasswordResetView(auth_views.PasswordResetView):
+
+    #def get(self, request, *args, **kwargs):
+        #return super().get(request, *args, **kwargs)
+
+    # Optional: Customizing the POST method
+   # def post(self, request, *args, **kwargs):
+        #put in method where it sends via sendgrid
+        #getEmail=request.POST.get('email')
+        #send_password_reset_email(getEmail)
+        #return super().post(request, *args, **kwargs)

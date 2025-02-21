@@ -132,13 +132,10 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_PASSWORD = os.environ.get('SENDGRID_API_KEY')
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_PORT = 465
 DEFAULT_FROM_EMAIL = 'Event Radar <hackba74@uwm.edu>'
 SERVER_EMAIL = 'Event Radar <hackba74@uwm.edu>'
 EMAIL_HOST_USER = 'apikey'
-
-# Customizing the email content for password reset
-PASSWORD_RESET_EMAIL_HTML = 'registration/password_reset_email.html'
-PASSWORD_RESET_EMAIL = 'registration/password_reset_email.txt'
