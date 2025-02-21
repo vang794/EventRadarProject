@@ -1,56 +1,143 @@
-h1, form {
-    text-align: center;
+/* Updated Settings Page Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
 }
 
-/* for settingsPage */
-.settings-container {
-    max-width: 500px;
-    margin: 50px auto;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    background-color: white;
-    text-align: center;
+body {
+    background: #f5f5f5;
+    padding: 2rem;
 }
 
-.settings-options p {
-    font-size: 18px;
-    margin: 10px 0;
-    cursor: pointer;
+.container {
+    display: flex;
+    gap: 2rem; /* Space between columns */
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.settings-options p:hover {
-    color: blue;
+/* Left Column */
+.left-column {
+    flex: 1;
+    background: white;
+    border-radius: 15px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-.logout-button {
-    background-color: #7a3bda;
+.left-header {
+    background: #6c5ce7; /* Purple Header */
+    padding: 1.5rem;
+    border-radius: 15px 15px 0 0;
     color: white;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 5px;
-    margin-top: 20px;
+    font-weight: bold;
 }
 
-.logout-button:hover {
-    background-color: #26136b;
+.nav-menu {
+    list-style: none;
+    padding: 1.5rem;
+}
+
+.nav-item {
+    margin: 1rem 0;
+    padding: 0.8rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.nav-item:hover {
+    background: #f0eefc;
+}
+
+/* Right Column */
+.right-column {
+    flex: 2;
+    background: white;
+    border-radius: 15px;
+    border: 1px solid #ddd;
+    padding: 2rem;
+}
+
+.right-header {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: white; /* White Title */
+    font-weight: 600;
+    background: #6c5ce7; /* Purple Header */
+    padding: 1.5rem;
+    border-radius: 15px 15px 0 0;
+
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #666;
+}
+
+input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.password-section {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #eee;
+}
+
+.btn {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-red {
+    background: #ff4757;
+    color: white;
+}
+
+.btn-purple {
+    background: #6c5ce7;
+    color: white;
+    margin-top: 2rem;
+}
+
+.back-link {
+    display: block;
+    margin-bottom: 1rem;
+    color: #6c5ce7;
+    text-decoration: none;
+    padding: 1.5rem; /* Add padding to match header */
 }
 
 /* Logo Positioning */
 .logo-container {
     text-align: center;
     margin-bottom: 20px;
+
 }
 
 .logo {
-    max-width: 250px;
+    max-width: 200px;
+    max-height: 100px;
 }
 /* Login page specific styles */
 .login-page {
     background: linear-gradient(rgba(106, 45, 175, 0.8), rgba(76, 35, 122, 0.8)),
-                url('https://media.discordapp.net/attachments/1338237719314305025/1339314646577975296/aerial-clean-top-view-of-the-night-time-city-map-with-street-and-river-001-vector.jpg?ex=67af96f7&is=67ae4577&hm=78c3fc215c1fe08641b437983583c3d32774c514bae644dbe51ec984bf90b498&=&format=webp&width=1332&height=888');
+                url('/static/media/bg.jpg');
     background-size: cover;
     background-position: center;
     min-height: 100vh;
@@ -128,3 +215,40 @@ h1, form {
     border-radius: 5px;
     margin: 15px 0;
 }
+
+.center-box {
+  margin: auto;
+  width: 50%;
+  border: 3px solid rebeccapurple;
+  padding: 10px;
+    background-color: white;
+}
+
+.reset-title {
+    margin: auto;
+  width: 50%;
+  border: 3px solid rebeccapurple;
+  padding: 10px;
+    background-color: rebeccapurple; /* Adds solid purple background */
+  color: white;
+}
+
+.reset-body {
+    background: linear-gradient(
+        rgba(106, 45, 175, 0.8),
+        rgba(76, 35, 122, 0.8)
+    );
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+
+}
+
+.barofcolour {
+    width: 100%;
+    height: 10px; /* Adjust the height as needed */
+    background-color: #460076; /* Choose your desired color */
+    position: absolute;
+    top: 0;
+    left: 0;
+    }
