@@ -82,14 +82,14 @@ class sign_out:
         pass
 
 #Override auth_views.PasswordResetView
-#class CustomPasswordResetView(auth_views.PasswordResetView):
+class CustomPasswordResetView(auth_views.PasswordResetView):
 
-    #def get(self, request, *args, **kwargs):
-        #return super().get(request, *args, **kwargs)
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
 
-    # Optional: Customizing the POST method
-   # def post(self, request, *args, **kwargs):
+
+    def post(self, request, *args, **kwargs):
         #put in method where it sends via sendgrid
-        #getEmail=request.POST.get('email')
-        #send_password_reset_email(getEmail)
-        #return super().post(request, *args, **kwargs)
+        getEmail=request.POST.get('email')
+        send_password_reset_email(getEmail)
+        return super().post(request, *args, **kwargs)
