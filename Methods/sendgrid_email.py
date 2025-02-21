@@ -2,6 +2,8 @@ import smtplib
 from email.mime.text import MIMEText
 from django.conf import settings
 from django.core.mail import send_mail as django_send_mail
+from django.template.loader import render_to_string
+
 
 WELCOME_EMAIL_SUBJECT = "Welcome to Event Radar"
 WELCOME_EMAIL_BODY_TEMPLATE = "Thank you for signing up for Event Radar, {first_name}! We're excited to have you on board!"
@@ -32,4 +34,5 @@ def send_confirmation_email(user):
                 server.sendmail(sender_email, email, message.as_string())
             return True
         except Exception as e:
-            return False 
+            return False
+

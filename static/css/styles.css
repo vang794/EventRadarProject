@@ -127,15 +127,17 @@ input {
 .logo-container {
     text-align: center;
     margin-bottom: 20px;
+
 }
 
 .logo {
-    max-width: 250px;
+    max-width: 200px;
+    max-height: 100px;
 }
 /* Login page specific styles */
 .login-page {
     background: linear-gradient(rgba(106, 45, 175, 0.8), rgba(76, 35, 122, 0.8)),
-                url('https://media.discordapp.net/attachments/1338237719314305025/1339314646577975296/aerial-clean-top-view-of-the-night-time-city-map-with-street-and-river-001-vector.jpg?ex=67af96f7&is=67ae4577&hm=78c3fc215c1fe08641b437983583c3d32774c514bae644dbe51ec984bf90b498&=&format=webp&width=1332&height=888');
+                url('/static/media/bg.jpg');
     background-size: cover;
     background-position: center;
     min-height: 100vh;
@@ -213,3 +215,40 @@ input {
     border-radius: 5px;
     margin: 15px 0;
 }
+
+.center-box {
+  margin: auto;
+  width: 50%;
+  border: 3px solid rebeccapurple;
+  padding: 10px;
+    background-color: white;
+}
+
+.reset-title {
+    margin: auto;
+  width: 50%;
+  border: 3px solid rebeccapurple;
+  padding: 10px;
+    background-color: rebeccapurple; /* Adds solid purple background */
+  color: white;
+}
+
+.reset-body {
+    background: linear-gradient(
+        rgba(106, 45, 175, 0.8),
+        rgba(76, 35, 122, 0.8)
+    );
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+
+}
+
+.barofcolour {
+    width: 100%;
+    height: 10px; /* Adjust the height as needed */
+    background-color: #460076; /* Choose your desired color */
+    position: absolute;
+    top: 0;
+    left: 0;
+    }
