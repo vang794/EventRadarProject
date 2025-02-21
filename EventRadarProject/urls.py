@@ -22,6 +22,9 @@ from django.urls import path
 from Methods.reset import CustomPasswordResetView
 from polls.views import LoginAuth, CreateAcct, SettingPage, sign_out, HomePage
 
+from django.conf.urls.static import static
+from django.conf import settings
+
 urlpatterns = [
     path('', LoginAuth.as_view(), name='login'),
     path('create-account/', CreateAcct.as_view(), name='create_account'),
@@ -31,9 +34,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     #Urls for reset password
-    path('reset_password/', CustomPasswordResetView.as_view(), name='password_reset'),
-    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
-    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
-    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    path('reset_password/', CustomPasswordResetView.as_view(template_name="password_reset.html"), name='password_reset'),
+    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name="password_reset_sent.html"), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="password_reset_form.html"), name='password_reset_confirm'),
+    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name="password_reset_done.html"), name='password_reset_complete'),
 
 ]
+
