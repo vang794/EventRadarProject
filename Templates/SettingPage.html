@@ -1,62 +1,97 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings Page</title>
+    <title>Event Radar - Settings</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div class="container">
-        <div class="left-column">
-            <a href="#" class="back-link"><i class="fas fa-arrow-left"></i> Return to Main Page</a>
-            <div class="left-header">Settings</div>
-            <nav>
-                <ul class="nav-menu">
-                    <li class="nav-item"><i class="fas fa-cog"></i> Settings</li>
-                    <li class="nav-item active"><i class="fas fa-user"></i> Profile Settings</li>
-                    <li class="nav-item"><i class="fas fa-bell"></i> Notifications</li>
-                    <li class="nav-item"><i class="fas fa-lock"></i> Privacy</li>
-                    <li class="nav-item">
-                            <form action="{% url 'sign_out' %}" method="POST" class="logout-form">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-red">
-                                    <i class="fas fa-sign-out-alt"></i> Log Out
-                                </button>
-                            </form>
-                        </li>
-                </ul>
-            </nav>
+<body class="login-page">
+    <div class="settings-container">
+        <div class="logo-container">
+            <img id="logo" src="/static/media/eventradar_logo2.png" alt="Event Radar Logo">
         </div>
-
-        <div class="right-column">
-            <h1 class="right-header">Profile Settings</h1>
-            <form>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" value="user@example.com">
+        
+        <div class="settings-header">
+            <h2>Account Settings</h2>
+        </div>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="{% if message.tags == 'success' %}success-message{% else %}error-message{% endif %}">
+                    {{ message }}
                 </div>
-                <div class="form-group">
-                    <label>Username</label>
-                    <input type="text" value="john_doe">
+            {% endfor %}
+        {% endif %}
+        
+        <div class="settings-content">
+            <div class="settings-sidebar">
+                <ul class="settings-nav">
+                    <li class="active"><i class="fas fa-user"></i> Profile</li>
+                </ul>
+                <div class="sidebar-footer">
+                    <a href="{% url 'homepage' %}" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
                 </div>
-                <div class="form-group">
-                    <label>First Name</label>
-                    <input type="text" value="John">
+            </div>
+            
+            <div class="settings-main">
+                <h3>Profile Information</h3>
+                <form method="post" class="settings-form">
+                    {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" value="{{ user.email }}">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" value="{{ user.username }}">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label for="first_name">First Name</label>
+                            <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}">
+                        </div>
+                        <div class="form-group half">
+                            <label for="last_name">Last Name</label>
+                            <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number <span class="optional">(optional)</span></label>
+                        <input type="tel" id="phone" name="phone" 
+                               value="{% if user.phone_number %}{% with phone=user.phone_number|stringformat:'s' %}{% if phone|length == 10 %}({{ phone|slice:':3' }}) {{ phone|slice:'3:6' }}-{{ phone|slice:'6:10' }}{% else %}{{ user.phone_number }}{% endif %}{% endwith %}{% endif %}" 
+                               placeholder="(123) 456-7890" 
+                               pattern="(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}">
+                        <small class="form-text text-muted">Format: (123) 456-7890 or 123-456-7890</small>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Changes</button>
+                    </div>
+                </form>
+                
+                <div class="settings-section">
+                    <h3>Account Security</h3>
+                    <p>Protect your account with a strong password</p>
+                    <a href="{% url 'password_reset' %}" class="btn btn-outline"><i class="fas fa-key"></i> Change Password</a>
                 </div>
-                <div class="form-group">
-                    <label>Last Name</label>
-                    <input type="text" value="Doe">
+                
+                <div class="settings-section danger-zone">
+                    <h3>Sign Out</h3>
+                    <p>Sign out from your current session</p>
+                    <form action="{% url 'sign_out' %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+                    </form>
                 </div>
-
-                <div class="password-section">
-                    <label>Password</label>
-                    <button type="button" class="btn btn-red">Click to change password</button>
-                </div>
-
-                <button type="submit" class="btn btn-purple">Confirm Changes</button>
-            </form>
+            </div>
         </div>
     </div>
 </body>

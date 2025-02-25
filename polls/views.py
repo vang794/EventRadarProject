@@ -1,6 +1,7 @@
 from django.core.validators import EmailValidator
 from django.contrib.auth.views import logout_then_login
 from django.shortcuts import render
+from django.contrib import messages
 
 # Create your views here.
 from django.shortcuts import render, redirect
@@ -18,10 +19,14 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.forms import PasswordResetForm
 
+
 from Methods.change_account_details import change_account_details
 from django.shortcuts import get_object_or_404
 
+
 from Methods.sendgrid_email import send_confirmation_email
+from django.contrib.auth import logout
+
 
 # Create your views here.
 class LoginAuth(View):
@@ -71,6 +76,7 @@ class HomePage(View):
         pass
 class SettingPage(View):
     def get(self, request):
+
         user_id = request.session.get("user_id")
         if not user_id:
             return redirect("login") #redirect if unauthenticated
@@ -132,12 +138,12 @@ class SettingPage(View):
         return render(request, "SettingPage.html", {"success": success_message, "error": error_message})
 
 
+class SignOutView(View):
+    def post(self, request):
+        logout(request)
+        request.session.flush()
+        return redirect('login')
 
-class sign_out:
-    def get(self,request):
-        pass
-    def post(self,request):
-        pass
 
 #Override auth_views.PasswordResetView
 class CustomPasswordResetView(auth_views.PasswordResetView):
