@@ -20,7 +20,7 @@ from django.contrib.auth import views as auth_views
 from django.urls import path
 
 from Methods.reset import CustomPasswordResetView
-from polls.views import LoginAuth, CreateAcct, SettingPage, sign_out, HomePage
+from polls.views import LoginAuth, CreateAcct, SettingPage, SignOutView, HomePage
 
 #for id
 import uuid
@@ -33,7 +33,7 @@ urlpatterns = [
     path('create-account/', CreateAcct.as_view(), name='create_account'),
     path('homepage/', HomePage.as_view(), name='homepage'),
     path('settings/', SettingPage.as_view(), name='settings'),
-    path('sign_out/', SettingPage.as_view(), name='sign_out'),
+    path('sign_out/', SignOutView.as_view(), name='sign_out'),
     path('admin/', admin.site.urls),
 
     #Urls for reset password
