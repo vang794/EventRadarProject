@@ -1,28 +1,82 @@
 <!--Written by Jonny-->
+{% load static %}
 <!DOCTYPE html>
 
 <html>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title> Event Radar - Login</title>
-        <meta name="description" content="">
+        <title>Event Radar - Home</title>
+        <meta name="description" content="Find events near you with Event Radar">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="../static/css/styles.css">
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <style>
+            .event-popup h3 {
+                color: #6c5ce7;
+                margin-bottom: 8px;
+            }
+            .event-popup p {
+                margin: 5px 0;
+            }
+        </style>
     </head>
-    <body>
-        <h1>Event Radar</h1>
+    <body class="homepage-body">
+        <div class="top-navbar">
+            <div class="logo-container">
+                <img id="logo" src="/static/media/eventradar_logo2.png" alt="Event Radar Logo">
+            </div>
+            <div class="nav-actions">
+                <a href="{% url 'settings' %}" class="settings-btn">
+                    <i class="fas fa-cog"></i> Settings
+                </a>
+            </div>
+        </div>
 
-        <form>
-            <div class="top_bar">
-                <input type="text" placeholder="Location">
-                <input type="text" placeholder="Radius">
-                <button><a href="{% url 'settings' %}">Settings</a></button>
-            </div> 
-        </form>
-        
+        <div class="main-content">
+            <div class="search-controls">
+                <form method="post" action="{% url 'homepage' %}">
+                    {% csrf_token %}
+                    <div class="search-bar">
+                        <div class="input-group">
+                            <span class="input-icon"><i class="fas fa-map-marker-alt"></i></span>
+                            <input type="text" name="location" placeholder="Location" value="Milwaukee">
+                        </div>
+                        
+                        <div class="input-group">
+                            <span class="input-icon"><i class="fas fa-circle-notch"></i></span>
+                            <input type="number" name="radius" placeholder="Radius (km)" value="5" min="1" max="50">
+                        </div>
+                        
+                        <button type="submit" class="search-btn">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                    </div>
+                </form>
+            </div>
 
+            <div class="content-container">
+                <div class="map-container">
+                    <!-- this is the map -->
+                    {{ map_html|safe }}
+                </div>
 
-
+                <div class="events-list">
+                    <h2>Events Near You</h2>
+                    
+                    {% for event in sample_events %}
+                    <div class="event-card">
+                        <div class="event-header">
+                            <h3>{{ event.title }}</h3>
+                            <span class="event-category">{{ event.category }}</span>
+                        </div>
+                        <p class="event-date">{{ event.date|date:"F j, Y" }} at {{ event.date|date:"g:i A" }}</p>
+                        <p class="event-description">{{ event.description }}</p>
+                        <a href="#" class="event-details-btn">View Details</a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
     </body>
 </html>
