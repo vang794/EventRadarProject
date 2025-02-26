@@ -7,10 +7,11 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views import View
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 
 from Methods.Login import Login
 from Methods.forms import CreateAccountForm
-from polls.models import User
+from polls.models import User, Event
 import re
 
 #For resetting password
@@ -27,6 +28,8 @@ from django.shortcuts import get_object_or_404
 from Methods.sendgrid_email import send_confirmation_email
 from django.contrib.auth import logout
 
+import folium
+from folium.plugins import MarkerCluster
 
 # Create your views here.
 class LoginAuth(View):
@@ -69,26 +72,121 @@ class CreateAcct(View):
             print(f"Form errors: {form.errors}")
             return render(request, "create_account.html", {"form": form})
 class HomePage(View):
-    #Homepage
     def get(self, request):
-        return render(request, "homepage.html")
+        # we are just using this location for now
+        m = folium.Map(location=[43.0389, -87.9065], zoom_start=12, 
+                     tiles="cartodbpositron")
+        
+        marker_cluster = MarkerCluster().add_to(m)
+        
+        # SAMPLE EVENTS! we will use our database for this later
+        sample_events = [
+            {
+                'title': 'Music in the Park',
+                'description': 'Live music performance at Veterans Park',
+                'latitude': 43.0450,
+                'longitude': -87.8900,
+                'date': timezone.now() + timezone.timedelta(days=2),
+                'category': 'Music'
+            },
+            {
+                'title': 'Food Festival',
+                'description': 'Annual food festival with local restaurants',
+                'latitude': 43.0381,
+                'longitude': -87.9066,
+                'date': timezone.now() + timezone.timedelta(days=5),
+                'category': 'Food'
+            },
+            {
+                'title': 'Art Exhibition',
+                'description': 'Modern art showcase at Milwaukee Art Museum',
+                'latitude': 43.0401,
+                'longitude': -87.8972,
+                'date': timezone.now() + timezone.timedelta(days=3),
+                'category': 'Art'
+            },
+            {
+                'title': 'Tech Meetup',
+                'description': 'Network with tech professionals in Milwaukee',
+                'latitude': 43.0336,
+                'longitude': -87.9125,
+                'date': timezone.now() + timezone.timedelta(days=7),
+                'category': 'Technology'
+            }
+        ]
+        
+        for event in sample_events:
+            event_date = event['date'].strftime('%B %d, %Y at %I:%M %p')
+            
+            popup_html = f"""
+            <div class="event-popup">
+                <h3>{event['title']}</h3>
+                <p><strong>Date:</strong> {event_date}</p>
+                <p><strong>Category:</strong> {event['category']}</p>
+                <p>{event['description']}</p>
+            </div>
+            """
+            
+            folium.Marker(
+                location=[event['latitude'], event['longitude']],
+                popup=folium.Popup(popup_html, max_width=300),
+                tooltip=event['title'],
+                icon=folium.Icon(icon="info-sign", prefix='fa', color="blue"),
+            ).add_to(marker_cluster)
+        
+        # circle for the search radius
+        folium.Circle(
+            location=[43.0389, -87.9065],
+            radius=5000,
+            color='#3186cc',
+            fill=True,
+            fill_color='#3186cc',
+            fill_opacity=0.2,
+            tooltip="5km radius"
+        ).add_to(m)
+        
+        map_html = m._repr_html_()
+        
+        return render(request, "homepage.html", {
+            'map_html': map_html,
+            'sample_events': sample_events
+        })
 
     def post(self, request):
-        pass
+        location = request.POST.get('location', 'Milwaukee')
+        radius = request.POST.get('radius', 5)
+        
+        try:
+            radius = int(radius)
+        except ValueError:
+            radius = 5
+            
+        # rerender the map with new radius, not implemented yet
+        return redirect('homepage')
+
 class SettingPage(View):
     def get(self, request):
-
-        user_id = request.session.get("user_id")
-        if not user_id:
+        email = request.session.get("email")
+        if not email:
             return redirect("login") #redirect if unauthenticated
-        return render(request, "SettingPage.html")
+        
+        try:
+            user = User.objects.get(email=email)
+            return render(request, "SettingPage.html", {"user": user})
+        except User.DoesNotExist:
+            request.session.flush()
+            return redirect("login")
 
     def post(self, request):
-        user_id = request.session.get("user_id")
-        if not user_id:
-            return redirect("login") #redirect if unauthenticated
+        email = request.session.get("email")
+        if not email:
+            return redirect("login")  #redirect if unauthenticated
 
-        user = get_object_or_404(User, id=user_id)
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            request.session.flush()
+            return redirect('login')
 
         if "logout" in request.POST:
             request.session.flush()
@@ -136,7 +234,11 @@ class SettingPage(View):
         if success_message:
             return redirect("settings")
 
-        return render(request, "SettingPage.html", {"success": success_message, "error": error_message})
+        return render(request, "SettingPage.html", {
+            "user": user,
+            "success": success_message, 
+            "error": error_message
+        })
 
 
 class SignOutView(View):
