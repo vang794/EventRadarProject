@@ -66,6 +66,7 @@ class CreateAcct(View):
             send_confirmation_email(user)
             return redirect("login")
         else:
+            print(f"Form errors: {form.errors}")
             return render(request, "create_account.html", {"form": form})
 class HomePage(View):
     #Homepage
