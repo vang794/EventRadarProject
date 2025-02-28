@@ -7,7 +7,6 @@ from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.urls import reverse
-from EventRadarProject import urls
 from Methods.CustomTokenGenerator import CustomTokenGenerator
 
 

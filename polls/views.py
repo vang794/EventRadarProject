@@ -262,8 +262,10 @@ class PasswordResetView(View):
 
     def post(self, request):
         #put in method where it sends via sendgrid
+        from Methods.sendgrid_reset import send_reset_email
         check = Reset()
         email = request.POST.get('email')
+
         user = User.objects.filter(email=email).first()
         #check that the email is valid
         if user:

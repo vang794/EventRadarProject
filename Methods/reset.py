@@ -6,8 +6,6 @@ class Reset:
     def authenticate(self, email):
         return self.email_not_blank(email) and self.email_find(email) and self.valid_email_form(email)
 
-    def email_case(self,email):
-        pass
 
     # Check if fields are blank
     #If email is not blank, return true.
@@ -33,13 +31,14 @@ class Reset:
 ##make sure that the passwords are not the same as before
     ##If password is the same as past password, return true else return false
     def pass_duplicate(self,email,password):
-        ##Returns user, None if no user
         user = User.objects.filter(email=email).first()
-        ##if it is not None and the passwords are same, returns true
+
+        # If the user exists, check if the provided password matches the stored password
         if user and check_password(password, user.password):
-            return True
+            return True  # Password is the same as the previous one
         return False
-#Returns true if password is 50 or less characters
+
+    #Returns true if password is 50 or less characters
     def pass_maximum(self,password):
         if self.pass_not_blank(password):
             return 50 >= len(password) > 0
