@@ -312,19 +312,25 @@ class PasswordResetConfirmView(View):
         password2 = request.POST.get('password2')
 
         if user:
+            # Check if the password meets the length requirements
             if check.pass_maximum(password1):
-                if check.pass_exact(password1,password2):
-                    # now set the password as the user's new password and go to next page
+                # Check if the two passwords match
+                if check.pass_exact(password1, password2):
+                    # Set the new password and redirect to completion page
                     check.set_password(user.email, password1)
                     return redirect("password_reset_complete")
                 else:
-                    return render(request, "password_reset_form.html", {"errors": "Passwords don't match"})
+                    # Return error if passwords do not match
+                    errors["match"] = "Passwords don't match"
             else:
-                return render(request, "password_reset_form.html", {"errors": "Password must be more than 0 characters but less than 51 characters"})
+                # Return error if password is not within valid length
+                errors["char"] = "Password must be more than 0 characters but less than 51 characters"
         else:
-            return render(request, "password_reset_form.html", {"valid": False, "errors": "Invalid or expired token"})
+            # Return error if the token is invalid or expired
+            errors["token"] = ["Invalid or expired token"]
 
-
+            # If there were any errors, render the form again with error messages
+        return render(request, "password_reset_form.html", {"errors": errors, "user_data": request.POST})
 
 
 
