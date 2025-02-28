@@ -264,16 +264,18 @@ class PasswordResetView(View):
         #put in method where it sends via sendgrid
         check = Reset()
         email = request.POST.get('email')
-        user=User.objects.get(email=email)
+        user = User.objects.filter(email=email).first()
         #check that the email is valid
-        if check.authenticate(email):
-            #then get username
-            send_reset_email(request,user)
-            #if the email is valid and email is send to user email, go to password_reset_done page
-            return redirect("password_reset_done")
+        if user:
+            if check.authenticate(email):
+                #then get username
+                send_reset_email(request,user)
+                #if the email is valid and email is send to user email, go to password_reset_done page
+                return redirect("password_reset_done")
+            else:
+                return render(request, "password_reset.html", {"error": "Invalid email"})
         else:
             return render(request, "password_reset.html", {"error": "Invalid email"})
-
 class PasswordResetDoneView(View):
     def get(self, request,):
         return render(request, "password_reset_sent.html")
@@ -318,6 +320,7 @@ class PasswordResetConfirmView(View):
                 return render(request, "password_reset_form.html", {"error": "Password must be more than 0 characters but less than 51 characters"})
         else:
             return render(request, "password_reset_form.html", {"valid": False, "error": "Invalid or expired token"})
+
 
 
 
