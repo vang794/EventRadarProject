@@ -25,6 +25,7 @@ from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
 
 
+
 from Methods.change_account_details import change_account_details
 from django.shortcuts import get_object_or_404
 
@@ -260,7 +261,6 @@ class PasswordResetView(View):
 
 
     def post(self, request):
-        from Methods.sendgrid_reset import send_reset_email
         #put in method where it sends via sendgrid
         check = Reset()
         email = request.POST.get('email')

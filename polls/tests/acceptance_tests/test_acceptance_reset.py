@@ -2,7 +2,8 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from django.core import mail
 from polls.models import User, Roles
-from Methods.reset import CustomPasswordResetForm, CustomPasswordResetView
+from Methods.reset import Reset
+from Methods.sendgrid_reset import send_reset_email
 
 class ResetAcceptanceTests(TestCase):
     def setUp(self):
@@ -21,7 +22,7 @@ class ResetAcceptanceTests(TestCase):
         # Create user instance and save to database
         self.user = User.objects.create(**self.user_data)
 
-        self.CustomPasswordResetForm = CustomPasswordResetForm()
+        self.CustomPasswordResetForm = Reset()
 
     def test_user_success(self):
         #being on page reset
