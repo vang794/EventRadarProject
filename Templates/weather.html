@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Weather Forecast</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="weather-section">
+        <h2>Weather Forecast</h2>
+        <form method="post">
+            {% csrf_token %}
+            <label>
+                <input type="radio" name="locationType" value="city" checked> City
+            </label>
+            <label>
+                <input type="radio" name="locationType" value="zip"> Zip Code
+            </label>
+            <label>
+                <input type="radio" name="locationType" value="coords"> Coordinates
+            </label>
+            <br>
+            <input type="text" name="locationInput" placeholder="Enter location" required>
+            <button type="submit">Get Forecast</button>
+        </form>
+
+        {% if weather_data %}
+            <div class="forecast-results">
+                <h3>3-Day Forecast</h3>
+                {% for item in weather_data.list %}
+                    <div class="forecast-day">
+                        <h4>{{ item.dt_txt }}</h4>
+                        <img src="http://openweathermap.org/img/wn/{{ item.weather.0.icon }}@2x.png" alt="{{ item.weather.0.description }}">
+                        <p>Temp: {{ item.main.temp }}°C</p>
+                        <p>Clouds: {{ item.clouds.all }}%</p>
+                        <p>Pressure: {{ item.main.pressure }} hPa</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% elif error %}
+            <p style="color: red;">Error: {{ error }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>

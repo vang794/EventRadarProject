@@ -27,6 +27,9 @@
                 <img id="logo" src="/static/media/eventradar_logo2.png" alt="Event Radar Logo">
             </div>
             <div class="nav-actions">
+                <a href="{% url 'weather' %}" class="settings-btn">
+                    <i class="fas fa-cloud"></i> Weather
+                </a>
                 <a href="{% url 'settings' %}" class="settings-btn">
                     <i class="fas fa-cog"></i> Settings
                 </a>
@@ -42,12 +45,12 @@
                             <span class="input-icon"><i class="fas fa-map-marker-alt"></i></span>
                             <input type="text" name="location" placeholder="Location" value="Milwaukee">
                         </div>
-                        
+
                         <div class="input-group">
                             <span class="input-icon"><i class="fas fa-circle-notch"></i></span>
                             <input type="number" name="radius" placeholder="Radius (km)" value="5" min="1" max="50">
                         </div>
-                        
+
                         <button type="submit" class="search-btn">
                             <i class="fas fa-search"></i> Search
                         </button>
@@ -63,7 +66,7 @@
 
                 <div class="events-list">
                     <h2>Events Near You</h2>
-                    
+
                     {% for event in sample_events %}
                     <div class="event-card">
                         <div class="event-header">
