@@ -20,8 +20,7 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import PasswordResetCompleteView
 from django.urls import path
 
-from Methods.reset import CustomPasswordResetView
-from polls.views import LoginAuth, CreateAcct, SettingPage, SignOutView, HomePage, WeatherView
+from polls.views import LoginAuth, CreateAcct, SettingPage, SignOutView, HomePage, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, WeatherView
 
 #for id
 import uuid
@@ -36,6 +35,8 @@ urlpatterns = [
     path('settings/', SettingPage.as_view(), name='settings'),
     path('sign_out/', SignOutView.as_view(), name='sign_out'),
     path('admin/', admin.site.urls),
+    path('weather/', WeatherView.as_view(), name='weather'),
+
 
     #Urls for reset password
     path('reset_password/', PasswordResetView.as_view(), name='password_reset'),
