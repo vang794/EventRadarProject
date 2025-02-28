@@ -9,16 +9,20 @@ from django.views import View
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 
+
 from Methods.Login import Login
 from Methods.forms import CreateAccountForm
 from polls.models import User, Event
+from Methods.sendgrid_reset import CustomTokenGenerator
+from polls.models import User
 import re
 
 #For resetting password
 from django.contrib.auth import views as auth_views
 from django.shortcuts import render
-from django.http import HttpResponse
-from django.contrib.auth.forms import PasswordResetForm
+from Methods.reset import Reset
+from django.utils.http import urlsafe_base64_decode
+from django.contrib.auth.tokens import default_token_generator
 
 
 from Methods.change_account_details import change_account_details
@@ -74,11 +78,11 @@ class CreateAcct(View):
 class HomePage(View):
     def get(self, request):
         # we are just using this location for now
-        m = folium.Map(location=[43.0389, -87.9065], zoom_start=12, 
+        m = folium.Map(location=[43.0389, -87.9065], zoom_start=12,
                      tiles="cartodbpositron")
-        
+
         marker_cluster = MarkerCluster().add_to(m)
-        
+
         # SAMPLE EVENTS! we will use our database for this later
         sample_events = [
             {
@@ -114,10 +118,10 @@ class HomePage(View):
                 'category': 'Technology'
             }
         ]
-        
+
         for event in sample_events:
             event_date = event['date'].strftime('%B %d, %Y at %I:%M %p')
-            
+
             popup_html = f"""
             <div class="event-popup">
                 <h3>{event['title']}</h3>
@@ -126,14 +130,14 @@ class HomePage(View):
                 <p>{event['description']}</p>
             </div>
             """
-            
+
             folium.Marker(
                 location=[event['latitude'], event['longitude']],
                 popup=folium.Popup(popup_html, max_width=300),
                 tooltip=event['title'],
                 icon=folium.Icon(icon="info-sign", prefix='fa', color="blue"),
             ).add_to(marker_cluster)
-        
+
         # circle for the search radius
         folium.Circle(
             location=[43.0389, -87.9065],
@@ -144,9 +148,9 @@ class HomePage(View):
             fill_opacity=0.2,
             tooltip="5km radius"
         ).add_to(m)
-        
+
         map_html = m._repr_html_()
-        
+
         return render(request, "homepage.html", {
             'map_html': map_html,
             'sample_events': sample_events
@@ -155,12 +159,12 @@ class HomePage(View):
     def post(self, request):
         location = request.POST.get('location', 'Milwaukee')
         radius = request.POST.get('radius', 5)
-        
+
         try:
             radius = int(radius)
         except ValueError:
             radius = 5
-            
+
         # rerender the map with new radius, not implemented yet
         return redirect('homepage')
 
@@ -169,7 +173,7 @@ class SettingPage(View):
         email = request.session.get("email")
         if not email:
             return redirect("login") #redirect if unauthenticated
-        
+
         try:
             user = User.objects.get(email=email)
             return render(request, "SettingPage.html", {"user": user})
@@ -236,7 +240,7 @@ class SettingPage(View):
 
         return render(request, "SettingPage.html", {
             "user": user,
-            "success": success_message, 
+            "success": success_message,
             "error": error_message
         })
 
@@ -249,14 +253,73 @@ class SignOutView(View):
 
 
 #Override auth_views.PasswordResetView
-class CustomPasswordResetView(auth_views.PasswordResetView):
+class PasswordResetView(View):
 
-    def get(self, request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
+    def get(self, request):
+        return render(request, "password_reset.html")
 
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
+        from Methods.sendgrid_reset import send_reset_email
         #put in method where it sends via sendgrid
-        getEmail=request.POST.get('email')
-        send_password_reset_email(getEmail)
-        return super().post(request, *args, **kwargs)
+        check = Reset()
+        email = request.POST.get('email')
+        user=User.objects.get(email=email)
+        #check that the email is valid
+        if check.authenticate(email):
+            #then get username
+            send_reset_email(request,user)
+            #if the email is valid and email is send to user email, go to password_reset_done page
+            return redirect("password_reset_done")
+        else:
+            return render(request, "password_reset.html", {"error": "Invalid email"})
+
+class PasswordResetDoneView(View):
+    def get(self, request,):
+        return render(request, "password_reset_sent.html")
+
+class PasswordResetConfirmView(View):
+    def get(self, request, uidb64, token):
+        token_generator = CustomTokenGenerator()
+        try:
+            uid = urlsafe_base64_decode(uidb64).decode()
+            user = User.objects.get(pk=uid)
+        except (User.DoesNotExist, ValueError, TypeError):
+            user = None
+
+        if user and token_generator.check_token(user, token):
+            return render(request, "password_reset_form.html", {"valid": True, "uidb64": uidb64, "token": token})
+        else:
+            return render(request, "password_reset_form.html", {"valid": False, "error": "Invalid or expired token"})
+
+    def post(self, request, uidb64, token):
+
+        try:
+            uid = urlsafe_base64_decode(uidb64).decode()
+            user = User.objects.get(pk=uid)
+        except (User.DoesNotExist, ValueError, TypeError):
+            user = None
+
+        errors = {}
+        check = Reset()
+
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+
+        if user:
+            if check.pass_maximum(password1):
+                if check.pass_exact(password1,password2):
+                    # now set the password as the user's new password and go to next page
+                    check.set_password(user.email, password1)
+                    return redirect("password_reset_complete")
+                else:
+                    return render(request, "password_reset_form.html", {"error": "Passwords don't match"})
+            else:
+                return render(request, "password_reset_form.html", {"error": "Password must be more than 0 characters but less than 51 characters"})
+        else:
+            return render(request, "password_reset_form.html", {"valid": False, "error": "Invalid or expired token"})
+
+
+
+
+
