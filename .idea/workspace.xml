@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="redid views and made new file for customtokengenerator">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Methods/reset.py" beforeDir="false" afterPath="$PROJECT_DIR$/Methods/reset.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Methods/sendgrid_reset.py" beforeDir="false" afterPath="$PROJECT_DIR$/Methods/sendgrid_reset.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/polls/tests/acceptance_tests/test_acceptance_reset.py" beforeDir="false" afterPath="$PROJECT_DIR$/polls/tests/acceptance_tests/test_acceptance_reset.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/polls/tests/unit_tests/test_unit_reset.py" beforeDir="false" afterPath="$PROJECT_DIR$/polls/tests/unit_tests/test_unit_reset.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/polls/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/polls/views.py" afterDir="false" />
-    </list>
+    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="Redone the views and added proper notes to unit tests" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -25,23 +18,28 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Django Server.Unnamed.executor": "Run",
-    "Django tests.Test: polls.tests.acceptance_tests.test_acceptance_reset.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_correct_email.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_find.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_not_blank.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_set_password.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.executor": "Run",
-    "git-widget-placeholder": "reset__2",
-    "node.js.selected.package.tslint": "(autodetect)"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Django Server.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.acceptance_tests.test_acceptance_reset.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_correct_email.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_find.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_not_blank.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_set_password.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;reset__2&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;
   }
-}]]></component>
-  <component name="RunManager" selected="Django tests.Test: polls.tests.unit_tests.test_unit_reset">
+}</component>
+  <component name="RunManager" selected="Django Server.Unnamed">
     <configuration name="Test: polls.tests.acceptance_tests.test_acceptance_reset" type="DjangoTestsConfigurationType" temporary="true">
       <module name="EventRadarProject" />
       <option name="ENV_FILES" value="" />
@@ -193,11 +191,11 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_reset" />
-        <item itemvalue="Django tests.Test: polls.tests.acceptance_tests.test_acceptance_reset" />
         <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_set_password" />
         <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_not_blank" />
         <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_correct_email" />
+        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_reset" />
+        <item itemvalue="Django tests.Test: polls.tests.acceptance_tests.test_acceptance_reset" />
       </list>
     </recent_temporary>
   </component>
@@ -225,7 +223,18 @@
     <MESSAGE value="redid reset.py" />
     <MESSAGE value="redid password_reset.html and changing acceptance tests" />
     <MESSAGE value="redid views and made new file for customtokengenerator" />
-    <option name="LAST_COMMIT_MESSAGE" value="redid views and made new file for customtokengenerator" />
+    <MESSAGE value="Redone the views and added proper notes to unit tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="Redone the views and added proper notes to unit tests" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/polls/tests/unit_tests/test_unit_reset.py</url>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_reset_TestLogin_test_correct_email.coverage" NAME="Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_correct_email Coverage Results" MODIFIED="1740709830853" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
