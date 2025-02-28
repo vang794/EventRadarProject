@@ -1,3 +1,4 @@
+import requests
 from django.core.validators import EmailValidator
 from django.contrib.auth.views import logout_then_login
 from django.shortcuts import render
@@ -329,6 +330,47 @@ class PasswordResetConfirmView(View):
             # Render error messages
         return render(request, "password_reset_form.html", {"errors": errors, "user_data": request.POST})
 
+class WeatherView(View):
+        def get(self, request):
+            # Render the weather form template for GET requests
+            return render(request, "weather.html")
 
+        def post(self, request):
+            api_key = '438802557a5074e655e46b4140076665'  # Consider moving this to settings.py for better security
+            location_type = request.POST.get('locationType')
+            location_input = request.POST.get('locationInput').strip()
+
+            if not location_input:
+                return render(request, "weather.html", {'error': 'Please enter a location.'})
+
+            api_url = f'https://api.openweathermap.org/data/2.5/forecast?appid={api_key}&units=metric'
+
+            try:
+                if location_type == 'city':
+                    api_url += f'&q={location_input}'
+                elif location_type == 'zip':
+                    if not location_input.isdigit() or len(location_input) != 5:
+                        return render(request, "weather.html", {'error': 'Invalid zip code format.'})
+                    api_url += f'&zip={location_input}'
+                elif location_type == 'coords':
+                    lat, lon = map(str.strip, location_input.split(','))
+                    if not (lat.replace('.', '').isdigit() and lon.replace('.', '').isdigit()):
+                        return render(request, "weather.html", {'error': 'Invalid coordinates format.'})
+                    api_url += f'&lat={lat}&lon={lon}'
+                else:
+                    return render(request, "weather.html", {'error': 'Invalid location type.'})
+
+                response = requests.get(api_url)
+
+                # Check for a 404 response and return a friendly error message
+                if response.status_code == 404:
+                    return render(request, "weather.html", {'error': 'Location not found. Please check your spelling.'})
+
+                response.raise_for_status()  # Raise an exception for other HTTP errors
+                weather_data = response.json()
+                return render(request, "weather.html", {'weather_data': weather_data})
+
+            except requests.exceptions.RequestException as e:
+                return render(request, "weather.html", {'error': f'Failed to fetch weather data: {str(e)}'})
 
 
