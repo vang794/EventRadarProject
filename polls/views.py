@@ -37,8 +37,6 @@ from django.contrib.auth import logout
 import folium
 from folium.plugins import MarkerCluster
 
-import requests
-
 # Create your views here.
 class LoginAuth(View):
 
@@ -264,7 +262,7 @@ class PasswordResetView(View):
 
     def post(self, request):
         #put in method where it sends via sendgrid
-<<<<<<< HEAD
+
         getEmail=request.POST.get('email')
         send_password_reset_email(getEmail)
         return super().post(request, *args, **kwargs)
@@ -306,7 +304,7 @@ class WeatherView(View):
 
         except requests.exceptions.RequestException as e:
             return render(request, "weather.html", {'error': f'Failed to fetch weather data: {str(e)}'})
-=======
+
         from Methods.sendgrid_reset import send_reset_email
         check = Reset()
         email = request.POST.get('email')
@@ -377,4 +375,4 @@ class PasswordResetConfirmView(View):
 
 
 
->>>>>>> 3f88a2de46910613668ed1efcf6ae52dd9e7116c
+
