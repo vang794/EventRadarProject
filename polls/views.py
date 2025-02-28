@@ -318,11 +318,11 @@ class PasswordResetConfirmView(View):
                     check.set_password(user.email, password1)
                     return redirect("password_reset_complete")
                 else:
-                    return render(request, "password_reset_form.html", {"error": "Passwords don't match"})
+                    return render(request, "password_reset_form.html", {"errors": "Passwords don't match"})
             else:
-                return render(request, "password_reset_form.html", {"error": "Password must be more than 0 characters but less than 51 characters"})
+                return render(request, "password_reset_form.html", {"errors": "Password must be more than 0 characters but less than 51 characters"})
         else:
-            return render(request, "password_reset_form.html", {"valid": False, "error": "Invalid or expired token"})
+            return render(request, "password_reset_form.html", {"valid": False, "errors": "Invalid or expired token"})
 
 
 
