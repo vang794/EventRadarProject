@@ -13,7 +13,7 @@ from django.utils import timezone
 from Methods.Login import Login
 from Methods.forms import CreateAccountForm
 from polls.models import User, Event
-from Methods.sendgrid_reset import CustomTokenGenerator
+from Methods.sendgrid_reset import CustomTokenGenerator, send_reset_email
 from polls.models import User
 import re
 
@@ -23,6 +23,7 @@ from django.shortcuts import render
 from Methods.reset import Reset
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
+from Methods.CustomTokenGenerator import CustomTokenGenerator
 
 
 
@@ -259,7 +260,6 @@ class PasswordResetView(View):
     def get(self, request):
         return render(request, "password_reset.html")
 
-
     def post(self, request):
         #put in method where it sends via sendgrid
         check = Reset()
@@ -281,6 +281,7 @@ class PasswordResetDoneView(View):
         return render(request, "password_reset_sent.html")
 
 class PasswordResetConfirmView(View):
+
     def get(self, request, uidb64, token):
         token_generator = CustomTokenGenerator()
         try:

@@ -6,16 +6,10 @@ from django.core.mail import send_mail as django_send_mail
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
-from django.contrib.auth.tokens import default_token_generator
 from django.urls import reverse
 from EventRadarProject import urls
+from Methods.CustomTokenGenerator import CustomTokenGenerator
 
-#Override Token generator
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
-
-class CustomTokenGenerator(PasswordResetTokenGenerator):
-    def _make_hash_value(self, user, timestamp):
-        return str(user.pk) + str(timestamp)
 
 #code by Ben & Modified by Carolyn
 
@@ -30,7 +24,7 @@ Sincerely,
 The Event Radar Team""" #put the html for this in here
 
 def send_reset_email(request, user):
-    #Generates user token and uid
+    # Generates user token and uid
     token_generator = CustomTokenGenerator()
     token = token_generator.make_token(user)
     uid = urlsafe_base64_encode(force_bytes(user.pk))

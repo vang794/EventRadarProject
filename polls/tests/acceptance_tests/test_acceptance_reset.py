@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.core import mail
 from polls.models import User, Roles
 from Methods.reset import Reset
+from Methods.CustomTokenGenerator import CustomTokenGenerator
 from Methods.sendgrid_reset import send_reset_email
 
 class ResetAcceptanceTests(TestCase):
