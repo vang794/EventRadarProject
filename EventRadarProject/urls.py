@@ -17,10 +17,15 @@ Including another URLconf
 
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.views import PasswordResetCompleteView
 from django.urls import path
 
+<<<<<<< HEAD
 from Methods.reset import CustomPasswordResetView
 from polls.views import LoginAuth, CreateAcct, SettingPage, SignOutView, HomePage, WeatherView
+=======
+from polls.views import LoginAuth, CreateAcct, SettingPage, SignOutView, HomePage, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView
+>>>>>>> 3f88a2de46910613668ed1efcf6ae52dd9e7116c
 
 #for id
 import uuid
@@ -38,10 +43,10 @@ urlpatterns = [
     path('weather/', WeatherView.as_view(), name='weather'),
 
     #Urls for reset password
-    path('reset_password/', CustomPasswordResetView.as_view(template_name="password_reset.html"), name='password_reset'),
-    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name="password_reset_sent.html"), name='password_reset_done'),
-    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="password_reset_form.html"), name='password_reset_confirm'),
-    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name="password_reset_done.html"), name='password_reset_complete'),
+    path('reset_password/', PasswordResetView.as_view(), name='password_reset'),
+    path('password_reset/done/', PasswordResetDoneView.as_view(), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('reset/done/', PasswordResetCompleteView.as_view(template_name="password_reset_done.html"), name='password_reset_complete'),
 
 ]
 
