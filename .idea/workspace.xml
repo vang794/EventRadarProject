@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="Redone the views and added proper notes to unit tests" />
+    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="Redone the views and added proper notes to unit tests">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventRadarProject/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/EventRadarProject/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/polls/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/polls/views.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -26,19 +31,31 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Django Server.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.acceptance_tests.test_acceptance_reset.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_correct_email.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_find.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_not_blank.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_set_password.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;reset__2&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Django Server.Unnamed.executor": "Run",
+    "Django tests.Test: polls.tests.acceptance_tests.test_acceptance_reset.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_correct_email.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_find.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_not_blank.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_set_password.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.executor": "Run",
+    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "feature/weather",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Django Server.Unnamed">
     <configuration name="Test: polls.tests.acceptance_tests.test_acceptance_reset" type="DjangoTestsConfigurationType" temporary="true">
       <module name="EventRadarProject" />
@@ -145,7 +162,7 @@
       <option name="OPTIONS" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Unnamed" type="Python.DjangoServer" factoryName="Django server" nameIsGenerated="true">
+    <configuration name="Unnamed" type="Python.DjangoServer" factoryName="Django server">
       <module name="EventRadarProject" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -153,9 +170,10 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
         <env name="DJANGO_SETTINGS_MODULE" value="EventRadarProject.settings" />
+        <env name="export DJANGO_SETTINGS_MODULE" value="EventRadarProject1.settings" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="SDK_NAME" value="Python 3.11 (EventRadarProject)" />
+      <option name="SDK_NAME" value="Python 3.12 (EventRadarProject1)" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -184,21 +202,30 @@
     <list>
       <item itemvalue="Django Server.Unnamed" />
       <item itemvalue="Django tests.Test: polls.tests.acceptance_tests.test_acceptance_reset" />
-      <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_reset" />
       <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_correct_email" />
       <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_not_blank" />
       <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_set_password" />
+      <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_reset" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_reset" />
         <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_set_password" />
         <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_not_blank" />
         <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_correct_email" />
-        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_reset" />
         <item itemvalue="Django tests.Test: polls.tests.acceptance_tests.test_acceptance_reset" />
       </list>
     </recent_temporary>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-PY-243.23654.177" />
+        <option value="bundled-python-sdk-91d3a02ef49d-43b77aa2d136-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.23654.177" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task id="LOCAL-00001" summary="redid password_reset.html and changing acceptance tests">
       <option name="closed" value="true" />
@@ -216,8 +243,40 @@
       <option name="project" value="LOCAL" />
       <updated>1740707762786</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Redone the views and added proper notes to unit tests">
+      <option name="closed" value="true" />
+      <created>1740720999803</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1740720999803</updated>
+    </task>
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="Redone the views and added proper notes to unit tests" />
+      <created>1740721531828</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1740721531828</updated>
+      <workItem from="1740721532462" duration="226000" />
+      <workItem from="1740721785792" duration="133000" />
+      <workItem from="1740721921456" duration="240000" />
+      <workItem from="1740722163921" duration="26000" />
+      <workItem from="1740725985306" duration="826000" />
+      <workItem from="1740726815716" duration="1904000" />
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="redid reset.py" />

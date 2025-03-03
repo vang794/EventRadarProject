@@ -785,3 +785,64 @@ input[type="tel"]::placeholder {
         height: 350px;
     }
 }
+
+/* homepage side bar */
+.event-popup h3 {
+                color: #6c5ce7;
+                margin-bottom: 8px;
+}
+.event-popup p {
+                margin: 5px 0;
+}
+/* Weather Section Styles */
+.weather-section {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+.weather-section h2 {
+    color: #4a2b7a;
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+.weather-section input[type="radio"] {
+    margin-right: 5px;
+}
+.weather-section input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #e0d6f5;
+    border-radius: 8px;
+    margin: 10px 0;
+}
+.weather-section button {
+    background: #7a3bda;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+}
+.weather-section button:hover {
+    background: #6429c8;
+}
+.forecast-results {
+    margin-top: 15px;
+}
+.forecast-day {
+    border-bottom: 1px solid #e0d6f5;
+    padding: 10px 0;
+}
+.forecast-day:last-child {
+    border-bottom: none;
+}
+.forecast-day h3 {
+    color: #4a2b7a;
+    margin-bottom: 5px;
+}
+.forecast-day img {
+    vertical-align: middle;
+}
