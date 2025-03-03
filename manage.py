@@ -6,7 +6,7 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'event_radar_project1.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'EventRadarProject.settings') #changed from project1 to project -annie
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
