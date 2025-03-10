@@ -10,7 +10,8 @@ from django.views import View
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 
-
+#Login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from Methods.Login import Login
 from Methods.forms import CreateAccountForm
 from polls.models import User, Event
@@ -19,7 +20,7 @@ from polls.models import User
 import re
 
 #For resetting password
-from django.contrib.auth import views as auth_views
+from django.contrib.auth import views as auth_views, authenticate, login
 from django.shortcuts import render
 from Methods.reset import Reset
 from django.utils.http import urlsafe_base64_decode
@@ -34,6 +35,7 @@ from django.shortcuts import get_object_or_404
 
 from Methods.sendgrid_email import send_confirmation_email
 from django.contrib.auth import logout
+
 
 import folium
 from folium.plugins import MarkerCluster
@@ -52,11 +54,19 @@ class LoginAuth(View):
         # Initialize errors dictionary
         errors = {}
 
-        login = Login()
+        login_auth = Login()
         # Check if fields are blank
-        if not login.isNotBlank(email, password):
+        if not login_auth.isNotBlank(email, password):
             return render(request, "login.html", {"error": "Invalid email or password"})
-        elif login.authenticate(email, password):
+
+        user = authenticate(request, email=email, password=password)
+
+        if user is not None:
+            login(request, user)  # Django's login method to manage session
+            request.session['email'] = user.email  # Store email in session (optional)
+            return redirect("homepage")
+
+        elif login_auth.authenticate(email, password):
                 user = User.objects.get(email=email)
                 request.session['email'] = user.email
                 return redirect("homepage")
@@ -78,7 +88,8 @@ class CreateAcct(View):
         else:
             print(f"Form errors: {form.errors}")
             return render(request, "create_account.html", {"form": form})
-class HomePage(View):
+class HomePage(LoginRequiredMixin,View):
+    login_url = 'login'
     def get(self, request):
         # we are just using this location for now
         m = folium.Map(location=[43.0389, -87.9065], zoom_start=12,
@@ -171,7 +182,8 @@ class HomePage(View):
         # rerender the map with new radius, not implemented yet
         return redirect('homepage')
 
-class SettingPage(View):
+class SettingPage(LoginRequiredMixin,View):
+    login_url = 'login'
     def get(self, request):
         email = request.session.get("email")
         if not email:
