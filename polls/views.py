@@ -237,6 +237,16 @@ class SettingPage(View):
                     success_message = "Your last name has been updated successfully"
                 else:
                     error_message = "Failed to update your last name"
+        
+        elif "update_phone_number" in request.POST:
+            new_phone_number = request.POST.get("phone_number")
+            if new_phone_number:
+                result = change_account_details(user, new_phone_number=new_phone_number)
+                if result:
+                    success_message = "Your phone number has been updated successfully"
+                else:
+                    error_message = "Failed to update your phone number"
+
 
         if success_message:
             return redirect("settings")
