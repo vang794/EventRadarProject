@@ -38,6 +38,8 @@ from django.contrib.auth import logout
 import folium
 from folium.plugins import MarkerCluster
 
+from polls.geocoding import GeocodingService
+
 # Create your views here.
 class LoginAuth(View):
 
@@ -79,9 +81,25 @@ class CreateAcct(View):
             print(f"Form errors: {form.errors}")
             return render(request, "create_account.html", {"form": form})
 class HomePage(View):
+
     def get(self, request):
-        # we are just using this location for now
-        m = folium.Map(location=[43.0389, -87.9065], zoom_start=12,
+        radius = request.session.get('radius', 5)
+        location_name = request.session.get('location', 'Milwaukee')
+        geocoder = GeocodingService()
+        location = request.session.get('location_coords', geocoder.get_coordinates(location_name) or [43.0389, -87.9065])
+
+        if 'location_coords' not in request.session:
+            location = geocoder.get_coordinates(location_name)
+            if location:
+                request.session['location_coords'] = location
+            else:
+                location = [43.0389, -87.9065]
+                request.session['location_coords'] = location
+                location_name = 'Milwaukee'
+                request.session['location'] = location_name
+
+
+        m = folium.Map(location=location, zoom_start=12,
                      tiles="cartodbpositron")
 
         marker_cluster = MarkerCluster().add_to(m)
@@ -141,34 +159,54 @@ class HomePage(View):
                 icon=folium.Icon(icon="info-sign", prefix='fa', color="blue"),
             ).add_to(marker_cluster)
 
-        # circle for the search radius
+        radius_in_meters = radius * 1609.34
+        
         folium.Circle(
-            location=[43.0389, -87.9065],
-            radius=5000,
+            location=location,
+            radius=radius_in_meters,
             color='#3186cc',
             fill=True,
             fill_color='#3186cc',
             fill_opacity=0.2,
-            tooltip="5km radius"
+            tooltip=f"{radius} miles radius"
         ).add_to(m)
 
         map_html = m._repr_html_()
 
         return render(request, "homepage.html", {
             'map_html': map_html,
-            'sample_events': sample_events
+            'sample_events': sample_events,
+            'current_radius': radius,
+            'current_location': location_name
         })
 
     def post(self, request):
-        location = request.POST.get('location', 'Milwaukee')
+        location_string = request.POST.get('location', 'Milwaukee').strip()
         radius = request.POST.get('radius', 5)
 
         try:
             radius = int(radius)
+            if radius < 1:
+                radius = 1
+            elif radius > 50:
+                radius = 50
         except ValueError:
             radius = 5
 
-        # rerender the map with new radius, not implemented yet
+        geocoder = GeocodingService()
+        location_coords = geocoder.get_coordinates(location_string)
+
+        if location_coords:
+            request.session['location'] = location_string
+            request.session['location_coords'] = location_coords
+            request.session['radius'] = radius
+        else:
+            messages.warning(request, f"Location '{location_string}' not found. Showing results for Milwaukee.")
+            request.session['location'] = 'Milwaukee'
+            request.session['location_coords'] = [43.0389, -87.9065]
+            request.session['radius'] = radius
+
+
         return redirect('homepage')
 
 class SettingPage(View):
