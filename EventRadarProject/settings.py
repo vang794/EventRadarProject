@@ -145,3 +145,7 @@ EMAIL_PORT = 465
 DEFAULT_FROM_EMAIL = 'Event Radar <hackba74@uwm.edu>'
 SERVER_EMAIL = 'Event Radar <hackba74@uwm.edu>'
 EMAIL_HOST_USER = 'apikey'
+
+GEOCODING_SERVICE = 'nominatim'
+NOMINATIM_USER_AGENT = 'EventRadarApp/1.0 (http://localhost:8000)'
+NOMINATIM_BASE_URL = 'https://nominatim.openstreetmap.org/search'
