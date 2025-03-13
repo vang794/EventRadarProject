@@ -40,6 +40,8 @@ from django.contrib.auth import logout
 import folium
 from folium.plugins import MarkerCluster
 
+#TESTER
+from Methods.SessionLoginMixin import SessionLoginRequiredMixin
 # Create your views here.
 class LoginAuth(View):
 
@@ -59,16 +61,10 @@ class LoginAuth(View):
         if not login_auth.isNotBlank(email, password):
             return render(request, "login.html", {"error": "Invalid email or password"})
 
-        user = authenticate(request, email=email, password=password)
-
-        if user is not None:
-            login(request, user)  # Django's login method to manage session
-            request.session['email'] = user.email  # Store email in session (optional)
-            return redirect("homepage")
-
         elif login_auth.authenticate(email, password):
                 user = User.objects.get(email=email)
                 request.session['email'] = user.email
+                request.session["is_authenticated"] = True
                 return redirect("homepage")
         else:
             return render(request, "login.html", {"error": "Invalid email or password"})  # Show error message
@@ -88,8 +84,7 @@ class CreateAcct(View):
         else:
             print(f"Form errors: {form.errors}")
             return render(request, "create_account.html", {"form": form})
-class HomePage(LoginRequiredMixin,View):
-    login_url = 'login'
+class HomePage(SessionLoginRequiredMixin,View):
     def get(self, request):
         # we are just using this location for now
         m = folium.Map(location=[43.0389, -87.9065], zoom_start=12,
@@ -171,6 +166,7 @@ class HomePage(LoginRequiredMixin,View):
         })
 
     def post(self, request):
+
         location = request.POST.get('location', 'Milwaukee')
         radius = request.POST.get('radius', 5)
 
@@ -182,7 +178,7 @@ class HomePage(LoginRequiredMixin,View):
         # rerender the map with new radius, not implemented yet
         return redirect('homepage')
 
-class SettingPage(LoginRequiredMixin,View):
+class SettingPage(SessionLoginRequiredMixin,View):
     login_url = 'login'
     def get(self, request):
         email = request.session.get("email")
@@ -262,7 +258,7 @@ class SettingPage(LoginRequiredMixin,View):
 
 class SignOutView(View):
     def post(self, request):
-        logout(request)
+        request.session.clear()
         request.session.flush()
         return redirect('login')
 
@@ -386,3 +382,8 @@ class WeatherView(View):
                 return render(request, "weather.html", {'error': f'Failed to fetch weather data: {str(e)}'})
 
 
+class DeleteView(View):
+    def get(self, request):
+        pass
+    def post(self,request):
+        pass
