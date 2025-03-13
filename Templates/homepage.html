@@ -43,12 +43,12 @@
                     <div class="search-bar">
                         <div class="input-group">
                             <span class="input-icon"><i class="fas fa-map-marker-alt"></i></span>
-                            <input type="text" name="location" placeholder="Location" value="Milwaukee">
+                            <input type="text" name="location" placeholder="Location" value="{{ current_location|default:'Milwaukee' }}">
                         </div>
 
                         <div class="input-group">
                             <span class="input-icon"><i class="fas fa-circle-notch"></i></span>
-                            <input type="number" name="radius" placeholder="Radius (km)" value="5" min="1" max="50">
+                            <input type="number" name="radius" placeholder="Radius (miles)" value="{{ current_radius|default:5 }}" min="1" max="50">
                         </div>
 
                         <button type="submit" class="search-btn">
