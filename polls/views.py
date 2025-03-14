@@ -6,12 +6,15 @@ from django.contrib import messages
 
 # Create your views here.
 from django.shortcuts import render, redirect
+from django.utils.decorators import method_decorator
 from django.views import View
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 
 #Login
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.decorators.cache import never_cache
+
 from Methods.Login import Login
 from Methods.forms import CreateAccountForm
 from polls.models import User, Event
@@ -46,10 +49,16 @@ from polls.geocoding import GeocodingService
 from Methods.SessionLoginMixin import SessionLoginRequiredMixin
 # Create your views here.
 class LoginAuth(View):
-
+    @method_decorator(never_cache)
     def get(self, request):
-        request.session.pop('id', None)  # Remove user ID from session
-        return render(request, "login.html")
+        if 'email' in request.session:
+            return redirect("homepage")  #If logged in then go to homepage
+
+        response = render(request, "login.html")
+        response['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+        response['Pragma'] = 'no-cache'
+        response['Expires'] = '0'
+        return response
 
     def post(self, request):
         email = request.POST.get('email')
