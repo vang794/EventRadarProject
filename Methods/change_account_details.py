@@ -4,8 +4,9 @@ from polls.models import User   #imports user model from poll app
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 
-#method to change user email, username, first name and/or last name
-def change_account_details(user, new_email=None, new_username=None, new_first_name=None, new_last_name=None):
+#method to change user email, username, first name and/or last name 
+#phone number is added
+def change_account_details(user, new_email=None, new_username=None, new_first_name=None, new_last_name=None, new_phone_number=None):
     updated_fields = [] #keeps track of what is updated
 
     if new_email:
@@ -46,7 +47,17 @@ def change_account_details(user, new_email=None, new_username=None, new_first_na
             return False
         user.last_name = new_last_name
         updated_fields.append("last_name")
+    if new_phone_number:
+        digits_only = "".join(c for c in new_phone_number if c.isdigit())  
+        if len(new_phone_number) != 10: #only 10 digits
+            return False
+        digits_only = "".join(c for c in new_phone_number if c.isdigit())  #remove characters
+        if len(digits_only) != 10:  #exactly 10 numbers
+            return False
 
+        user.phone_number = digits_only  #save only actualy numbers
+        updated_fields.append("phone_number")
+        
     if updated_fields:
         user.save(update_fields=updated_fields)#only saves updated fields
         user.refresh_from_db() 
