@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="edited login view">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="Updated Workspace" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -290,7 +288,15 @@
       <workItem from="1741812863722" duration="134000" />
       <workItem from="1741828213282" duration="2407000" />
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Updated Workspace">
+      <option name="closed" value="true" />
+      <created>1741914704127</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1741914704127</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -313,7 +319,8 @@
     <MESSAGE value="redid views and made new file for customtokengenerator" />
     <MESSAGE value="Redone the views and added proper notes to unit tests" />
     <MESSAGE value="edited login view" />
-    <option name="LAST_COMMIT_MESSAGE" value="edited login view" />
+    <MESSAGE value="Updated Workspace" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated Workspace" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

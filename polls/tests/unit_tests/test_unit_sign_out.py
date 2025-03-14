@@ -44,5 +44,5 @@ class SignOutTests(TestCase):
         """Test that unauthenticated user is redirected to login page"""
         # Clear session to simulate unauthenticated user
         self.client.session.flush()
-        response = self.client.get(reverse('setting_page'))
+        response = self.client.get(reverse('settings'))
         self.assertRedirects(response, reverse('login'))  # Should redirect to login page
