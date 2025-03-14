@@ -12,23 +12,21 @@
 <body class="login-page">
     <div class="settings-container">
         <div class="logo-container">
-            <img id="logo" src="/static/media/eventradar_logo2.png" alt="Event Radar Logo">
+            <img id="logo" src="{% static 'media/eventradar_logo2.png' %}" alt="Event Radar Logo">
         </div>
 
         <div class="settings-header">
             <h2>Account Settings</h2>
         </div>
 
-        {% if messages %}
-            {% for message in messages %}
-                <div class="{% if message.tags == 'success' %}success-message{% else %}error-message{% endif %}">
-                    {{ message }}
-                </div>
-            {% endfor %}
+        {% if success %}
+            <div class="success-message">{{ success }}</div>
+        {% endif %}
+        {% if error %}
+            <div class="error-message">{{ error }}</div>
         {% endif %}
 
         <div class="settings-content">
-            <!-- Sidebar -->
             <div class="settings-sidebar">
                 <ul class="settings-nav">
                     <li class="active"><i class="fas fa-user"></i> Profile</li>
@@ -45,43 +43,63 @@
                 <!-- Profile Information -->
                 <div class="settings-section">
                     <h3>Profile Information</h3>
-                    <form method="post" class="settings-form">
-                        {% csrf_token %}
 
+                    <!-- update email -->
+                    <form method="POST" class="settings-form">
+                        {% csrf_token %}
                         <div class="form-group">
                             <label for="email">Email Address</label>
                             <input type="email" id="email" name="email" value="{{ user.email }}">
                         </div>
+                        <button type="submit" name="update_email" class="btn btn-primary"><i class="fas fa-save"></i> Update Email</button>
+                    </form>
 
+                    <!-- update username -->
+                    <form method="POST" class="settings-form">
+                        {% csrf_token %}
                         <div class="form-group">
                             <label for="username">Username</label>
                             <input type="text" id="username" name="username" value="{{ user.username }}">
                         </div>
-
-                        <div class="form-row">
-                            <div class="form-group half">
-                                <label for="first_name">First Name</label>
-                                <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}">
-                            </div>
-                            <div class="form-group half">
-                                <label for="last_name">Last Name</label>
-                                <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="phone">Phone Number <span class="optional">(optional)</span></label>
-                            <input type="tel" id="phone" name="phone"
-                                   value="{% if user.phone_number %}{% with phone=user.phone_number|stringformat:'s' %}{% if phone|length == 10 %}({{ phone|slice:':3' }}) {{ phone|slice:'3:6' }}-{{ phone|slice:'6:10' }}{% else %}{{ user.phone_number }}{% endif %}{% endwith %}{% endif %}"
-                                   placeholder="(123) 456-7890"
-                                   pattern="(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}">
-                            <small class="form-text text-muted">Format: (123) 456-7890 or 123-456-7890</small>
-                        </div>
-
-                        <div class="form-actions">
-                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Changes</button>
-                        </div>
+                        <button type="submit" name="update_username" class="btn btn-primary"><i class="fas fa-save"></i> Update Username</button>
                     </form>
+
+                    <!-- update first name -->
+                    <form method="POST" class="settings-form">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="first_name">First Name</label>
+                            <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}">
+                        </div>
+                        <button type="submit" name="update_first_name" class="btn btn-primary"><i class="fas fa-save"></i> Update First Name</button>
+                    </form>
+
+                    <!-- update last name -->
+                    <form method="POST" class="settings-form">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="last_name">Last Name</label>
+                            <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}">
+                        </div>
+                        <button type="submit" name="update_last_name" class="btn btn-primary"><i class="fas fa-save"></i> Update Last Name</button>
+                    </form>
+
+                    <!-- update phone number -->
+                    <form method="POST" class="settings-form">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="phone">Phone Number  <span class="optional">Format: 1234567891</span></label>  
+                            <input type="tel" id="phone" name="phone_number"
+                                value="{{ user.phone_number }}"
+                                placeholder="Enter 10-digit number"
+                                pattern="[0-9]{10}">
+                        </div>
+                        <button type="submit" name="update_phone_number" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Update Phone Number
+                        </button>
+                    </form>
+
+
                 </div>
 
                 <!-- Account Security -->
