@@ -32,7 +32,7 @@
                     <div class="forecast-day">
                         <h4>{{ item.dt_txt }}</h4>
                         <img src="http://openweathermap.org/img/wn/{{ item.weather.0.icon }}@2x.png" alt="{{ item.weather.0.description }}">
-                        <p>Temp: {{ item.main.temp }}°C</p>
+                        <p>Temp: {{ item.main.temp }}°F</p>
                         <p>Clouds: {{ item.clouds.all }}%</p>
                         <p>Pressure: {{ item.main.pressure }} hPa</p>
                     </div>
