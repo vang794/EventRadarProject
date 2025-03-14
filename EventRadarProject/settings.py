@@ -84,14 +84,13 @@ WSGI_APPLICATION = 'EventRadarProject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'your_database_name',      # Your actual database name
-        'USER': 'actual_mysql_username',     # Replace with your MySQL username
-        'PASSWORD': 'actual_mysql_password', # Replace with your MySQL password
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT')
     }
 }
-
 
 
 # Password validation
