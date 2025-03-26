@@ -4,8 +4,10 @@ from django.db import models
 # Create your models here.
 
 class Roles(models.TextChoices):
-    EVENT_MANAGER = 'Event_Manager', 'Event Manager'  # First is stored value, second is human-readable
+    ADMIN = 'Admin', 'Admin'
+    EVENT_MANAGER = 'Event_Manager', 'Event Manager'
     USER = 'User', 'User'
+
 
 class User(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
