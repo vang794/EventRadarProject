@@ -442,6 +442,11 @@ class WeatherView(View):
             return render(request, "weather.html", {'error': f'Failed to fetch weather data: {str(e)}'})
 
 class DeleteView(View):
+    # DELETE page
+    # Send to page that confirms that they understand that they will not be able to retrieve their account
+    # If they click yes, they get brought to a page that they enter their email and enter their password two times
+    # if they successfully enter the right email and passwords, the account is deleted and if it is successfully
+    # deleted, they are redirected to a page that they successfully deleted account and go to login page
     def get(self, request):
         pass
     def post(self,request):

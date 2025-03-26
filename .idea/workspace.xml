@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="I Changed The Change celsius to fahrenheit">
+    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="updated models">
+      <change afterPath="$PROJECT_DIR$/Methods/Delete.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Templates/weather.html" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/weather.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/polls/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/polls/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,7 +24,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="vang_add_locations" />
+        <entry key="$PROJECT_DIR$" value="vang_dbupdate" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -34,12 +35,12 @@
     &quot;assignee&quot;: &quot;vang794&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/vang794/EventRadarProject.git",
-    "accountId": "6c6992d9-6889-441d-a5c7-6acebec26201"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/vang794/EventRadarProject.git&quot;,
+    &quot;accountId&quot;: &quot;6c6992d9-6889-441d-a5c7-6acebec26201&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -71,7 +72,7 @@
     "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "django.template.preview.state": "SHOW_EDITOR_AND_PREVIEW",
-    "git-widget-placeholder": "feature/weather",
+    "git-widget-placeholder": "vang__delete",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -232,10 +233,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_sign_out.SignOutTests.test_unauthenticated_user_redirect" />
-        <item itemvalue="Django tests.Test: polls.tests.unit_tests" />
-        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_create_account.CreateAccountTests.test_create_account_missing_required_fields" />
         <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_mixin.MixinUnitTests.test_allows_access_if_authenticated" />
         <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_mixin" />
+        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_create_account.CreateAccountTests.test_create_account_missing_required_fields" />
+        <item itemvalue="Django tests.Test: polls.tests.unit_tests" />
       </list>
     </recent_temporary>
   </component>
@@ -326,7 +327,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741926829765</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="updated models">
+      <option name="closed" value="true" />
+      <created>1743022474564</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1743022474564</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -353,7 +362,8 @@
     <MESSAGE value="Edited sign out test to reflect on actual settings page" />
     <MESSAGE value="test" />
     <MESSAGE value="I Changed The Change celsius to fahrenheit" />
-    <option name="LAST_COMMIT_MESSAGE" value="I Changed The Change celsius to fahrenheit" />
+    <MESSAGE value="updated models" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated models" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
