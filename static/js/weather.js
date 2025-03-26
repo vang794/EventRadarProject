@@ -61,7 +61,7 @@ function displayForecast(data) {
                 <div class="forecast-day">
                     <h3>${date.toDateString()}</h3>
                     <img src="http://openweathermap.org/img/wn/${weatherIcon}@2x.png" alt="${dayData[0].weather[0].description}">
-                    <p>Max Temp: ${maxTemp.toFixed(2)}°C</p>
+                    <p>Max Temp: ${maxTemp.toFixed(2)}°F</p>
                     <p>Avg Cloud Cover: ${avgClouds.toFixed(2)}%</p>
                     <p>Max Pressure: ${maxPressure} hPa</p>
                 </div>

@@ -14,6 +14,8 @@ import dotenv
 from pathlib import Path
 from dotenv import load_dotenv #for mySQL database
 load_dotenv() #gets database login from .env
+import pymysql
+pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
