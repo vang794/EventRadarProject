@@ -1,6 +1,7 @@
 from polls.models import User
 from django.contrib.auth.hashers import check_password
 import re
+from django.contrib.auth.hashers import make_password
 
 class Reset:
     def authenticate(self, email):
@@ -45,9 +46,10 @@ class Reset:
         else:
             return False
 
-    #set password
-    def set_password(self,email, password):
-        User.objects.filter(email=email).update(password=password)
+    #set password 
+    def set_password(self, email, password):
+        hashed = make_password(password) #hashed
+        User.objects.filter(email=email).update(password=hashed)
 
     #check that password is not blank
     def pass_not_blank(self,password):
