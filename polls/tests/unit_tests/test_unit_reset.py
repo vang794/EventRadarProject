@@ -1,6 +1,7 @@
 from django.test import TestCase
 
 from Methods.reset import Reset
+from Methods.Verification import VerifyAccount
 from polls.models import User, Roles
 from Methods.Login import Login
 from django.contrib.auth.forms import PasswordResetForm
