@@ -826,6 +826,59 @@ input[type="tel"]::placeholder {
     cursor: pointer;
     width: 100%;
 }
+/* Add this to weather existing CSS */
+.overlay-controls {
+    display: flex;
+    justify-content: flex-end; /* Align to the right side */
+    gap: 20px; /* Increased space between buttons */
+    margin-top: 2rem; /* More space above buttons */
+    padding: 10px 0;
+    width: 100%;
+}
+
+.submit-btn, .home-btn {
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #7a3bda; /* Purple background */
+    color: white;
+    border: 2px solid #7a3bda;
+    /* Add subtle shadow */
+    box-shadow: 0 2px 6px rgba(122, 59, 218, 0.2);
+}
+
+.submit-btn:hover, .home-btn:hover {
+    background-color: #6429c8; /* Darker purple on hover */
+    border-color: #6429c8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(122, 59, 218, 0.3);
+}
+
+.submit-btn:active, .home-btn:active {
+    transform: translateY(0);
+}
+
+/* Make home button stand out with slight differentiation */
+.home-btn {
+    background-color: #8f4eff; /* Slightly different purple */
+    border-color: #8f4eff;
+}
+
+.home-btn:hover {
+    background-color: #7233d3;
+    border-color: #7233d3;
+}
+
+.submit-btn i, .home-btn i {
+    font-size: 1.1em;
+    margin-right: 5px;
+}
+
 .weather-section button:hover {
     background: #6429c8;
 }
