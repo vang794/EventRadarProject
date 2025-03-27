@@ -4,22 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="made acceptance tests and unit tests again">
-      <change afterPath="$PROJECT_DIR$/Methods/Verification.py" afterDir="false" />
+    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="Refractored reset using Verification class">
+      <change afterPath="$PROJECT_DIR$/Templates/delete.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventRadarProject/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/EventRadarProject/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Methods/Delete.py" beforeDir="false" afterPath="$PROJECT_DIR$/Methods/Delete.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Methods/reset.py" beforeDir="false" afterPath="$PROJECT_DIR$/Methods/reset.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/polls/tests/unit_tests/test_unit_reset.py" beforeDir="false" afterPath="$PROJECT_DIR$/polls/tests/unit_tests/test_unit_reset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Methods/Verification.py" beforeDir="false" afterPath="$PROJECT_DIR$/Methods/Verification.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/polls/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/polls/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -52,37 +57,41 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Django Server.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.acceptance_tests.test_acceptance_reset.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_change_account_details.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_create_account.CreateAccountTests.test_create_account_missing_required_fields.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_mixin.MixinUnitTests.test_allows_access_if_authenticated.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_mixin.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_correct_email.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_find.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_not_blank.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_set_password.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_sign_out.SignOutTests.test_unauthenticated_user_redirect.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_sign_out.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.pycharm.django.structure.promotion.once.per.project&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR_AND_PREVIEW&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;vang__delete&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Django Server.Unnamed.executor": "Run",
+    "Django tests.Test: polls.tests.acceptance_tests.test_acceptance_reset.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_change_account_details.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_create_account.CreateAccountTests.test_create_account_missing_required_fields.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_delete.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_mixin.MixinUnitTests.test_allows_access_if_authenticated.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_mixin.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_correct_email.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_find.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_not_blank.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_set_password.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_sign_out.SignOutTests.test_unauthenticated_user_redirect.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_sign_out.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_verification.executor": "Run",
+    "Python.test_unit_delete.executor": "Run",
+    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "django.template.preview.state": "SHOW_EDITOR_AND_PREVIEW",
+    "git-widget-placeholder": "vang__delete",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager" selected="Django tests.Test: polls.tests.acceptance_tests.test_acceptance_reset">
+}]]></component>
+  <component name="RunManager" selected="Django tests.Test: polls.tests.unit_tests.test_unit_verification">
     <configuration name="Test: polls.tests.acceptance_tests.test_acceptance_reset" type="DjangoTestsConfigurationType" temporary="true">
       <module name="EventRadarProject" />
       <option name="ENV_FILES" value="" />
@@ -104,7 +113,7 @@
       <option name="OPTIONS" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Test: polls.tests.unit_tests.test_unit_mixin" type="DjangoTestsConfigurationType" temporary="true">
+    <configuration name="Test: polls.tests.unit_tests.test_unit_delete" type="DjangoTestsConfigurationType" temporary="true">
       <module name="EventRadarProject" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -118,28 +127,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="TARGET" value="polls.tests.unit_tests.test_unit_mixin" />
-      <option name="SETTINGS_FILE" value="" />
-      <option name="CUSTOM_SETTINGS" value="false" />
-      <option name="USE_OPTIONS" value="false" />
-      <option name="OPTIONS" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Test: polls.tests.unit_tests.test_unit_mixin.MixinUnitTests.test_allows_access_if_authenticated" type="DjangoTestsConfigurationType" temporary="true">
-      <module name="EventRadarProject" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="TARGET" value="polls.tests.unit_tests.test_unit_mixin.MixinUnitTests.test_allows_access_if_authenticated" />
+      <option name="TARGET" value="polls.tests.unit_tests.test_unit_delete" />
       <option name="SETTINGS_FILE" value="" />
       <option name="CUSTOM_SETTINGS" value="false" />
       <option name="USE_OPTIONS" value="false" />
@@ -167,7 +155,7 @@
       <option name="OPTIONS" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Test: polls.tests.unit_tests.test_unit_sign_out.SignOutTests.test_unauthenticated_user_redirect" type="DjangoTestsConfigurationType" temporary="true">
+    <configuration name="Test: polls.tests.unit_tests.test_unit_verification" type="DjangoTestsConfigurationType" temporary="true">
       <module name="EventRadarProject" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -181,11 +169,34 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="TARGET" value="polls.tests.unit_tests.test_unit_sign_out.SignOutTests.test_unauthenticated_user_redirect" />
+      <option name="TARGET" value="polls.tests.unit_tests.test_unit_verification" />
       <option name="SETTINGS_FILE" value="" />
       <option name="CUSTOM_SETTINGS" value="false" />
       <option name="USE_OPTIONS" value="false" />
       <option name="OPTIONS" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test_unit_delete" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="EventRadarProject" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/polls/tests/unit_tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/polls/tests/unit_tests/test_unit_delete.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
     <configuration name="Unnamed" type="Python.DjangoServer" factoryName="Django server">
@@ -227,18 +238,18 @@
     <list>
       <item itemvalue="Django Server.Unnamed" />
       <item itemvalue="Django tests.Test: polls.tests.acceptance_tests.test_acceptance_reset" />
+      <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_delete" />
       <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_reset" />
-      <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_mixin" />
-      <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_mixin.MixinUnitTests.test_allows_access_if_authenticated" />
-      <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_sign_out.SignOutTests.test_unauthenticated_user_redirect" />
+      <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_verification" />
+      <item itemvalue="Python.test_unit_delete" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_verification" />
+        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_delete" />
+        <item itemvalue="Python.test_unit_delete" />
         <item itemvalue="Django tests.Test: polls.tests.acceptance_tests.test_acceptance_reset" />
         <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_reset" />
-        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_sign_out.SignOutTests.test_unauthenticated_user_redirect" />
-        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_mixin.MixinUnitTests.test_allows_access_if_authenticated" />
-        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_mixin" />
       </list>
     </recent_temporary>
   </component>
@@ -296,7 +307,7 @@
       <workItem from="1741809842373" duration="2140000" />
       <workItem from="1741812863722" duration="134000" />
       <workItem from="1741828213282" duration="2407000" />
-      <workItem from="1743106969352" duration="2123000" />
+      <workItem from="1743106969352" duration="9172000" />
     </task>
     <task id="LOCAL-00004" summary="Updated Workspace">
       <option name="closed" value="true" />
@@ -354,7 +365,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743023460219</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Refractored reset using Verification class">
+      <option name="closed" value="true" />
+      <created>1743109319277</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1743109319277</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -383,7 +402,8 @@
     <MESSAGE value="I Changed The Change celsius to fahrenheit" />
     <MESSAGE value="updated models" />
     <MESSAGE value="made acceptance tests and unit tests again" />
-    <option name="LAST_COMMIT_MESSAGE" value="made acceptance tests and unit tests again" />
+    <MESSAGE value="Refractored reset using Verification class" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refractored reset using Verification class" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -394,32 +414,32 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/polls/views.py</url>
-          <line>61</line>
+          <line>65</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/polls/views.py</url>
-          <line>69</line>
+          <line>73</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/polls/views.py</url>
-          <line>72</line>
+          <line>76</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/polls/views.py</url>
-          <line>74</line>
+          <line>78</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/polls/views.py</url>
-          <line>79</line>
+          <line>83</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/polls/views.py</url>
-          <line>83</line>
+          <line>87</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
@@ -427,8 +447,10 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_reset_TestLogin_test_correct_email.coverage" NAME="Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_correct_email Coverage Results" MODIFIED="1740709830853" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$test_unit_delete.coverage" NAME="test_unit_delete Coverage Results" MODIFIED="1743115754078" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/polls/tests/unit_tests" />
     <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_acceptance_tests.coverage" NAME="Test: polls.tests.acceptance_tests Coverage Results" MODIFIED="1740157793993" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/EventRadarProject$settings.coverage" NAME="settings Coverage Results" MODIFIED="1738890242422" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/EventRadarProject" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_delete.coverage" NAME="Test: polls.tests.unit_tests.test_unit_delete Coverage Results" MODIFIED="1743117346860" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/EventRadarProject$Test__acceptance_tests_login_accttest.coverage" NAME="Test: acceptance_tests.login_accttest Coverage Results" MODIFIED="1738950572880" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/EventRadarProject$urls.coverage" NAME="urls Coverage Results" MODIFIED="1738884262034" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/EventRadarProject" />
     <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_login.coverage" NAME="Test: polls.tests.unit_tests.test_unit_login Coverage Results" MODIFIED="1740157615241" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
@@ -448,6 +470,7 @@
     <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_SignOutTests.coverage" NAME="Test: polls.tests.SignOutTests Coverage Results" MODIFIED="1738897198024" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/EventRadarProject$Test__acceptance_tests_create_test.coverage" NAME="Test: acceptance_tests.create_test Coverage Results" MODIFIED="1738935183497" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_acceptance_tests_test_acceptance_create_account.coverage" NAME="Test: polls.tests.acceptance_tests.test_acceptance_create_account Coverage Results" MODIFIED="1740157598246" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_verification.coverage" NAME="Test: polls.tests.unit_tests.test_unit_verification Coverage Results" MODIFIED="1743118798776" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_CreateAccountTests.coverage" NAME="Test: polls.tests.CreateAccountTests Coverage Results" MODIFIED="1738896882620" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_create_account_CreateAccountTests_test_create_account_missing_required_fields.coverage" NAME="Test: polls.tests.unit_tests.test_unit_create_account.CreateAccountTests.test_create_account_missing_required_fields Coverage Results" MODIFIED="1741914976347" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/EventRadarProject$views.coverage" NAME="views Coverage Results" MODIFIED="1740705481218" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/polls" />

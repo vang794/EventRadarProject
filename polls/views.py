@@ -458,6 +458,9 @@ class DeleteView(View):
     # if they successfully enter the right email and passwords, the account is deleted and if it is successfully
     # deleted, they are redirected to a page that they successfully deleted account and go to login page
     def get(self, request):
-        pass
+        return render(request, "delete.html")
     def post(self,request):
+
+
+        #If none, return error at bottom of page
         pass

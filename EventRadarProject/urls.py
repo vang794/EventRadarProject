@@ -20,7 +20,8 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import PasswordResetCompleteView
 from django.urls import path
 
-from polls.views import LoginAuth, CreateAcct, SettingPage, SignOutView, HomePage, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, WeatherView
+from polls.views import LoginAuth, CreateAcct, SettingPage, SignOutView, HomePage, PasswordResetView, \
+    PasswordResetDoneView, PasswordResetConfirmView, WeatherView, DeleteView
 
 #for id
 import uuid
@@ -43,6 +44,9 @@ urlpatterns = [
     path('password_reset/done/', PasswordResetDoneView.as_view(), name='password_reset_done'),
     path('reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/done/', PasswordResetCompleteView.as_view(template_name="password_reset_done.html"), name='password_reset_complete'),
+
+    #url for Delete
+    path('delete/', DeleteView.as_view(), name='delete'),
 
 ]
 
