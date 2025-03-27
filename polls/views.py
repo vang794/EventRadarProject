@@ -3,6 +3,10 @@ from django.core.validators import EmailValidator
 from django.contrib.auth.views import logout_then_login
 from django.shortcuts import render
 from django.contrib import messages
+from django.shortcuts import render, redirect
+from django.utils.decorators import method_decorator
+from django.views import View
+from math import radians, sin, cos, sqrt, atan2
 
 # Create your views here.
 from django.shortcuts import render, redirect
@@ -99,80 +103,23 @@ class HomePage(SessionLoginRequiredMixin,View):
     def get(self, request):
         radius = request.session.get('radius', 5)
         location_name = request.session.get('location', 'Milwaukee')
-        geocoder = GeocodingService()
-        location = request.session.get('location_coords', geocoder.get_coordinates(location_name) or [43.0389, -87.9065])
-
-        if 'location_coords' not in request.session:
-            location = geocoder.get_coordinates(location_name)
-            if location:
-                request.session['location_coords'] = location
-            else:
-                location = [43.0389, -87.9065]
-                request.session['location_coords'] = location
-                location_name = 'Milwaukee'
-                request.session['location'] = location_name
-
-
-        m = folium.Map(location=location, zoom_start=12,
-                     tiles="cartodbpositron")
-
-        marker_cluster = MarkerCluster().add_to(m)
-
-        # SAMPLE EVENTS! we will use our database for this later
-        sample_events = [
-            {
-                'title': 'Music in the Park',
-                'description': 'Live music performance at Veterans Park',
-                'latitude': 43.0450,
-                'longitude': -87.8900,
-                'date': timezone.now() + timezone.timedelta(days=2),
-                'category': 'Music'
-            },
-            {
-                'title': 'Food Festival',
-                'description': 'Annual food festival with local restaurants',
-                'latitude': 43.0381,
-                'longitude': -87.9066,
-                'date': timezone.now() + timezone.timedelta(days=5),
-                'category': 'Food'
-            },
-            {
-                'title': 'Art Exhibition',
-                'description': 'Modern art showcase at Milwaukee Art Museum',
-                'latitude': 43.0401,
-                'longitude': -87.8972,
-                'date': timezone.now() + timezone.timedelta(days=3),
-                'category': 'Art'
-            },
-            {
-                'title': 'Tech Meetup',
-                'description': 'Network with tech professionals in Milwaukee',
-                'latitude': 43.0336,
-                'longitude': -87.9125,
-                'date': timezone.now() + timezone.timedelta(days=7),
-                'category': 'Technology'
-            }
-        ]
-
-        for event in sample_events:
-            event_date = event['date'].strftime('%B %d, %Y at %I:%M %p')
-
-            popup_html = f"""
-            <div class="event-popup">
-                <h3>{event['title']}</h3>
-                <p><strong>Date:</strong> {event_date}</p>
-                <p><strong>Category:</strong> {event['category']}</p>
-                <p>{event['description']}</p>
-            </div>
-            """
-
-            folium.Marker(
-                location=[event['latitude'], event['longitude']],
-                popup=folium.Popup(popup_html, max_width=300),
-                tooltip=event['title'],
-                icon=folium.Icon(icon="info-sign", prefix='fa', color="blue"),
-            ).add_to(marker_cluster)
-
+        
+        # Default Milwaukee coordinates if no location_coords in session
+        location_coords = request.session.get('location_coords')
+        if not location_coords:
+            geocoder = GeocodingService()
+            location_coords = geocoder.get_coordinates(location_name)
+            if not location_coords:
+                location_coords = (43.0389, -87.9065) 
+            request.session['location_coords'] = location_coords
+        
+        if isinstance(location_coords, tuple):
+            location = list(location_coords)
+        else:
+            location = location_coords
+            
+        m = folium.Map(location=location, zoom_start=12)
+        
         radius_in_meters = radius * 1609.34
 
         folium.Circle(
@@ -184,12 +131,35 @@ class HomePage(SessionLoginRequiredMixin,View):
             fill_opacity=0.2,
             tooltip=f"{radius} miles radius"
         ).add_to(m)
-
+        
+        marker_cluster = MarkerCluster().add_to(m)
+        
+        events = self.get_events_within_radius(location[0], location[1], radius)
+        
+        for event in events:
+            event_date = event.event_date.strftime('%B %d, %Y at %I:%M %p')
+            
+            popup_html = f"""
+            <div class="event-popup">
+                <h3>{event.title}</h3>
+                <p><strong>Date:</strong> {event_date}</p>
+                <p><strong>Category:</strong> {event.category}</p>
+                <p>{event.description}</p>
+            </div>
+            """
+            
+            folium.Marker(
+                location=[event.latitude, event.longitude],
+                popup=folium.Popup(popup_html, max_width=300),
+                tooltip=event.title,
+                icon=folium.Icon(icon="info-sign", prefix='fa', color="blue"),
+            ).add_to(marker_cluster)
+        
         map_html = m._repr_html_()
 
         return render(request, "homepage.html", {
             'map_html': map_html,
-            'sample_events': sample_events,
+            'sample_events': events,
             'current_radius': radius,
             'current_location': location_name
         })
@@ -215,13 +185,53 @@ class HomePage(SessionLoginRequiredMixin,View):
             request.session['location_coords'] = location_coords
             request.session['radius'] = radius
         else:
+            # Handle location not found. Default to Milwaukee, and show a message.
             messages.warning(request, f"Location '{location_string}' not found. Showing results for Milwaukee.")
             request.session['location'] = 'Milwaukee'
             request.session['location_coords'] = [43.0389, -87.9065]
             request.session['radius'] = radius
 
-
         return redirect('homepage')
+    
+    def get_events_within_radius(self, lat, lon, radius_miles):
+        """
+        Get events within a certain radius of a point using the Haversine formula
+        """
+        # Get all events from the database
+        all_events = Event.objects.all()
+        
+        events_within_radius = []
+        for event in all_events:
+            distance = self.calculate_distance(lat, lon, event.latitude, event.longitude)
+            if distance <= radius_miles:
+                events_within_radius.append(event)
+        
+        return events_within_radius
+    
+    def calculate_distance(self, lat1, lon1, lat2, lon2):
+        """
+        Calculate distance between two points using the Haversine formula.
+        Returns distance in miles.
+        """
+        # Earth radius in miles
+        R = 3958.8
+        
+        # Convert coordinates from degrees to radians
+        lat1_rad = radians(float(lat1))
+        lon1_rad = radians(float(lon1))
+        lat2_rad = radians(float(lat2))
+        lon2_rad = radians(float(lon2))
+        
+        # Difference in coordinates
+        dlat = lat2_rad - lat1_rad
+        dlon = lon2_rad - lon1_rad
+        
+        # Haversine formula
+        a = sin(dlat/2)**2 + cos(lat1_rad) * cos(lat2_rad) * sin(dlon/2)**2
+        c = 2 * atan2(sqrt(a), sqrt(1-a))
+        distance = R * c
+        
+        return distance
 
 class SettingPage(SessionLoginRequiredMixin,View):
     login_url = 'login'
