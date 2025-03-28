@@ -74,5 +74,5 @@ class DeleteAcceptanceTests(TestCase):
         response = self.client.post(reverse('delete'), data)
 
            #Get the error
-        self.assertContains(response, "You can only delete your own account!")
+        self.assertContains(response, "Incorrect Email")
         self.assertEqual(response.status_code, 200)
