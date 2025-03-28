@@ -1,9 +1,10 @@
+from Methods.Login import Login
 from polls.models import User
 from django.contrib.auth.hashers import check_password
 import re
 
 class VerifyAccount:
-    def authenticate(self, email):
+    def authenticate_email(self, email):
         return self.email_not_blank(email) and self.email_find(email) and self.valid_email_form(email)
 
         # Check if fields are blank
@@ -35,8 +36,19 @@ class VerifyAccount:
             return False
         return True
 
+    def isNotBlank(self, email, password):
+        # Check if fields are blank
+        if not email:
+            return False
+        if not password:
+            return False
+        return True
+
     #get account by email
     def find_acct(self,email):
         if self.email_find(email):
             return User.objects.filter(email=email)
+
+    #password is related to the email
+
 

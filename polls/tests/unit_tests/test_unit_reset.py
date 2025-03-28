@@ -1,3 +1,4 @@
+from django.contrib.auth.hashers import make_password,check_password
 from django.test import TestCase
 
 from Methods.reset import Reset
@@ -17,7 +18,7 @@ class TestLogin(TestCase):
         self.user = User.objects.create(
             username="testuser",
             email="testuser@example.com",
-            password="testpassword",
+            password=make_password("testpassword"),
             first_name="Test",
             last_name="User",
             role=Roles.USER
@@ -63,7 +64,7 @@ class TestLogin(TestCase):
         new_password = "newpassword123"
         self.reset.set_password(self.user.email, new_password)
         self.user.refresh_from_db()
-        self.assertTrue(self.user.password==new_password)
+        self.assertTrue(check_password(new_password,encoded=self.user.password))
 
     def test_pass_not_blank(self):
         #Test if the password is blank
@@ -72,6 +73,6 @@ class TestLogin(TestCase):
 
     def test_authenticate(self):
         #Check if the email is valid
-        self.assertTrue(self.reset.authenticate("testuser@example.com"))
-        self.assertFalse(self.reset.authenticate("invalidemail@example.com"))
-        self.assertFalse(self.reset.authenticate(""))
+        self.assertTrue(self.reset.authenticate_email("testuser@example.com"))
+        self.assertFalse(self.reset.authenticate_email("invalidemail@example.com"))
+        self.assertFalse(self.reset.authenticate_email(""))
