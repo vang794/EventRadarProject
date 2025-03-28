@@ -5,7 +5,8 @@ class Login:
     def authenticate(self, email, password):
         if self.checkemail(email):
             return self.checkpassword(email, password)
-        return False
+        else:
+            return False
 
     def checkpassword(self, email, password):
         try:

@@ -19,6 +19,7 @@ from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.decorators.cache import never_cache
 
+from Methods.Delete import DeleteAcct
 from Methods.Login import Login
 from Methods.forms import CreateAccountForm
 from polls.models import User, Event
@@ -31,7 +32,6 @@ from django.contrib.auth import views as auth_views, authenticate, login
 from django.shortcuts import render
 from Methods.reset import Reset
 from django.utils.http import urlsafe_base64_decode
-from django.contrib.auth.tokens import default_token_generator
 from Methods.CustomTokenGenerator import CustomTokenGenerator
 
 
@@ -41,7 +41,6 @@ from django.shortcuts import get_object_or_404
 
 
 from Methods.sendgrid_email import send_confirmation_email
-from django.contrib.auth import logout
 
 
 import folium
@@ -345,7 +344,7 @@ class PasswordResetView(View):
         user = User.objects.filter(email=email).first()
         #check that the email is valid
         if user:
-            if check.authenticate(email):
+            if check.authenticate_email(email):
                 #then get username
                 send_reset_email(request,user)
                 #if the email is valid and email is send to user email, go to password_reset_done page
@@ -454,7 +453,44 @@ class WeatherView(View):
             return render(request, "weather.html", {'error': f'Failed to fetch weather data: {str(e)}'})
 
 class DeleteView(View):
+    # DELETE page
+    # Send to page that confirms that they understand that they will not be able to retrieve their account
+    # If they click yes, they get brought to a page that they enter their email and enter their password two times
+    # if they successfully enter the right email and passwords, the account is deleted and if it is successfully
+    # deleted, they are redirected to a page that they successfully deleted account and go to login page
+
     def get(self, request):
-        pass
+        return render(request, "delete.html")
     def post(self,request):
-        pass
+
+        #Get the input information
+        email=request.POST.get('email')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+        auth = DeleteAcct()
+        # Check if fields are blank
+        if auth.isNotBlank(email, password1, password2):
+            session_user=request.session.get('email')
+            if session_user != email:
+                return render(request, "delete.html", {"error": "You can only delete your own account!"})
+
+            #Check if fields are blank
+            #Check if passwords match
+            if not auth.pass_exact(password1,password2):
+                return render(request, "delete.html", {"error": "Passwords don't match"})
+
+
+            if not auth.del_acct(email,password1,password2):
+                return render(request, "delete.html", {"error": "Incorrect Email or Password"})
+            else:
+                request.session.clear()
+                return redirect("delete_complete")
+
+        #If none, return error at bottom of page
+        else:
+            return render(request, "delete.html", {"error": "Enter an email and password"})
+
+
+class DeleteCompleteView(View):
+    def get(self,request):
+        return render(request, "delete_complete.html")
