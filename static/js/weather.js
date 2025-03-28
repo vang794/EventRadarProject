@@ -1,15 +1,45 @@
-const apiKey = '438802557a5074e655e46b4140076665'; // Move this to Django backend for security
+// weather.js
+let useCelsius = false;
 
+// Initialize unit toggle
+document.addEventListener('DOMContentLoaded', () => {
+    const unitToggle = document.getElementById('unitToggle');
+    if (unitToggle) {
+        unitToggle.addEventListener('change', handleUnitToggle);
+    }
+});
+
+function handleUnitToggle() {
+    useCelsius = this.checked;
+    if (document.getElementById('forecastResults').innerHTML) {
+        fetchWeather();
+    }
+}
+
+// Overlay controls
+function openWeatherOverlay() {
+    document.getElementById('weatherOverlay').style.display = 'block';
+}
+
+function closeWeatherOverlay() {
+    document.getElementById('weatherOverlay').style.display = 'none';
+}
+
+// API configuration
+const apiKey = '438802557a5074e655e46b4140076665';
+
+// Weather data functions
 async function fetchWeather() {
     const locationType = document.querySelector('input[name="locationType"]:checked').value;
     const locationInput = document.getElementById('locationInput').value.trim();
+    const units = useCelsius ? 'metric' : 'imperial';
 
     if (!locationInput) {
         showError('Please enter a location.');
         return;
     }
 
-    let apiUrl = `https://api.openweathermap.org/data/2.5/forecast?appid=${apiKey}&units=metric`;
+    let apiUrl = `https://api.openweathermap.org/data/2.5/forecast?appid=${apiKey}&units=${units}`;
 
     try {
         if (locationType === 'city') {
@@ -40,6 +70,7 @@ function displayForecast(data) {
     const now = new Date();
     const todayStartTimestamp = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime() / 1000;
     const tomorrowStartTimestamp = todayStartTimestamp + 86400;
+    const unitSymbol = useCelsius ? '°C' : '°F';
 
     const forecastData = data.list.filter(item => item.dt >= tomorrowStartTimestamp);
     let forecastHTML = '';
@@ -47,23 +78,22 @@ function displayForecast(data) {
     for (let i = 0; i < 3; i++) {
         const dayStartTimestamp = tomorrowStartTimestamp + (86400 * i);
         const dayEndTimestamp = dayStartTimestamp + 86400;
-
         const dayData = forecastData.filter(item => item.dt >= dayStartTimestamp && item.dt < dayEndTimestamp);
 
         if (dayData.length > 0) {
             const date = new Date(dayData[0].dt * 1000);
-            const maxTemp = Math.max(...dayData.map(i => i.main.temp));
-            const avgClouds = dayData.reduce((acc, i) => acc + i.clouds.all, 0) / dayData.length;
-            const maxPressure = Math.max(...dayData.map(i => i.main.pressure));
-            const weatherIcon = dayData[0].weather[0].icon; // Get weather icon code
+            const maxTemp = Math.max(...dayData.map(i => i.main.temp_max));
+            const minTemp = Math.min(...dayData.map(i => i.main.temp_min));
+            const weatherIcon = dayData[0].weather[0].icon;
+            const weatherDesc = dayData[0].weather[0].description;
 
             forecastHTML += `
                 <div class="forecast-day">
-                    <h3>${date.toDateString()}</h3>
-                    <img src="http://openweathermap.org/img/wn/${weatherIcon}@2x.png" alt="${dayData[0].weather[0].description}">
-                    <p>Max Temp: ${maxTemp.toFixed(2)}°F</p>
-                    <p>Avg Cloud Cover: ${avgClouds.toFixed(2)}%</p>
-                    <p>Max Pressure: ${maxPressure} hPa</p>
+                    <h3>${date.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}</h3>
+                    <img src="http://openweathermap.org/img/wn/${weatherIcon}@2x.png" alt="${weatherDesc}">
+                    <p><i class="fas fa-temperature-high"></i> High: ${maxTemp.toFixed(1)}${unitSymbol}</p>
+                    <p><i class="fas fa-temperature-low"></i> Low: ${minTemp.toFixed(1)}${unitSymbol}</p>
+                    <p><i class="fas fa-cloud"></i> ${weatherDesc}</p>
                 </div>
             `;
         }
@@ -73,5 +103,16 @@ function displayForecast(data) {
 }
 
 function showError(message) {
-    document.getElementById('forecastResults').innerHTML = `<p style="color: red;">Error: ${message}</p>`;
+    document.getElementById('forecastResults').innerHTML = `
+        <div class="error-message">
+            <i class="fas fa-exclamation-triangle"></i>
+            ${message}
+        </div>
+    `;
 }
+
+// Event listener for form submission
+document.getElementById('weatherForm')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    fetchWeather();
+});
