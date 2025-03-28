@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="Refractored reset using Verification class">
-      <change afterPath="$PROJECT_DIR$/Templates/delete.html" afterDir="false" />
+    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="Unit tests and Acceptance tests created. Unit tests working. Created html for delete">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventRadarProject/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/EventRadarProject/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Methods/Delete.py" beforeDir="false" afterPath="$PROJECT_DIR$/Methods/Delete.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Methods/Verification.py" beforeDir="false" afterPath="$PROJECT_DIR$/Methods/Verification.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/polls/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/polls/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Templates/delete.html" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/delete.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Templates/password_reset.html" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/password_reset.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +88,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Django tests.Test: polls.tests.unit_tests.test_unit_verification">
+  <component name="RunManager" selected="Django Server.Unnamed">
     <configuration name="Test: polls.tests.acceptance_tests.test_acceptance_reset" type="DjangoTestsConfigurationType" temporary="true">
       <module name="EventRadarProject" />
       <option name="ENV_FILES" value="" />
@@ -307,7 +304,7 @@
       <workItem from="1741809842373" duration="2140000" />
       <workItem from="1741812863722" duration="134000" />
       <workItem from="1741828213282" duration="2407000" />
-      <workItem from="1743106969352" duration="9172000" />
+      <workItem from="1743106969352" duration="11632000" />
     </task>
     <task id="LOCAL-00004" summary="Updated Workspace">
       <option name="closed" value="true" />
@@ -373,7 +370,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743109319277</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Unit tests and Acceptance tests created. Unit tests working. Created html for delete">
+      <option name="closed" value="true" />
+      <created>1743119175884</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1743119175885</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -403,7 +408,8 @@
     <MESSAGE value="updated models" />
     <MESSAGE value="made acceptance tests and unit tests again" />
     <MESSAGE value="Refractored reset using Verification class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refractored reset using Verification class" />
+    <MESSAGE value="Unit tests and Acceptance tests created. Unit tests working. Created html for delete" />
+    <option name="LAST_COMMIT_MESSAGE" value="Unit tests and Acceptance tests created. Unit tests working. Created html for delete" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

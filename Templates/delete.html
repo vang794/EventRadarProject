@@ -1,10 +1,59 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Event Radar - Delete">
+    <title>Event Radar - Delete Account</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
-<body>
+<body class="reset-body">
+
+    <div class="barofcolour">
+        <p></p><p></p><p></p>
+    </div>
+
+    <div class="logo-container">
+        <img id="logo" src="{% static 'media/eventradar_logo2.png' %}" alt="Event Radar Logo">
+    </div>
+
+    <div class="reset-title">
+        <h3>Delete Account</h3>
+    </div>
+
+    <div class="center-box">
+        <p>Enter your email address, password, and confirm password to delete your password.</p>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <!-- Email and PasswordInput -->
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="password1">Password:</label>
+                <input type="password" id="password1" name="password1" required>
+
+                <label for="password2">Confirm Password:</label>
+                <input type="password" id="password2" name="password2" required>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group">
+                <input type="submit" value="Send Account">
+            </div>
+
+            {% if error %}
+                <div class="error">
+                    <p>{{ error }}</p>
+                </div>
+            {% endif %}
+        </form>
+    </div>
 
 </body>
 </html>
