@@ -5,6 +5,6 @@ function confirmAction() {
 }
 
 function cancelAction() {
-    // Go back to previous page
-    window.history.back();
+    // Go back to settings
+    window.location.href = '/settings';
 }
