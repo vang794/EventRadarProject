@@ -1,6 +1,9 @@
 from django.test import TestCase
 from polls.models import User, Roles
 from Methods.Login import Login
+from django.contrib.auth.hashers import make_password
+
+
 
 class TestLogin(TestCase):
 
@@ -9,7 +12,7 @@ class TestLogin(TestCase):
         self.user = User.objects.create(
             username="testuser",
             email="testuser@example.com",
-            password="testpassword",
+            password=make_password("testpassword"),
             first_name="Test",
             last_name="User",
             role=Roles.USER
