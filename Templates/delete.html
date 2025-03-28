@@ -23,7 +23,15 @@
     <div class="reset-title">
         <h3>Delete Account</h3>
     </div>
-
+    <!-- Confirmation Overlay -->
+    <div id="confirmation-overlay" style="display: flex;">
+        <div id="confirmation-box">
+            <p>Are you sure you want to delete your account? You can not retrieve this account after deletion. Do you want to proceed?</p>
+            <button onclick="confirmAction()">Yes</button>
+            <button onclick="cancelAction()">No</button>
+        </div>
+    </div>
+<!-- Main Form -->
     <div class="center-box">
         <p>Enter your email address, password, and confirm password to delete your password.</p>
 
@@ -54,6 +62,6 @@
             {% endif %}
         </form>
     </div>
-
+<script src="{% static 'js/delete.js' %}"></script>
 </body>
 </html>

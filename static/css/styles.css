@@ -899,3 +899,40 @@ input[type="tel"]::placeholder {
 .forecast-day img {
     vertical-align: middle;
 }
+
+/* To hide the details */
+.content {
+    display: none;
+}
+
+#confirmation-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Style for the confirmation box */
+#confirmation-box {
+    background: white;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+
+button {
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ddd;
+}
