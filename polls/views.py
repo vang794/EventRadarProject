@@ -472,7 +472,7 @@ class DeleteView(View):
         if auth.isNotBlank(email, password1, password2):
             session_user=request.session.get('email')
             if session_user != email:
-                return render(request, "delete.html", {"error": "You can only delete your own account!"})
+                return render(request, "delete.html", {"error": "Incorrect Email"})
 
             #Check if fields are blank
             #Check if passwords match
