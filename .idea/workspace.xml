@@ -4,12 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="Edited the login methods and unit tests">
+    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="Added delete complete html page">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventRadarProject/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/EventRadarProject/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Methods/Delete.py" beforeDir="false" afterPath="$PROJECT_DIR$/Methods/Delete.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Methods/Verification.py" beforeDir="false" afterPath="$PROJECT_DIR$/Methods/Verification.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/polls/tests/unit_tests/test_unit_reset.py" beforeDir="false" afterPath="$PROJECT_DIR$/polls/tests/unit_tests/test_unit_reset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Templates/SettingPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/SettingPage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Templates/delete.html" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/delete.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Templates/delete_complete.html" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/delete_complete.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/polls/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/polls/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -88,7 +89,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Django tests.Test: polls.tests.unit_tests">
+  <component name="RunManager" selected="Django Server.Unnamed">
     <configuration name="Test: polls.tests.unit_tests" type="DjangoTestsConfigurationType" temporary="true">
       <module name="EventRadarProject" />
       <option name="ENV_FILES" value="" />
@@ -354,7 +355,23 @@
       <option name="project" value="LOCAL" />
       <updated>1743126106257</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Created Delete view and made delete_complete page">
+      <option name="closed" value="true" />
+      <created>1743129375664</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1743129375665</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Added delete complete html page">
+      <option name="closed" value="true" />
+      <created>1743129393868</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1743129393868</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -384,7 +401,9 @@
     <MESSAGE value="I Changed changed c to F" />
     <MESSAGE value="Incorporated main branch merge" />
     <MESSAGE value="Edited the login methods and unit tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="Edited the login methods and unit tests" />
+    <MESSAGE value="Created Delete view and made delete_complete page" />
+    <MESSAGE value="Added delete complete html page" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added delete complete html page" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -392,6 +411,16 @@
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/polls/tests/unit_tests/test_unit_reset.py</url>
           <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/polls/views.py</url>
+          <line>473</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/polls/views.py</url>
+          <line>472</line>
+          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -437,6 +466,6 @@
     <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_reset_TestLogin_test_set_password.coverage" NAME="Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_set_password Coverage Results" MODIFIED="1743127065689" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_change_account_details.coverage" NAME="Test: polls.tests.unit_tests.test_unit_change_account_details Coverage Results" MODIFIED="1741913812885" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_acceptance_tests_test_acceptance_confirm_email.coverage" NAME="Test: polls.tests.acceptance_tests.test_acceptance_confirm_email Coverage Results" MODIFIED="1740157595599" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests.coverage" NAME="Test: polls.tests.unit_tests Coverage Results" MODIFIED="1743127906315" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests.coverage" NAME="Test: polls.tests.unit_tests Coverage Results" MODIFIED="1743129407770" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>

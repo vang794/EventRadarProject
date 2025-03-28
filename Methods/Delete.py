@@ -22,7 +22,7 @@ class DeleteAcct(VerifyAccount):
             account.delete()
 
     def del_acct(self,email,password1,password2):
-        if self.authenticate_email and self.pass_exact(password1,password2):
+        if self.authenticate_email(email) and self.pass_exact(password1,password2):
             self.del_acct_action(email)
             return True
         else:

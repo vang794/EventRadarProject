@@ -34,7 +34,8 @@ class VerifyAccount:
     def pass_not_blank(self,password):
         if not password:
             return False
-        return True
+        else:
+            return True
 
     def isNotBlank(self, email, password):
         # Check if fields are blank

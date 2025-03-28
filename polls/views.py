@@ -452,15 +452,17 @@ class WeatherView(View):
         except requests.exceptions.RequestException as e:
             return render(request, "weather.html", {'error': f'Failed to fetch weather data: {str(e)}'})
 
-class DeleteView(View):
+class DeleteView(SessionLoginRequiredMixin,View):
     # DELETE page
     # Send to page that confirms that they understand that they will not be able to retrieve their account
     # If they click yes, they get brought to a page that they enter their email and enter their password two times
     # if they successfully enter the right email and passwords, the account is deleted and if it is successfully
     # deleted, they are redirected to a page that they successfully deleted account and go to login page
+
     def get(self, request):
         return render(request, "delete.html")
     def post(self,request):
+
         #Get the input information
         email=request.POST.get('email')
         password1 = request.POST.get('password1')
@@ -468,13 +470,20 @@ class DeleteView(View):
         auth = DeleteAcct()
         # Check if fields are blank
         if auth.isNotBlank(email, password1, password2):
+            session_user=request.session.get('email')
+            if session_user != email:
+                return render(request, "delete.html", {"error": "You can only delete your own account!"})
+
+            #Check if fields are blank
             #Check if passwords match
-            if not auth.pass_not_blank(password1,password2):
+            if not auth.pass_exact(password1,password2):
                 return render(request, "delete.html", {"error": "Passwords don't match"})
 
-            if auth.del_acct(email,password1,password2) is not True:
+
+            if not auth.del_acct(email,password1,password2):
                 return render(request, "delete.html", {"error": "Incorrect Email or Password"})
             else:
+                request.session.clear()
                 return redirect("delete_complete")
 
         #If none, return error at bottom of page
