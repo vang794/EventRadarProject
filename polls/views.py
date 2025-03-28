@@ -452,7 +452,7 @@ class WeatherView(View):
         except requests.exceptions.RequestException as e:
             return render(request, "weather.html", {'error': f'Failed to fetch weather data: {str(e)}'})
 
-class DeleteView(SessionLoginRequiredMixin,View):
+class DeleteView(View):
     # DELETE page
     # Send to page that confirms that they understand that they will not be able to retrieve their account
     # If they click yes, they get brought to a page that they enter their email and enter their password two times
