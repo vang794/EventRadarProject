@@ -2,6 +2,8 @@ from polls.models import User
 from django.contrib.auth.hashers import check_password
 import re
 from Methods.Verification import VerifyAccount
+from django.contrib.auth.hashers import make_password
+
 
 class Reset(VerifyAccount):
 
@@ -23,6 +25,8 @@ class Reset(VerifyAccount):
             return False
 
     #set password
-    def set_password(self,email, password):
-        User.objects.filter(email=email).update(password=password)
+    def set_password(self, email, password):
+        hashed = make_password(password) #hashed
+        User.objects.filter(email=email).update(password=hashed)
+
 

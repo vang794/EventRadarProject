@@ -48,6 +48,7 @@ import folium
 from folium.plugins import MarkerCluster
 
 from polls.geocoding import GeocodingService
+from django.contrib.auth.hashers import make_password
 
 #TESTER
 from Methods.SessionLoginMixin import SessionLoginRequiredMixin
@@ -92,6 +93,7 @@ class CreateAcct(View):
         form = CreateAccountForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
+            user.password = make_password(user.password)  #hashes the password
             user.role = 'User'
             user.save()
             send_confirmation_email(user)
