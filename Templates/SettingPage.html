@@ -111,6 +111,12 @@
 
                 <!-- Danger Zone -->
                 <div class="settings-section danger-zone">
+                    <h3>Delete Account</h3>
+                    <p>Delete your account</p>
+                    <a href="{% url 'delete' %}" class="btn btn-danger"><i class="fa-solid fa-user"></i></i> Delete Account</a>
+
+                </div>
+                <div class="settings-section danger-zone">
                     <h3>Sign Out</h3>
                     <p>Sign out from your current session</p>
                     <form action="{% url 'sign_out' %}" method="POST">

@@ -1,7 +1,5 @@
-<!--Written by Jonny-->
 {% load static %}
 <!DOCTYPE html>
-
 <html>
     <head>
         <meta charset="utf-8">
@@ -11,23 +9,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="{% static 'css/styles.css' %}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-        <style>
-            .event-popup h3 {
-                color: #6c5ce7;
-                margin-bottom: 8px;
-            }
-            .event-popup p {
-                margin: 5px 0;
-            }
-        </style>
+        <!-- Overlay-specific CSS -->
+        <link rel="stylesheet" href="{% static 'css/overlay.css' %}">
     </head>
     <body class="homepage-body">
         <div class="top-navbar">
             <div class="logo-container">
-                <img id="logo" src="/static/media/eventradar_logo2.png" alt="Event Radar Logo">
+                <img id="logo" src="{% static 'media/eventradar_logo2.png' %}" alt="Event Radar Logo">
             </div>
             <div class="nav-actions">
-                <a href="{% url 'weather' %}" class="settings-btn">
+                <!-- Instead of linking to a separate weather page, clicking this will open the overlay -->
+                <a href="#" class="settings-btn" onclick="openWeatherOverlay()">
                     <i class="fas fa-cloud"></i> Weather
                 </a>
                 <a href="{% url 'settings' %}" class="settings-btn">
@@ -45,12 +37,10 @@
                             <span class="input-icon"><i class="fas fa-map-marker-alt"></i></span>
                             <input type="text" name="location" placeholder="Location" value="{{ current_location|default:'Milwaukee' }}">
                         </div>
-
                         <div class="input-group">
                             <span class="input-icon"><i class="fas fa-circle-notch"></i></span>
                             <input type="number" name="radius" placeholder="Radius (miles)" value="{{ current_radius|default:5 }}" min="1" max="50">
                         </div>
-
                         <button type="submit" class="search-btn">
                             <i class="fas fa-search"></i> Search
                         </button>
@@ -60,13 +50,12 @@
 
             <div class="content-container">
                 <div class="map-container">
-                    <!-- this is the map -->
+                    <!-- Rendered map HTML -->
                     {{ map_html|safe }}
                 </div>
 
                 <div class="events-list">
                     <h2>Events Near You</h2>
-
                     {% for event in sample_events %}
                     <div class="event-card">
                         <div class="event-header">
@@ -81,5 +70,48 @@
                 </div>
             </div>
         </div>
+
+<!-- Updated Weather Overlay Section -->
+<div id="weatherOverlay" class="weather-overlay">
+    <div class="overlay-content">
+        <div class="overlay-header">
+            <h2>Weather Forecast</h2>
+        </div>
+        
+        <!-- Weather Form -->
+        <form id="weatherForm" onsubmit="event.preventDefault(); fetchWeather();">
+            <div class="form-row">
+                <label>
+                    <input type="radio" name="locationType" value="city" checked> City
+                </label>
+                <label>
+                    <input type="radio" name="locationType" value="zip"> Zip Code
+                </label>
+                <label>
+                    <input type="radio" name="locationType" value="coords"> Coordinates
+                </label>
+            </div>
+            <div class="form-input-row">
+                <input type="text" id="locationInput" placeholder="Enter location" required>
+            </div>
+            <div class="overlay-controls">
+                <button class="submit-btn" onclick="fetchWeather()">
+                    <i class="fas fa-cloud-sun"></i> Get Forecast
+                </button>
+                <button class="home-btn" onclick="closeWeatherOverlay()">
+                    <i class="fas fa-home"></i> Home
+                </button>
+            </div>
+        </form>
+        
+        <!-- Forecast Results -->
+        <div class="forecast-container">
+            <div id="forecastResults" class="forecast-results"></div>
+        </div>
+    </div>
+</div>
+
+        <!-- Include the weather JavaScript file -->
+        <script src="{% static 'js/weather.js' %}"></script>
     </body>
 </html>
