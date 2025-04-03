@@ -21,7 +21,7 @@ from django.contrib.auth.views import PasswordResetCompleteView
 from django.urls import path
 
 from polls.views import LoginAuth, CreateAcct, SettingPage, SignOutView, HomePage, PasswordResetView, \
-    PasswordResetDoneView, PasswordResetConfirmView, WeatherView, DeleteView, DeleteCompleteView
+    PasswordResetDoneView, PasswordResetConfirmView, WeatherView, DeleteView, DeleteCompleteView, fetch_and_save_events_api
 
 #for id
 import uuid
@@ -47,7 +47,8 @@ urlpatterns = [
 
     #url for Delete
     path('delete/', DeleteView.as_view(), name='delete'),
-path('delete_complete/', DeleteCompleteView.as_view(), name='delete_complete'),
+    path('delete_complete/', DeleteCompleteView.as_view(), name='delete_complete'),
 
+    path('api/fetch_events/', fetch_and_save_events_api, name='fetch_events_api'),
 ]
 

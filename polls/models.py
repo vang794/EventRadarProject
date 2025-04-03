@@ -26,6 +26,7 @@ class User(models.Model):
 
 class Event(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
+    place_id = models.CharField(max_length=255, unique=True, null=True, blank=True, help_text="Unique ID from the data source (e.g., Geoapify place_id)")
     title = models.CharField(max_length=100)
     description = models.TextField()
     location_name = models.CharField(max_length=100)
@@ -40,3 +41,14 @@ class Event(models.Model):
     
     def __str__(self):
         return self.title
+
+class SearchedArea(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    radius = models.FloatField()
+    has_events = models.BooleanField(default=False)
+    last_checked = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Area at ({self.latitude}, {self.longitude}) with radius {self.radius} miles"

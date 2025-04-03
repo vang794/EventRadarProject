@@ -22,9 +22,10 @@ from django.views.decorators.cache import never_cache
 from Methods.Delete import DeleteAcct
 from Methods.Login import Login
 from Methods.forms import CreateAccountForm
-from polls.models import User, Event
+from polls.models import User, Event, SearchedArea
 from Methods.sendgrid_reset import CustomTokenGenerator, send_reset_email
 from polls.models import User
+from EventRadarProject.settings import EVENT_API_KEY
 import re
 
 #For resetting password
@@ -51,7 +52,22 @@ from django.contrib.auth.hashers import make_password
 
 #TESTER
 from Methods.SessionLoginMixin import SessionLoginRequiredMixin
+from polls.api import fetch_events_from_api
+import json
+
 # Create your views here.
+import logging
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
+from polls.config.category_mapping import category_mapping
+import math
+from django.db.models import Max
+import time
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 class LoginAuth(View):
     @method_decorator(never_cache)
     def get(self, request):
@@ -101,113 +117,108 @@ class CreateAcct(View):
             print(f"Form errors: {form.errors}")
             return render(request, "create_account.html", {"form": form})
 class HomePage(SessionLoginRequiredMixin,View):
-    def get(self, request):
+    @method_decorator(never_cache)
+    def get(self, request, *args, **kwargs):
         radius = request.session.get('radius', 5)
         location_name = request.session.get('location', 'Milwaukee')
-        
-        # Default Milwaukee coordinates if no location_coords in session
         location_coords = request.session.get('location_coords')
         if not location_coords:
             geocoder = GeocodingService()
             location_coords = geocoder.get_coordinates(location_name)
             if not location_coords:
-                location_coords = (43.0389, -87.9065) 
+                location_coords = (43.0389, -87.9065)
             request.session['location_coords'] = location_coords
-        
         if isinstance(location_coords, tuple):
             location = list(location_coords)
         else:
             location = location_coords
-            
-        m = folium.Map(location=location, zoom_start=12)
-        
-        radius_in_meters = radius * 1609.34
 
-        folium.Circle(
-            location=location,
-            radius=radius_in_meters,
-            color='#3186cc',
-            fill=True,
-            fill_color='#3186cc',
-            fill_opacity=0.2,
-            tooltip=f"{radius} miles radius"
-        ).add_to(m)
-        
-        marker_cluster = MarkerCluster().add_to(m)
-        
+        logger.info(f"Session location: {request.session.get('location')}, radius: {request.session.get('radius')}, location_coords: {request.session.get('location_coords')}")
+
+        max_searched_radius_data = SearchedArea.objects.filter(
+            latitude=location[0],
+            longitude=location[1]
+        ).aggregate(Max('radius'))
+
+        max_searched_radius = max_searched_radius_data['radius__max']
+
+        if max_searched_radius is not None and radius <= max_searched_radius:
+            needs_fetch = False
+            logger.info(f"Found previous search for location ({location[0]}, {location[1]}) with max radius {max_searched_radius}. Requested radius {radius} is covered. No fetch needed.")
+        else:
+            needs_fetch = True
+            if max_searched_radius is not None:
+                logger.info(f"Largest previous search for location ({location[0]}, {location[1]}) was {max_searched_radius} miles. Requested radius {radius} is larger. Fetch required.")
+            else:
+                logger.info(f"No previous SearchedArea record found for location ({location[0]}, {location[1]}). Fetch required.")
+
+        logger.info(f"Final decision for needs_fetch: {needs_fetch}")
+
         events = self.get_events_within_radius(location[0], location[1], radius)
-        
-        for event in events:
-            event_date = event.event_date.strftime('%B %d, %Y at %I:%M %p')
-            
-            popup_html = f"""
-            <div class="event-popup">
-                <h3>{event.title}</h3>
-                <p><strong>Date:</strong> {event_date}</p>
-                <p><strong>Category:</strong> {event.category}</p>
-                <p>{event.description}</p>
-            </div>
-            """
-            
-            folium.Marker(
-                location=[event.latitude, event.longitude],
-                popup=folium.Popup(popup_html, max_width=300),
-                tooltip=event.title,
-                icon=folium.Icon(icon="info-sign", prefix='fa', color="blue"),
-            ).add_to(marker_cluster)
-        
-        map_html = m._repr_html_()
+        logger.info(f"Displaying {len(events)} events currently in DB within {radius} miles.")
 
-        return render(request, "homepage.html", {
+        map_html = self.generate_map(location[0], location[1], radius, events)
+
+        context = {
             'map_html': map_html,
-            'sample_events': events,
+            'sample_events': events[:20],
+            'current_location': request.session.get('location_name', 'Milwaukee'),
             'current_radius': radius,
-            'current_location': location_name
-        })
+            'current_latitude': location[0],
+            'current_longitude': location[1],
+            'needs_fetch': needs_fetch,
+        }
+        return render(request, "homepage.html", context)
 
     def post(self, request):
-        location_string = request.POST.get('location', 'Milwaukee').strip()
+        location_name = request.POST.get('location', 'Milwaukee')
         radius = request.POST.get('radius', 5)
 
         try:
             radius = int(radius)
-            if radius < 1:
-                radius = 1
-            elif radius > 50:
-                radius = 50
-        except ValueError:
+            if not (1 <= radius <= 50):
+                radius = 5
+        except (ValueError, TypeError):
             radius = 5
 
         geocoder = GeocodingService()
-        location_coords = geocoder.get_coordinates(location_string)
+        location_coords = geocoder.get_coordinates(location_name)
 
-        if location_coords:
-            request.session['location'] = location_string
-            request.session['location_coords'] = location_coords
+        if not location_coords:
+            messages.error(request, f"Could not find coordinates for '{location_name}'. Using previous location.")
             request.session['radius'] = radius
         else:
-            # Handle location not found. Default to Milwaukee, and show a message.
-            messages.warning(request, f"Location '{location_string}' not found. Showing results for Milwaukee.")
-            request.session['location'] = 'Milwaukee'
-            request.session['location_coords'] = [43.0389, -87.9065]
+            request.session['location_name'] = location_name
             request.session['radius'] = radius
-
+            request.session['location_coords'] = location_coords
+            logger.info(f"POST request: Updated session location_name='{location_name}', radius={radius}, coords={location_coords}")
         return redirect('homepage')
-    
-    def get_events_within_radius(self, lat, lon, radius_miles):
-        """
-        Get events within a certain radius of a point using the Haversine formula
-        """
-        # Get all events from the database
-        all_events = Event.objects.all()
-        
-        events_within_radius = []
-        for event in all_events:
-            distance = self.calculate_distance(lat, lon, event.latitude, event.longitude)
+
+    def get_events_within_radius(self, center_lat, center_lon, radius_miles):
+        lat_change_per_mile = 1.0 / 69.0
+        lon_change_per_mile = 1.0 / (69.0 * math.cos(math.radians(center_lat)))
+
+        min_lat = center_lat - (radius_miles * lat_change_per_mile)
+        max_lat = center_lat + (radius_miles * lat_change_per_mile)
+        min_lon = center_lon - (radius_miles * lon_change_per_mile)
+        max_lon = center_lon + (radius_miles * lon_change_per_mile)
+
+        potential_events = Event.objects.filter(
+            latitude__gte=min_lat,
+            latitude__lte=max_lat,
+            longitude__gte=min_lon,
+            longitude__lte=max_lon
+        )
+        logger.info(f"Found {potential_events.count()} potential events in bounding box for Haversine check.")
+
+        nearby_events = []
+        for event in potential_events:
+            distance = self.calculate_distance(center_lat, center_lon, event.latitude, event.longitude)
             if distance <= radius_miles:
-                events_within_radius.append(event)
-        
-        return events_within_radius
+                nearby_events.append(event)
+
+        logger.info(f"Filtered down to {len(nearby_events)} events within precise radius.")
+        return nearby_events
     
     def calculate_distance(self, lat1, lon1, lat2, lon2):
         """
@@ -233,6 +244,45 @@ class HomePage(SessionLoginRequiredMixin,View):
         distance = R * c
         
         return distance
+
+    def generate_map(self, center_lat, center_lon, radius_miles, events):
+        m = folium.Map(location=[center_lat, center_lon], zoom_start=12)
+        radius_in_meters = radius_miles * 1609.34
+
+        folium.Circle(
+            location=[center_lat, center_lon],
+            radius=radius_in_meters,
+            color='#3186cc',
+            fill=True,
+            fill_color='#3186cc',
+            fill_opacity=0.2,
+            tooltip=f"{radius_miles:.1f} miles radius"
+        ).add_to(m)
+        marker_cluster = MarkerCluster().add_to(m)
+
+        for event in events:
+            try:
+                event_date_str = event.event_date.strftime('%B %d, %Y at %I:%M %p')
+            except AttributeError:
+                event_date_str = "Date not available"
+
+            popup_html = f"""
+            <div class="event-popup">
+                <h3>{event.title}</h3>
+                <p><strong>Date:</strong> {event_date_str}</p>
+                <p><strong>Category:</strong> {event.category or 'N/A'}</p>
+                <p>{event.description or 'No description available.'}</p>
+            </div>
+            """
+
+            folium.Marker(
+                location=[event.latitude, event.longitude],
+                popup=folium.Popup(popup_html, max_width=300),
+                tooltip=event.title,
+                icon=folium.Icon(icon="info-sign", prefix='fa', color="blue"),
+            ).add_to(marker_cluster)
+
+        return m._repr_html_()
 
 class SettingPage(SessionLoginRequiredMixin,View):
     login_url = 'login'
@@ -494,3 +544,146 @@ class DeleteView(View):
 class DeleteCompleteView(View):
     def get(self,request):
         return render(request, "delete_complete.html")
+
+@csrf_exempt
+@require_POST
+def fetch_and_save_events_api(request):
+    try:
+        data = json.loads(request.body)
+        lat = float(data['latitude'])
+        lon = float(data['longitude'])
+        radius = float(data['radius'])
+        location_name = data.get('location_name', 'Unknown Location')
+
+        logger.info(f"API endpoint called: Fetching events for lat={lat}, lon={lon}, radius={radius}")
+        api_start_time = time.time()
+        features = fetch_events_from_api(lat, lon, radius, EVENT_API_KEY)
+        api_end_time = time.time()
+        logger.info(f"API fetch took {api_end_time - api_start_time:.2f} seconds.")
+
+        if features is not None:
+            logger.info(f"API returned {len(features)} events.")
+
+            logger.info("Starting bulk processing and saving/updating events...")
+            start_time = time.time()
+            num_processed = 0
+            events_to_create = []
+            events_to_update = []
+            update_fields = ['title', 'latitude', 'longitude', 'description', 'location_name', 'event_date', 'category', 'image_url'] # Fields to update
+
+            try:
+                admin_user = User.objects.get(email='system@eventradar.local')
+            except User.DoesNotExist:
+                logger.error("System user not found during API fetch.")
+                return JsonResponse({'status': 'error', 'message': 'Internal configuration error: System user missing.'}, status=500)
+
+            api_place_ids = [f['properties'].get('place_id') for f in features if f.get('properties', {}).get('place_id')]
+            if not api_place_ids:
+                 logger.info("No valid place_ids found in API response.")
+            else:
+                existing_events = Event.objects.filter(place_id__in=api_place_ids).in_bulk(field_name='place_id')
+                logger.info(f"Found {len(existing_events)} existing events in DB for comparison.")
+
+                for feature in features:
+                    props = feature.get('properties', {})
+                    geometry = feature.get('geometry', {})
+                    place_id = props.get('place_id')
+
+                    if not place_id or not geometry or 'coordinates' not in geometry:
+                        continue
+
+                    latitude = geometry['coordinates'][1]
+                    longitude = geometry['coordinates'][0]
+                    description_parts = [props.get(key) for key in ['address_line1', 'address_line2', 'phone', 'website'] if props.get(key)]
+                    description = "\n".join(description_parts)
+                    api_category = props.get('categories', ['unknown'])[0]
+                    category_label = category_mapping.get(api_category, 'Other Landmark')
+                    title = props.get('name', 'Unnamed Event')
+                    formatted_location = props.get('formatted', location_name)
+                    image_url = props.get('datasource', {}).get('raw', {}).get('image')
+
+                    existing_event = existing_events.get(place_id)
+
+                    if existing_event:
+                        update_needed = False
+                        for field in update_fields:
+                            new_value = locals().get(field)
+                            if field == 'event_date': new_value = timezone.now()
+                            if getattr(existing_event, field) != new_value:
+                                setattr(existing_event, field, new_value)
+                                update_needed = True
+                        if update_needed:
+                            events_to_update.append(existing_event)
+                    else:
+                        events_to_create.append(
+                            Event(
+                                place_id=place_id,
+                                title=title,
+                                latitude=latitude,
+                                longitude=longitude,
+                                description=description,
+                                location_name=formatted_location,
+                                event_date=timezone.now(),
+                                created_by=admin_user,
+                                category=category_label,
+                                image_url=image_url,
+                            )
+                        )
+                    num_processed += 1
+
+                created_count = 0
+                if events_to_create:
+                    try:
+                        created_objs = Event.objects.bulk_create(events_to_create)
+                        created_count = len(created_objs)
+                        logger.info(f"Bulk created {created_count} new events.")
+                    except Exception as e:
+                        logger.error(f"Error during bulk_create: {e}")
+
+                updated_count = 0
+                if events_to_update:
+                    try:
+                        updated_count = Event.objects.bulk_update(events_to_update, update_fields)
+                        logger.info(f"Bulk updated {updated_count} existing events.")
+                    except Exception as e:
+                        logger.error(f"Error during bulk_update: {e}")
+
+
+            end_time = time.time()
+            total_time = end_time - start_time
+            logger.info(f"Finished bulk processing {num_processed} events in {total_time:.2f} seconds.")
+
+            logger.info(f"Updating SearchedArea: lat={lat}, lon={lon}, radius={radius}, has_events=True")
+            SearchedArea.objects.update_or_create(
+                latitude=lat, longitude=lon, radius=radius,
+                defaults={'has_events': True, 'last_checked': timezone.now()}
+            )
+
+            logger.info(f"API endpoint: Saved {created_count} new events via bulk.")
+            return JsonResponse({
+                'status': 'success',
+                'message': f'{created_count} new events found and saved.',
+                'processed_count': num_processed
+            })
+        else:
+            logger.info(f"Updating SearchedArea: lat={lat}, lon={lon}, radius={radius}, has_events=False (API fetch failed)")
+            SearchedArea.objects.update_or_create(
+                latitude=lat, longitude=lon, radius=radius,
+                defaults={'has_events': False, 'last_checked': timezone.now()}
+            )
+            logger.info("API endpoint: No events found or API error occurred.")
+            return JsonResponse({
+                'status': 'success',
+                'message': 'No new events found or API error occurred.',
+                'processed_count': 0
+            })
+
+    except json.JSONDecodeError:
+        logger.error("API endpoint: Invalid JSON received.")
+        return JsonResponse({'status': 'error', 'message': 'Invalid request format.'}, status=400)
+    except (KeyError, ValueError, TypeError) as e:
+        logger.error(f"API endpoint: Invalid data received - {e}")
+        return JsonResponse({'status': 'error', 'message': f'Invalid data: {e}'}, status=400)
+    except Exception as e:
+        logger.exception("API endpoint: An unexpected error occurred.")
+        return JsonResponse({'status': 'error', 'message': 'An internal server error occurred.'}, status=500)
