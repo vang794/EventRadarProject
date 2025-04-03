@@ -1,0 +1,15 @@
+category_mapping = {
+    'parking.cars': 'Parking', 'tourism.attraction.artwork': 'Artwork', 'tourism.attraction.viewpoint': 'Viewpoint',
+    'tourism.attraction.fountain': 'Fountain', 'tourism.sights.windmill': 'Windmill', 'tourism.sights.tower': 'Tower',
+    'tourism.sights.battlefield': 'Battlefield', 'tourism.sights.fort': 'Fort', 'tourism.sights.castle': 'Castle',
+    'tourism.sights.ruins': 'Ruins', 'tourism.sights.archaeological_site': 'Archaeological Site', 'tourism.sights.memorial': 'Memorial',
+    'tourism.sights.memorial.aircraft': 'Aircraft Memorial', 'tourism.sights.memorial.locomotive': 'Locomotive Memorial',
+    'tourism.sights.memorial.railway_car': 'Railway Car Memorial', 'tourism.sights.memorial.ship': 'Ship Memorial',
+    'tourism.sights.memorial.tank': 'Tank Memorial', 'tourism.sights.memorial.tomb': 'Tomb', 'tourism.sights.memorial.monument': 'Monument',
+    'tourism.sights.memorial.wayside_cross': 'Wayside Cross', 'tourism.sights.memorial.boundary_stone': 'Boundary Stone',
+    'tourism.sights.memorial.pillory': 'Pillory', 'tourism.sights.memorial.milestone': 'Milestone',
+    'entertainment.theme_park': 'Theme Park', 'entertainment.water_park': 'Water Park', 'entertainment.activity_park': 'Activity Park',
+    'entertainment.culture.theatre': 'Theatre', 'entertainment.culture.arts_centre': 'Arts Centre', 'entertainment.culture.gallery': 'Gallery',
+    'entertainment.zoo': 'Zoo', 'entertainment.aquarium': 'Aquarium', 'entertainment.planetarium': 'Planetarium',
+    'entertainment.museum': 'Museum', 'building.tourism': 'Tourist Building', 'building.historic': 'Historic Building',
+}
