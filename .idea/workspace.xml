@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="Merged main into this project">
+    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="changed the model to include admin">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/polls/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/polls/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,16 +15,16 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JavaScript File" />
         <option value="Python Script" />
         <option value="HTML File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="vang_event_manager_page" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -89,7 +87,7 @@
   }
 }]]></component>
   <component name="RunManager" selected="Django Server.Unnamed">
-    <configuration name="Test: polls.tests.acceptance_tests" type="DjangoTestsConfigurationType" temporary="true">
+    <configuration name="Test: polls.tests.acceptance_tests.test_acceptance_delete" type="DjangoTestsConfigurationType" temporary="true">
       <module name="EventRadarProject" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -103,7 +101,28 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="TARGET" value="polls.tests.acceptance_tests" />
+      <option name="TARGET" value="polls.tests.acceptance_tests.test_acceptance_delete" />
+      <option name="SETTINGS_FILE" value="" />
+      <option name="CUSTOM_SETTINGS" value="false" />
+      <option name="USE_OPTIONS" value="false" />
+      <option name="OPTIONS" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Test: polls.tests.acceptance_tests.test_acceptance_login" type="DjangoTestsConfigurationType" temporary="true">
+      <module name="EventRadarProject" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="TARGET" value="polls.tests.acceptance_tests.test_acceptance_login" />
       <option name="SETTINGS_FILE" value="" />
       <option name="CUSTOM_SETTINGS" value="false" />
       <option name="USE_OPTIONS" value="false" />
@@ -131,7 +150,7 @@
       <option name="OPTIONS" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Test: polls.tests.unit_tests.test_unit_mixin" type="DjangoTestsConfigurationType" temporary="true">
+    <configuration name="Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_set_password" type="DjangoTestsConfigurationType" temporary="true">
       <module name="EventRadarProject" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -145,14 +164,14 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="TARGET" value="polls.tests.unit_tests.test_unit_mixin" />
+      <option name="TARGET" value="polls.tests.unit_tests.test_unit_reset.TestLogin.test_set_password" />
       <option name="SETTINGS_FILE" value="" />
       <option name="CUSTOM_SETTINGS" value="false" />
       <option name="USE_OPTIONS" value="false" />
       <option name="OPTIONS" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Test: polls.tests.unit_tests.test_unit_mixin.MixinUnitTests.test_allows_access_if_authenticated" type="DjangoTestsConfigurationType" temporary="true">
+    <configuration name="Test: polls.tests.unit_tests.test_unit_verification" type="DjangoTestsConfigurationType" temporary="true">
       <module name="EventRadarProject" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -166,28 +185,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="TARGET" value="polls.tests.unit_tests.test_unit_mixin.MixinUnitTests.test_allows_access_if_authenticated" />
-      <option name="SETTINGS_FILE" value="" />
-      <option name="CUSTOM_SETTINGS" value="false" />
-      <option name="USE_OPTIONS" value="false" />
-      <option name="OPTIONS" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Test: polls.tests.unit_tests.test_unit_sign_out.SignOutTests.test_unauthenticated_user_redirect" type="DjangoTestsConfigurationType" temporary="true">
-      <module name="EventRadarProject" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="TARGET" value="polls.tests.unit_tests.test_unit_sign_out.SignOutTests.test_unauthenticated_user_redirect" />
+      <option name="TARGET" value="polls.tests.unit_tests.test_unit_verification" />
       <option name="SETTINGS_FILE" value="" />
       <option name="CUSTOM_SETTINGS" value="false" />
       <option name="USE_OPTIONS" value="false" />
@@ -232,19 +230,19 @@
     </configuration>
     <list>
       <item itemvalue="Django Server.Unnamed" />
-      <item itemvalue="Django tests.Test: polls.tests.acceptance_tests" />
-      <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_mixin" />
-      <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_mixin.MixinUnitTests.test_allows_access_if_authenticated" />
-      <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_sign_out.SignOutTests.test_unauthenticated_user_redirect" />
+      <item itemvalue="Django tests.Test: polls.tests.acceptance_tests.test_acceptance_delete" />
+      <item itemvalue="Django tests.Test: polls.tests.acceptance_tests.test_acceptance_login" />
+      <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_set_password" />
+      <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_verification" />
       <item itemvalue="Django tests.Test: polls.tests.unit_tests" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Django tests.Test: polls.tests.unit_tests" />
-        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_sign_out.SignOutTests.test_unauthenticated_user_redirect" />
-        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_mixin.MixinUnitTests.test_allows_access_if_authenticated" />
-        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_mixin" />
-        <item itemvalue="Django tests.Test: polls.tests.acceptance_tests" />
+        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_verification" />
+        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_set_password" />
+        <item itemvalue="Django tests.Test: polls.tests.acceptance_tests.test_acceptance_login" />
+        <item itemvalue="Django tests.Test: polls.tests.acceptance_tests.test_acceptance_delete" />
       </list>
     </recent_temporary>
   </component>
@@ -306,7 +304,7 @@
       <workItem from="1743112162595" duration="1783000" />
       <workItem from="1743113952592" duration="1601000" />
       <workItem from="1743624876496" duration="509000" />
-      <workItem from="1743703456167" duration="3682000" />
+      <workItem from="1743703456167" duration="5657000" />
     </task>
     <task id="LOCAL-00004" summary="Updated Workspace">
       <option name="closed" value="true" />
@@ -404,7 +402,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743451752021</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="changed the model to include admin">
+      <option name="closed" value="true" />
+      <created>1743709924866</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1743709924866</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -441,7 +447,8 @@
     <MESSAGE value="Edited delete.js code" />
     <MESSAGE value="workspace (?)" />
     <MESSAGE value="Merged main into this project" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merged main into this project" />
+    <MESSAGE value="changed the model to include admin" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed the model to include admin" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_reset_TestLogin_test_correct_email.coverage" NAME="Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_correct_email Coverage Results" MODIFIED="1740709830853" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
