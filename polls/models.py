@@ -3,6 +3,9 @@ import uuid
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+import polls.models
+
+
 # Create your models here.
 
 class Roles(models.TextChoices):
@@ -52,3 +55,5 @@ class SearchedArea(models.Model):
 
     def __str__(self):
         return f"Area at ({self.latitude}, {self.longitude}) with radius {self.radius} miles"
+
+
