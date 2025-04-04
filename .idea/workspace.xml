@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="Edited userpermissions and on view">
+    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="Created app confirm html and methods for making an application">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventRadarProject/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/EventRadarProject/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Methods/userPermissions.py" beforeDir="false" afterPath="$PROJECT_DIR$/Methods/userPermissions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Templates/application.html" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/application.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/polls/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/polls/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -430,7 +426,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743746900790</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Created app confirm html and methods for making an application">
+      <option name="closed" value="true" />
+      <created>1743751260697</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1743751260697</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -471,7 +475,8 @@
     <MESSAGE value="Merging main" />
     <MESSAGE value="Added role and planned html" />
     <MESSAGE value="Edited userpermissions and on view" />
-    <option name="LAST_COMMIT_MESSAGE" value="Edited userpermissions and on view" />
+    <MESSAGE value="Created app confirm html and methods for making an application" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created app confirm html and methods for making an application" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_reset_TestLogin_test_correct_email.coverage" NAME="Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_correct_email Coverage Results" MODIFIED="1740709830853" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
