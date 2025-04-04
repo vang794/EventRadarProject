@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="I Changed changed c to F">
+    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="I made the pop up work">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Templates/homepage.html" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/homepage.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -296,6 +297,7 @@
       <workItem from="1743110889336" duration="1266000" />
       <workItem from="1743112162595" duration="1783000" />
       <workItem from="1743113952592" duration="1601000" />
+      <workItem from="1743728295120" duration="1498000" />
     </task>
     <task id="LOCAL-00004" summary="Updated Workspace">
       <option name="closed" value="true" />
@@ -337,7 +339,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741927258538</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="I made the pop up work">
+      <option name="closed" value="true" />
+      <created>1743724993311</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1743724993311</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -365,7 +375,8 @@
     <MESSAGE value="test" />
     <MESSAGE value="I Changed The Change celsius to fahrenheit" />
     <MESSAGE value="I Changed changed c to F" />
-    <option name="LAST_COMMIT_MESSAGE" value="I Changed changed c to F" />
+    <MESSAGE value="I made the pop up work" />
+    <option name="LAST_COMMIT_MESSAGE" value="I made the pop up work" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

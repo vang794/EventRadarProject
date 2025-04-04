@@ -91,25 +91,38 @@
                     <input type="radio" name="locationType" value="coords"> Coordinates
                 </label>
             </div>
+
             <div class="form-input-row">
                 <input type="text" id="locationInput" placeholder="Enter location" required>
             </div>
+
+            <!-- Unit Toggle Switch -->
+            <div class="unit-toggle">
+                <span>°F</span>
+                <label class="switch">
+                    <input type="checkbox" id="unitToggle">
+                    <span class="slider round"></span>
+                </label>
+                <span>°C</span>
+            </div>
+
             <div class="overlay-controls">
-                <button class="submit-btn" onclick="fetchWeather()">
+                <button type="button" class="submit-btn" onclick="fetchWeather()">
                     <i class="fas fa-cloud-sun"></i> Get Forecast
                 </button>
-                <button class="home-btn" onclick="closeWeatherOverlay()">
+                <button type="button" class="home-btn" onclick="closeWeatherOverlay()">
                     <i class="fas fa-home"></i> Home
                 </button>
             </div>
         </form>
-        
+
         <!-- Forecast Results -->
         <div class="forecast-container">
             <div id="forecastResults" class="forecast-results"></div>
         </div>
     </div>
 </div>
+
 
         <!-- Include the weather JavaScript file -->
         <script src="{% static 'js/weather.js' %}"></script>
