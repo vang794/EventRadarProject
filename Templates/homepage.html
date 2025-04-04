@@ -108,15 +108,15 @@
             </div>
         </div>
 
-<!-- Updated Weather Overlay Section -->
+<!-- Weather Overlay -->
 <div id="weatherOverlay" class="weather-overlay">
     <div class="overlay-content">
         <div class="overlay-header">
             <h2>Weather Forecast</h2>
+            <button class="close-btn" onclick="closeWeatherOverlay()">&times;</button>
         </div>
         
-        <!-- Weather Form -->
-        <form id="weatherForm" onsubmit="event.preventDefault(); fetchWeather();">
+        <form id="weatherForm">
             <div class="form-row">
                 <label>
                     <input type="radio" name="locationType" value="city" checked> City
@@ -133,7 +133,6 @@
                 <input type="text" id="locationInputWeather" placeholder="Enter location" required>
             </div>
 
-            <!-- Unit Toggle Switch -->
             <div class="unit-toggle">
                 <span>°F</span>
                 <label class="switch">
@@ -148,12 +147,11 @@
                     <i class="fas fa-cloud-sun"></i> Get Forecast
                 </button>
                 <button type="button" class="home-btn" onclick="closeWeatherOverlay()">
-                    <i class="fas fa-home"></i> Home
+                    <i class="fas fa-home"></i> Close
                 </button>
             </div>
         </form>
 
-        <!-- Forecast Results -->
         <div class="forecast-container">
             <div id="forecastResults" class="forecast-results"></div>
         </div>
