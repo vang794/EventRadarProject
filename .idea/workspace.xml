@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="I created a °C or °F option, so the user can choose">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Templates/homepage.html" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/homepage.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/weather.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/weather.js" afterDir="false" />
-    </list>
+    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="I had few issues with the weather api that I fixed, and issue with the pop up" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -301,7 +295,7 @@
       <workItem from="1743113952592" duration="1601000" />
       <workItem from="1743728295120" duration="1498000" />
       <workItem from="1743741893679" duration="1030000" />
-      <workItem from="1743742956796" duration="216000" />
+      <workItem from="1743742956796" duration="539000" />
     </task>
     <task id="LOCAL-00004" summary="Updated Workspace">
       <option name="closed" value="true" />
@@ -351,7 +345,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743724993311</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="I had few issues with the weather api that I fixed, and issue with the pop up">
+      <option name="closed" value="true" />
+      <created>1743743439966</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1743743439966</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -380,7 +382,8 @@
     <MESSAGE value="I Changed The Change celsius to fahrenheit" />
     <MESSAGE value="I Changed changed c to F" />
     <MESSAGE value="I made the pop up work" />
-    <option name="LAST_COMMIT_MESSAGE" value="I made the pop up work" />
+    <MESSAGE value="I had few issues with the weather api that I fixed, and issue with the pop up" />
+    <option name="LAST_COMMIT_MESSAGE" value="I had few issues with the weather api that I fixed, and issue with the pop up" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
