@@ -828,16 +828,46 @@ input[type="tel"]::placeholder {
     cursor: pointer;
     width: 100%;
 }
-/* Add this to weather existing CSS */
-.overlay-controls {
-    display: flex;
-    justify-content: flex-end; /* Align to the right side */
-    gap: 20px; /* Increased space between buttons */
-    margin-top: 2rem; /* More space above buttons */
-    padding: 10px 0;
+
+/* Weather Overlay Styles */
+.weather-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+.overlay-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+/* Button Container */
+.overlay-controls {
+    display: flex;
+    justify-content: space-between; /* This spreads buttons to opposite sides */
+    margin-top: 2rem; /* Space above buttons */
+    padding: 1rem 0; /* Space above and below buttons */
+    gap: 20px; /* Space between buttons */
+}
+
+/* Button Styles */
 .submit-btn, .home-btn {
     padding: 12px 24px;
     border-radius: 8px;
@@ -847,11 +877,13 @@ input[type="tel"]::placeholder {
     display: flex;
     align-items: center;
     gap: 8px;
-    background-color: #7a3bda; /* Purple background */
+    background-color: #7a3bda;
     color: white;
     border: 2px solid #7a3bda;
-    /* Add subtle shadow */
     box-shadow: 0 2px 6px rgba(122, 59, 218, 0.2);
+    flex: 1; /* Makes buttons equal width */
+    justify-content: center; /* Centers button content */
+    max-width: 48%; /* Prevents buttons from getting too wide */
 }
 
 .submit-btn:hover, .home-btn:hover {
