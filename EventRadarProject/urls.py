@@ -20,7 +20,8 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import PasswordResetCompleteView
 from django.urls import path
 
-from polls.views import LoginAuth, CreateAcct, SettingPage, SignOutView, HomePage, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, WeatherView
+from polls.views import LoginAuth, CreateAcct, SettingPage, SignOutView, HomePage, PasswordResetView, \
+    PasswordResetDoneView, PasswordResetConfirmView, WeatherView, DeleteView, DeleteCompleteView, fetch_and_save_events_api
 
 #for id
 import uuid
@@ -44,5 +45,10 @@ urlpatterns = [
     path('reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/done/', PasswordResetCompleteView.as_view(template_name="password_reset_done.html"), name='password_reset_complete'),
 
+    #url for Delete
+    path('delete/', DeleteView.as_view(), name='delete'),
+    path('delete_complete/', DeleteCompleteView.as_view(), name='delete_complete'),
+
+    path('api/fetch_events/', fetch_and_save_events_api, name='fetch_events_api'),
 ]
 
