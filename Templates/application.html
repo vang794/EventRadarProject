@@ -1,0 +1,55 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Event Radar - Event Manager Application">
+    <title>Event Radar - Event Manager Application</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body class="reset-body">
+
+    <div class="barofcolour">
+        <p></p><p></p><p></p>
+    </div>
+
+    <div class="logo-container">
+        <img id="logo" src="{% static 'media/eventradar_logo2.png' %}" alt="Event Radar Logo">
+    </div>
+
+    <div class="reset-title">
+        <h3>Apply to be Event Manager</h3>
+    </div>
+
+    <div class="center-box">
+        <p>Enter the reasoning for becoming an event manager below. You may include details such as company or previous experiences with hosting events.</p>
+        <form method="post">
+            {% csrf_token %}
+
+            <!-- Text input -->
+         <label for="message">Your Message (Max 3000 characters):</label><br>
+         <textarea id="message" name="app_message" maxlength="3000" rows="4" cols="50"></textarea>
+            <br>
+
+            <!-- Submit Button -->
+            <div class="form-group">
+                <input type="submit" value="Submit Application">
+            </div>
+
+            {% if error %}
+                <div class="error">
+                    <p>{{ error }}</p>
+                </div>
+            {% endif %}
+
+            <p>
+                <a href="javascript:history.back()" class="create-link">Go back to the previous page</a>
+            </p>
+        </form>
+    </div>
+
+</body>
+</html>

@@ -3,6 +3,9 @@ import uuid
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+import polls.models
+
+
 # Create your models here.
 
 class Roles(models.TextChoices):
@@ -52,3 +55,19 @@ class SearchedArea(models.Model):
 
     def __str__(self):
         return f"Area at ({self.latitude}, {self.longitude}) with radius {self.radius} miles"
+
+class ApplicationStatus(models.TextChoices):
+    PENDING = 'pending', 'Pending'
+    ACCEPTED = 'accepted', 'Accepted'
+    DENIED = 'denied', 'Denied'
+
+
+class Application(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='applications')
+    status = models.CharField(max_length=20, choices=ApplicationStatus.choices,default=ApplicationStatus.PENDING)
+    message = models.TextField()
+    submitted_at = models.DateTimeField(auto_now_add=True)  #When submission was added
+
+    def __str__(self):
+        return f"Application from {self.user.username} - Status: {self.get_status_display()}"

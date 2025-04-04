@@ -1,6 +1,8 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
+<!-- give user_role to JavaScript -->
+    <meta id="user_role" data-role="{{ user_role }}">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -44,7 +46,15 @@
                 <img id="logo" src="{% static 'media/eventradar_logo2.png' %}" alt="Event Radar Logo">
             </div>
             <div class="nav-actions">
+                <!-- Top bar buttons (App Approvals(Admin) and Application(User)) -->
+                <a href="{% url 'app_approve' %}" class="settings-btn" id="approve-btn">
+                    <i class="fa fa-check-square-o"></i> App Approval
+                </a>
+                <a href="{% url 'application' %}" class="settings-btn" id="event-app-btn">
+                    <i class="fa fa-file-text"></i> Event Manager Application
+                </a>
                 <!-- Instead of linking to a separate weather page, clicking this will open the overlay -->
+
                 <a href="#" class="settings-btn" onclick="openWeatherOverlay()">
                     <i class="fas fa-cloud"></i> Weather
                 </a>
@@ -250,5 +260,6 @@
                 }
             });
         </script>
+     <script src="{% static 'js/permissions.js' %}"></script>
     </body>
 </html>

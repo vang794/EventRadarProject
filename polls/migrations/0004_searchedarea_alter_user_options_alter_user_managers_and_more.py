@@ -31,34 +31,7 @@ class Migration(migrations.Migration):
             managers=[
             ],
         ),
-        migrations.RemoveField(
-            model_name='user',
-            name='date_joined',
-        ),
-        migrations.RemoveField(
-            model_name='user',
-            name='groups',
-        ),
-        migrations.RemoveField(
-            model_name='user',
-            name='is_active',
-        ),
-        migrations.RemoveField(
-            model_name='user',
-            name='is_staff',
-        ),
-        migrations.RemoveField(
-            model_name='user',
-            name='is_superuser',
-        ),
-        migrations.RemoveField(
-            model_name='user',
-            name='last_login',
-        ),
-        migrations.RemoveField(
-            model_name='user',
-            name='user_permissions',
-        ),
+
         migrations.AddField(
             model_name='event',
             name='place_id',

@@ -1,15 +1,10 @@
 import requests
-from django.core.validators import EmailValidator
-from django.contrib.auth.views import logout_then_login
-from django.shortcuts import render
 from django.contrib import messages
-from django.shortcuts import render, redirect
-from django.utils.decorators import method_decorator
-from django.views import View
+
 from math import radians, sin, cos, sqrt, atan2
 
 # Create your views here.
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.core.exceptions import ValidationError
@@ -19,10 +14,13 @@ from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.decorators.cache import never_cache
 
+from Methods.Application import ApplicationMethods
 from Methods.Delete import DeleteAcct
 from Methods.Login import Login
+from Methods.Verification import VerifyAccount
 from Methods.forms import CreateAccountForm
-from polls.models import User, Event, SearchedArea
+
+from polls.models import User, Event, SearchedArea, Application, ApplicationStatus
 from Methods.sendgrid_reset import CustomTokenGenerator, send_reset_email
 from polls.models import User
 from EventRadarProject.settings import EVENT_API_KEY
@@ -50,8 +48,10 @@ from folium.plugins import MarkerCluster
 from polls.geocoding import GeocodingService
 from django.contrib.auth.hashers import make_password
 
-#TESTER
+#Mixins
 from Methods.SessionLoginMixin import SessionLoginRequiredMixin
+from Methods.userPermissions import UserRequiredMixin,AdminManagerRequiredMixin,EventManagerRequiredMixin,AdminRequiredMixin
+
 from polls.api import fetch_events_from_api
 import json
 
@@ -96,8 +96,10 @@ class LoginAuth(View):
                 user = User.objects.get(email=email)
                 request.session['email'] = user.email
                 request.session["is_authenticated"] = True
+                request.session['role'] = user.role
                 return redirect("homepage")
         else:
+
             return render(request, "login.html", {"error": "Invalid email or password"})  # Show error message
 class CreateAcct(View):
     def get(self, request):
@@ -159,6 +161,10 @@ class HomePage(SessionLoginRequiredMixin,View):
 
         map_html = self.generate_map(location[0], location[1], radius, events)
 
+        # Returning user's role (For permissions)
+        email = request.session.get("email")
+        user = User.objects.get(email=email)  # Find user by email
+        user_role = user.role
         context = {
             'map_html': map_html,
             'sample_events': events[:20],
@@ -167,7 +173,9 @@ class HomePage(SessionLoginRequiredMixin,View):
             'current_latitude': location[0],
             'current_longitude': location[1],
             'needs_fetch': needs_fetch,
+            'user_role': user_role
         }
+
         return render(request, "homepage.html", context)
 
     def post(self, request):
@@ -687,3 +695,69 @@ def fetch_and_save_events_api(request):
     except Exception as e:
         logger.exception("API endpoint: An unexpected error occurred.")
         return JsonResponse({'status': 'error', 'message': 'An internal server error occurred.'}, status=500)
+
+###application
+#make sure this is only viewable through users/admins (not event managers) only
+class ApplicationClass(UserRequiredMixin,View):
+    def get(self, request):
+        return render(request, "application.html")
+    def post(self, request):
+        auth=VerifyAccount()
+        applic=ApplicationMethods()
+        session_user = request.session.get('email')
+        #get the user from session
+        email = request.session.get("email")
+        user = User.objects.get(email=email)  # Find user by email
+        message = request.POST.get('app_message', '')
+        #check that the form is under 3000 characters
+        if message and len(message)<3000:
+            applic.create_app(user=user,message=message)
+
+            return redirect("app_confirmation")
+
+        else:
+            return render(request, "application.html", {"error": "Invalid message"})
+
+
+        #create form object
+class App_Confirm(View):
+    def get(self, request):
+        return render(request, "App_Confirm.html")
+
+class Approval(AdminRequiredMixin,View):
+    def get(self, request):
+        pending_apps = Application.objects.filter(status=ApplicationStatus.PENDING)
+
+        return render(request, "admin_app_approval.html",{'applications': pending_apps})
+
+    def post(self, request):
+        #load all applications that have pending status
+        application_id = request.POST.get('application_id')  #Get the app id
+        action = request.POST.get('action') #getting the action
+
+        if application_id and action:
+            application = get_object_or_404(Application, id=application_id)
+
+            #If accepted button is pressed
+            #Put status as accepted
+            if action == 'accept':
+                application.status = "Accepted"
+                application.save()
+
+                #change user's role to event manager
+                user = application.user
+                user.role = 'Event_Manager'
+                user.save()
+
+            #if denied
+            #just change app status
+            elif action == 'deny':
+                application.status = "Denied"
+                application.save()
+
+                # After processing, redirect back to the application approval page
+            return redirect('app_approve')
+
+        # If something went wrong, redirect back to the same page
+        return redirect('app_approve')
+
