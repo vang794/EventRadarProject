@@ -19,12 +19,13 @@ from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.decorators.cache import never_cache
 
+from Methods.Application import ApplicationMethods
 from Methods.Delete import DeleteAcct
 from Methods.Login import Login
 from Methods.Verification import VerifyAccount
 from Methods.forms import CreateAccountForm
 
-from polls.models import User, Event, SearchedArea
+from polls.models import User, Event, SearchedArea, ApplicationStatus
 from Methods.sendgrid_reset import CustomTokenGenerator, send_reset_email
 from polls.models import User
 from EventRadarProject.settings import EVENT_API_KEY
@@ -707,12 +708,26 @@ class Application(UserRequiredMixin,View):
         return render(request, "application.html")
     def post(self, request):
         auth=VerifyAccount()
+        applic=ApplicationMethods()
         session_user = request.session.get('email')
         #get the user from session
-        user=auth.find_acct(session_user)
+        email = request.session.get("email")
+        user = User.objects.get(email=email)  # Find user by email
+        message = request.POST.get('app_message', '')
         #check that the form is under 3000 characters
+        if message and len(message)<3000:
+            applic.create_app(user=user,message=message)
+
+            return redirect("App_Confirm")
+
+        else:
+            return render(request, "application.html", {"error": "Invalid message"})
+
 
         #create form object
+class App_Confirm(View):
+    def get(self, request):
+        return render(request, "App_Confirm.html")
 
 class Approval(AdminRequiredMixin,View):
     def get(self, request):
@@ -722,7 +737,7 @@ class Approval(AdminRequiredMixin,View):
         #load all applications that have pending
         print("Session data:", request.session.items())
 
-        pending_apps = Application.objects.filter(status=Application.PENDING)
+        pending_apps = Application.objects.filter(status=ApplicationStatus.PENDING)
 
         return render(request, 'admin_app_approval.html', {'pending_apps': pending_apps})
         #where pressing approval will change the role of the user to event manager

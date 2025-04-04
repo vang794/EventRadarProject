@@ -21,24 +21,22 @@
     </div>
 
     <div class="reset-title">
-        <h3>Password Reset</h3>
+        <h3>Apply to be Event Manager</h3>
     </div>
 
     <div class="center-box">
-        <p>Enter your reasoning for becoming an event manager below.</p>
-
+        <p>Enter the reasoning for becoming an event manager below. You may include details such as company or previous experiences with hosting events.</p>
         <form method="post">
             {% csrf_token %}
 
-            <!-- Email Input -->
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
+            <!-- Text input -->
+         <label for="message">Your Message (Max 3000 characters):</label><br>
+         <textarea id="message" name="app_message" maxlength="3000" rows="4" cols="50"></textarea>
+            <br>
 
             <!-- Submit Button -->
             <div class="form-group">
-                <input type="submit" value="Send Email">
+                <input type="submit" value="Submit Application">
             </div>
 
             {% if error %}

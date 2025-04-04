@@ -22,7 +22,7 @@ from django.urls import path
 
 from polls.views import LoginAuth, CreateAcct, SettingPage, SignOutView, HomePage, PasswordResetView, \
     PasswordResetDoneView, PasswordResetConfirmView, WeatherView, DeleteView, DeleteCompleteView, \
-    fetch_and_save_events_api, Application, Approval
+    fetch_and_save_events_api, Application, Approval, App_Confirm
 
 #for id
 import uuid
@@ -40,6 +40,7 @@ urlpatterns = [
     path('weather/', WeatherView.as_view(), name='weather'),
     path('application/', Application.as_view(), name='application'),
     #URL for Admins
+    path('app_confirmation/', App_Confirm.as_view(), name='app_confirmation'),
     path('app_approve/', Approval.as_view(), name='app_approve'),
 
     #Urls for reset password

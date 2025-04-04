@@ -1,11 +1,3 @@
-from django.shortcuts import redirect
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import never_cache
-from django.core.exceptions import ObjectDoesNotExist
-
-from Methods.SessionLoginMixin import SessionLoginRequiredMixin
-from polls.models import User
-
 
 #check if adminn
 #check that the user is an admin or manager
