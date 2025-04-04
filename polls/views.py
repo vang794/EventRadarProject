@@ -23,6 +23,7 @@ from Methods.Delete import DeleteAcct
 from Methods.Login import Login
 from Methods.Verification import VerifyAccount
 from Methods.forms import CreateAccountForm
+
 from polls.models import User, Event, SearchedArea
 from Methods.sendgrid_reset import CustomTokenGenerator, send_reset_email
 from polls.models import User
@@ -51,8 +52,10 @@ from folium.plugins import MarkerCluster
 from polls.geocoding import GeocodingService
 from django.contrib.auth.hashers import make_password
 
-#TESTER
+#Mixins
 from Methods.SessionLoginMixin import SessionLoginRequiredMixin
+from Methods.userPermissions import UserRequiredMixin,AdminManagerRequiredMixin,EventManagerRequiredMixin,AdminRequiredMixin
+
 from polls.api import fetch_events_from_api
 import json
 
@@ -691,9 +694,9 @@ def fetch_and_save_events_api(request):
 
 ###application
 #make sure this is only viewable through users/admins (not event managers) only
-class Application(View):
+class Application(View, UserRequiredMixin):
     def get(self, request):
-        pass
+        return render(request, "application.html")
     def post(self, request):
         auth=VerifyAccount()
         session_user = request.session.get('email')
@@ -702,3 +705,15 @@ class Application(View):
         #check that the form is under 3000 characters
 
         #create form object
+
+class Approval(View, AdminRequiredMixin):
+    def get(self, request):
+        return render(request, "admin_app_approval.html")
+
+    def post(self, request):
+        #load all applications that have pending
+        pending_apps = Application.objects.filter(status=Application.PENDING)
+
+        return render(request, 'admin_app_approval.html', {'pending_apps': pending_apps})
+        #where pressing approval will change the role of the user to event manager
+        #If approved or denied, the status of the application is put as approved or denied instead of deciding

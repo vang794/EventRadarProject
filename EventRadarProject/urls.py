@@ -21,7 +21,8 @@ from django.contrib.auth.views import PasswordResetCompleteView
 from django.urls import path
 
 from polls.views import LoginAuth, CreateAcct, SettingPage, SignOutView, HomePage, PasswordResetView, \
-    PasswordResetDoneView, PasswordResetConfirmView, WeatherView, DeleteView, DeleteCompleteView, fetch_and_save_events_api
+    PasswordResetDoneView, PasswordResetConfirmView, WeatherView, DeleteView, DeleteCompleteView, \
+    fetch_and_save_events_api, Application, Approval
 
 #for id
 import uuid
@@ -37,7 +38,9 @@ urlpatterns = [
     path('sign_out/', SignOutView.as_view(), name='sign_out'),
     path('admin/', admin.site.urls),
     path('weather/', WeatherView.as_view(), name='weather'),
-
+    path('application/', Application.as_view(), name='application'),
+    #URL for Admins
+    path('app_approve/', Approval.as_view(), name='app_approve'),
 
     #Urls for reset password
     path('reset_password/', PasswordResetView.as_view(), name='password_reset'),

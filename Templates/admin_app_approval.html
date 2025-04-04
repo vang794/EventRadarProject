@@ -1,10 +1,66 @@
-<!DOCTYPE html>
+{% load static %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Radar - Settings</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body>
+<body class="login-page">
+    <!-- Main Settings Container -->
+    <div class="settings-container">
+        
+        <!-- Logo Section -->
+        <div class="logo-container">
+            <img id="logo" src="{% static 'media/eventradar_logo2.png' %}" alt="Event Radar Logo">
+        </div>
+
+        <!-- Title Section -->
+        <div class="settings-header">
+            <h2>Application Approval</h2>
+        </div>
+        
+        <!-- Applications Table Section -->
+        <div class="applications-table-container">
+            <table class="application-table">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Application Text</th>
+                        <th>Accept/Deny</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Loop through applications -->
+                    {% for application in applications %}
+                    <tr>
+                        <td>{{ application.username }}</td>
+                        <td>{{ application.first_name }}</td>
+                        <td>{{ application.last_name }}</td>
+                        <td>{{ application.email }}</td>
+                        <td>{{ application.application_text }}</td>
+                        <td>
+                            <form method="POST" action="{% url 'change_application_status' application.id %}">
+                            {% csrf_token %}
+                            <button type="submit" name="action" value="accept">Accept</button>
+                            <button type="submit" name="action" value="deny">Deny</button>
+                        </form>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center">No applications to review</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 </body>
 </html>

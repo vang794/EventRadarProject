@@ -6,10 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="Merging main">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Methods/userPermissions.py" beforeDir="false" afterPath="$PROJECT_DIR$/Methods/userPermissions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Templates/application.html" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/application.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventRadarProject/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/EventRadarProject/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Templates/admin_app_approval.html" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/admin_app_approval.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/polls/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/polls/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/polls/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/polls/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,16 +20,16 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="HTML File" />
         <option value="JavaScript File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="feature/weather" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -54,42 +55,42 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "Django Server.Unnamed.executor": "Run",
-    "Django tests.Test: polls.tests.acceptance_tests.test_acceptance_delete.executor": "Run",
-    "Django tests.Test: polls.tests.acceptance_tests.test_acceptance_login.executor": "Run",
-    "Django tests.Test: polls.tests.acceptance_tests.test_acceptance_reset.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_change_account_details.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_create_account.CreateAccountTests.test_create_account_missing_required_fields.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_delete.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_login.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_mixin.MixinUnitTests.test_allows_access_if_authenticated.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_mixin.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_correct_email.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_find.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_not_blank.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_set_password.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_sign_out.SignOutTests.test_unauthenticated_user_redirect.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_sign_out.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_verification.executor": "Run",
-    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "django.template.preview.state": "SHOW_EDITOR_AND_PREVIEW",
-    "git-widget-placeholder": "vang__event__manager__page",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Django Server.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.acceptance_tests.test_acceptance_delete.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.acceptance_tests.test_acceptance_login.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.acceptance_tests.test_acceptance_reset.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_change_account_details.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_create_account.CreateAccountTests.test_create_account_missing_required_fields.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_delete.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_login.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_mixin.MixinUnitTests.test_allows_access_if_authenticated.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_mixin.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_correct_email.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_find.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_not_blank.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_set_password.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_sign_out.SignOutTests.test_unauthenticated_user_redirect.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_sign_out.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_verification.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.pycharm.django.structure.promotion.once.per.project&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR_AND_PREVIEW&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;vang__event__manager__page&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Django Server.Unnamed">
     <configuration name="Test: polls.tests.acceptance_tests.test_acceptance_delete" type="DjangoTestsConfigurationType" temporary="true">
       <module name="EventRadarProject" />
@@ -243,6 +244,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Django tests.Test: polls.tests.unit_tests" />
+        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_verification" />
+        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_set_password" />
+        <item itemvalue="Django tests.Test: polls.tests.acceptance_tests.test_acceptance_login" />
+        <item itemvalue="Django tests.Test: polls.tests.acceptance_tests.test_acceptance_delete" />
       </list>
     </recent_temporary>
   </component>
