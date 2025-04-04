@@ -21,6 +21,7 @@ from django.views.decorators.cache import never_cache
 
 from Methods.Delete import DeleteAcct
 from Methods.Login import Login
+from Methods.Verification import VerifyAccount
 from Methods.forms import CreateAccountForm
 from polls.models import User, Event, SearchedArea
 from Methods.sendgrid_reset import CustomTokenGenerator, send_reset_email
@@ -687,3 +688,17 @@ def fetch_and_save_events_api(request):
     except Exception as e:
         logger.exception("API endpoint: An unexpected error occurred.")
         return JsonResponse({'status': 'error', 'message': 'An internal server error occurred.'}, status=500)
+
+###application
+#make sure this is only viewable through users/admins (not event managers) only
+class Application(View):
+    def get(self, request):
+        pass
+    def post(self, request):
+        auth=VerifyAccount()
+        session_user = request.session.get('email')
+        #get the user from session
+        user=auth.find_acct(session_user)
+        #check that the form is under 3000 characters
+
+        #create form object

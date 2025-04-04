@@ -55,5 +55,3 @@ class SearchedArea(models.Model):
 
     def __str__(self):
         return f"Area at ({self.latitude}, {self.longitude}) with radius {self.radius} miles"
-
-
