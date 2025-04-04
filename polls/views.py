@@ -100,8 +100,10 @@ class LoginAuth(View):
                 user = User.objects.get(email=email)
                 request.session['email'] = user.email
                 request.session["is_authenticated"] = True
+                request.session['role'] = user.role
                 return redirect("homepage")
         else:
+
             return render(request, "login.html", {"error": "Invalid email or password"})  # Show error message
 class CreateAcct(View):
     def get(self, request):
@@ -163,6 +165,10 @@ class HomePage(SessionLoginRequiredMixin,View):
 
         map_html = self.generate_map(location[0], location[1], radius, events)
 
+        # Returning user's role (For permissions)
+        email = request.session.get("email")
+        user = User.objects.get(email=email)  # Find user by email
+        user_role = user.role
         context = {
             'map_html': map_html,
             'sample_events': events[:20],
@@ -171,7 +177,9 @@ class HomePage(SessionLoginRequiredMixin,View):
             'current_latitude': location[0],
             'current_longitude': location[1],
             'needs_fetch': needs_fetch,
+            'user_role': user_role
         }
+
         return render(request, "homepage.html", context)
 
     def post(self, request):
@@ -694,7 +702,7 @@ def fetch_and_save_events_api(request):
 
 ###application
 #make sure this is only viewable through users/admins (not event managers) only
-class Application(View, UserRequiredMixin):
+class Application(UserRequiredMixin,View):
     def get(self, request):
         return render(request, "application.html")
     def post(self, request):
@@ -706,12 +714,14 @@ class Application(View, UserRequiredMixin):
 
         #create form object
 
-class Approval(View, AdminRequiredMixin):
+class Approval(AdminRequiredMixin,View):
     def get(self, request):
         return render(request, "admin_app_approval.html")
 
     def post(self, request):
         #load all applications that have pending
+        print("Session data:", request.session.items())
+
         pending_apps = Application.objects.filter(status=Application.PENDING)
 
         return render(request, 'admin_app_approval.html', {'pending_apps': pending_apps})
