@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="Merged main into this project">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="I Changed changed c to F">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/polls/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/polls/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,7 +25,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="vang_event_manager_page" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -240,11 +239,11 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_sign_out.SignOutTests.test_unauthenticated_user_redirect" />
+        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_mixin.MixinUnitTests.test_allows_access_if_authenticated" />
+        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_mixin" />
+        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_create_account.CreateAccountTests.test_create_account_missing_required_fields" />
         <item itemvalue="Django tests.Test: polls.tests.unit_tests" />
-        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_verification" />
-        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_set_password" />
-        <item itemvalue="Django tests.Test: polls.tests.acceptance_tests.test_acceptance_login" />
-        <item itemvalue="Django tests.Test: polls.tests.acceptance_tests.test_acceptance_delete" />
       </list>
     </recent_temporary>
   </component>
