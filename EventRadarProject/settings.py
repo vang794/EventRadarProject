@@ -151,3 +151,5 @@ EMAIL_HOST_USER = 'apikey'
 GEOCODING_SERVICE = 'nominatim'
 NOMINATIM_USER_AGENT = 'EventRadarApp/1.0 (http://localhost:8000)'
 NOMINATIM_BASE_URL = 'https://nominatim.openstreetmap.org/search'
+
+EVENT_API_KEY = os.environ.get('EVENT_API_KEY')

@@ -6,8 +6,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Event Radar - Password Reset">
-    <title>Event Radar - Password Reset</title>
+    <meta name="description" content="Event Radar - Delete">
+    <title>Event Radar - Delete Account</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body class="reset-body">
@@ -21,24 +21,38 @@
     </div>
 
     <div class="reset-title">
-        <h3>Password Reset</h3>
+        <h3>Delete Account</h3>
     </div>
-
+    <!-- Confirmation Overlay -->
+    <div id="confirmation-overlay" style="display: flex;">
+        <div id="confirmation-box">
+            <p>Are you sure you want to delete your account? You can not retrieve this account after deletion. Do you want to proceed?</p>
+            <button onclick="confirmAction()">Yes</button>
+            <button onclick="cancelAction()">No</button>
+        </div>
+    </div>
+<!-- Main Form -->
     <div class="center-box">
-        <p>Enter your email address below to reset your password.</p>
+        <p>Enter your email address, password, and confirm password to delete your password.</p>
 
         <form method="post">
             {% csrf_token %}
 
-            <!-- Email Input -->
+            <!-- Email and PasswordInput -->
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
+
+                <label for="password1">Password:</label>
+                <input type="password" id="password1" name="password1" required>
+
+                <label for="password2">Confirm Password:</label>
+                <input type="password" id="password2" name="password2" required>
             </div>
 
             <!-- Submit Button -->
             <div class="form-group">
-                <input type="submit" value="Send Email">
+                <input type="submit" value="Delete Account">
             </div>
 
             {% if error %}
@@ -46,12 +60,8 @@
                     <p>{{ error }}</p>
                 </div>
             {% endif %}
-
-            <p>
-                <a href="javascript:history.back()" class="create-link">Go back to the previous page</a>
-            </p>
         </form>
     </div>
-
+<script src="{% static 'js/delete.js' %}"></script>
 </body>
 </html>
