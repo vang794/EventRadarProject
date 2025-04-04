@@ -11,7 +11,7 @@
 <body class="login-page">
     <!-- Main Settings Container -->
     <div class="settings-container">
-        
+
         <!-- Logo Section -->
         <div class="logo-container">
             <img id="logo" src="{% static 'media/eventradar_logo2.png' %}" alt="Event Radar Logo">
@@ -21,7 +21,7 @@
         <div class="settings-header">
             <h2>Application Approval</h2>
         </div>
-        
+
         <!-- Applications Table Section -->
         <div class="applications-table-container">
             <table class="application-table">
@@ -39,14 +39,15 @@
                     <!-- Loop through applications -->
                     {% for application in applications %}
                     <tr>
-                        <td>{{ application.username }}</td>
-                        <td>{{ application.first_name }}</td>
-                        <td>{{ application.last_name }}</td>
-                        <td>{{ application.email }}</td>
-                        <td>{{ application.application_text }}</td>
+                        <td>{{ application.user.username }}</td>
+                        <td>{{ application.user.first_name }}</td>
+                        <td>{{ application.user.last_name }}</td>
+                        <td>{{ application.user.email }}</td>
+                        <td>{{ application.message }}</td>
                         <td>
-                            <form method="POST" action="{% url 'change_application_status' application.id %}">
+                            <form method="POST" action="{% url 'app_approve' %}">
                             {% csrf_token %}
+                            <input type="hidden" name="application_id" value="{{ application.id }}">
                             <button type="submit" name="action" value="accept">Accept</button>
                             <button type="submit" name="action" value="deny">Deny</button>
                         </form>

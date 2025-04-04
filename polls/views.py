@@ -1,15 +1,10 @@
 import requests
-from django.core.validators import EmailValidator
-from django.contrib.auth.views import logout_then_login
-from django.shortcuts import render
 from django.contrib import messages
-from django.shortcuts import render, redirect
-from django.utils.decorators import method_decorator
-from django.views import View
+
 from math import radians, sin, cos, sqrt, atan2
 
 # Create your views here.
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.core.exceptions import ValidationError
@@ -25,7 +20,7 @@ from Methods.Login import Login
 from Methods.Verification import VerifyAccount
 from Methods.forms import CreateAccountForm
 
-from polls.models import User, Event, SearchedArea, ApplicationStatus
+from polls.models import User, Event, SearchedArea, Application, ApplicationStatus
 from Methods.sendgrid_reset import CustomTokenGenerator, send_reset_email
 from polls.models import User
 from EventRadarProject.settings import EVENT_API_KEY
@@ -703,7 +698,7 @@ def fetch_and_save_events_api(request):
 
 ###application
 #make sure this is only viewable through users/admins (not event managers) only
-class Application(UserRequiredMixin,View):
+class ApplicationClass(UserRequiredMixin,View):
     def get(self, request):
         return render(request, "application.html")
     def post(self, request):
@@ -718,7 +713,7 @@ class Application(UserRequiredMixin,View):
         if message and len(message)<3000:
             applic.create_app(user=user,message=message)
 
-            return redirect("App_Confirm")
+            return redirect("app_confirmation")
 
         else:
             return render(request, "application.html", {"error": "Invalid message"})
@@ -731,14 +726,38 @@ class App_Confirm(View):
 
 class Approval(AdminRequiredMixin,View):
     def get(self, request):
-        return render(request, "admin_app_approval.html")
-
-    def post(self, request):
-        #load all applications that have pending
-        print("Session data:", request.session.items())
-
         pending_apps = Application.objects.filter(status=ApplicationStatus.PENDING)
 
-        return render(request, 'admin_app_approval.html', {'pending_apps': pending_apps})
-        #where pressing approval will change the role of the user to event manager
-        #If approved or denied, the status of the application is put as approved or denied instead of deciding
+        return render(request, "admin_app_approval.html",{'applications': pending_apps})
+
+    def post(self, request):
+        #load all applications that have pending status
+        application_id = request.POST.get('application_id')  #Get the app id
+        action = request.POST.get('action') #getting the action
+
+        if application_id and action:
+            application = get_object_or_404(Application, id=application_id)
+
+            #If accepted button is pressed
+            #Put status as accepted
+            if action == 'accept':
+                application.status = "Accepted"
+                application.save()
+
+                #change user's role to event manager
+                user = application.user
+                user.role = 'Event_Manager'
+                user.save()
+
+            #if denied
+            #just change app status
+            elif action == 'deny':
+                application.status = "Denied"
+                application.save()
+
+                # After processing, redirect back to the application approval page
+            return redirect('app_approve')
+
+        # If something went wrong, redirect back to the same page
+        return redirect('app_approve')
+
