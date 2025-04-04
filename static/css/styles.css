@@ -827,7 +827,6 @@ input[type="tel"]::placeholder {
     width: 100%;
 }
 
-/* Weather Overlay Styles */
 .weather-overlay {
     display: none;
     position: fixed;
@@ -837,9 +836,7 @@ input[type="tel"]::placeholder {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    overflow: auto;
 }
 
 .overlay-content {
@@ -849,20 +846,19 @@ input[type="tel"]::placeholder {
     width: 90%;
     max-width: 500px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    display: flex;
-    flex-direction: column;
-    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     max-height: 90vh;
     overflow-y: auto;
 }
 
-/* Button Container */
-.overlay-controls {
-    display: flex;
-    justify-content: space-between; /* This spreads buttons to opposite sides */
-    margin-top: 2rem; /* Space above buttons */
-    padding: 1rem 0; /* Space above and below buttons */
-    gap: 20px; /* Space between buttons */
+@media (max-width: 600px) {
+    .overlay-content {
+        width: 95%;
+        padding: 1rem;
+    }
 }
 
 /* Button Styles */
@@ -895,6 +891,71 @@ input[type="tel"]::placeholder {
     transform: translateY(0);
 }
 
+/* Unit Toggle Styles */
+.unit-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 1rem 0;
+    justify-content: center;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #7a3bda;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #6429c8;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.unit-toggle span {
+    font-weight: 600;
+    color: #4a2b7a;
+}
+
 /* Make home button stand out with slight differentiation */
 .home-btn {
     background-color: #8f4eff; /* Slightly different purple */
@@ -914,19 +975,64 @@ input[type="tel"]::placeholder {
 .weather-section button:hover {
     background: #6429c8;
 }
+/* Add close button styling */
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+}
+
+.close-btn:hover {
+    color: #333;
+}
+
+/* Form input styling */
+.form-input-row {
+    margin: 15px 0;
+}
+
+.form-input-row input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Forecast results styling */
 .forecast-results {
-    margin-top: 15px;
+    margin-top: 20px;
 }
+
 .forecast-day {
-    border-bottom: 1px solid #e0d6f5;
-    padding: 10px 0;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
 }
+
 .forecast-day:last-child {
     border-bottom: none;
 }
+
 .forecast-day h3 {
-    color: #4a2b7a;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.forecast-day p {
+    margin: 5px 0;
+}
+
+.error-message {
+    color: #d9534f;
+    padding: 10px;
+    background-color: #f8d7da;
+    border-radius: 5px;
+    margin-top: 15px;
 }
 .forecast-day img {
     vertical-align: middle;
