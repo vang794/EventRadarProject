@@ -253,10 +253,10 @@ async function triggerEventFetch(latitude, longitude, radius, locationName) {
         'X-CSRFToken': csrfToken
       },
       body: JSON.stringify({
-        latitude: latitude,
-        longitude: longitude,
-        radius: radius,
-        location_name: locationName
+        latitude: parseFloat(latitude),
+        longitude: parseFloat(longitude),
+        radius: parseFloat(radius),
+        location_name: String(locationName || '')
       })
     });
     const result = await response.json();
@@ -277,6 +277,7 @@ async function triggerEventFetch(latitude, longitude, radius, locationName) {
       if (loadingOverlay) loadingOverlay.style.display = 'none';
     }
   } catch (error) {
+    console.error("Error fetching events:", error);
     if (loadingText) loadingText.textContent = 'Fetching events... Please hang tight!';
     alert('An error occurred while trying to fetch events.');
     if (locationInput) locationInput.disabled = false;
