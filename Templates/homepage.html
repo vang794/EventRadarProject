@@ -1,272 +1,190 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html>
-<!-- give user_role to JavaScript -->
-    <meta id="user_role" data-role="{{ user_role }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Event Radar - Home</title>
-        <meta name="description" content="Find events near you with Event Radar">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-        <!-- Overlay-specific CSS -->
-        <link rel="stylesheet" href="{% static 'css/overlay.css' %}">
-        <style>
-            #loadingOverlay {
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background-color: rgba(255, 255, 255, 0.8);
-                z-index: 10; 
-                display: none; 
-                justify-content: center;
-                align-items: center;
-                text-align: center;
-                font-size: 1.2em;
-                color: #333;
-            }
-            #loadingOverlay i { 
-                margin-bottom: 15px;
-                font-size: 2em;
-                -webkit-animation: fa-spin 2s infinite linear;
-                animation: fa-spin 2s infinite linear;
-            }
-            .main-content {
-                position: relative;
-            }
-        </style>
-    </head>
-    <body class="homepage-body">
-        <div class="top-navbar">
-            <div class="logo-container">
-                <img id="logo" src="{% static 'media/eventradar_logo2.png' %}" alt="Event Radar Logo">
-            </div>
-            <div class="nav-actions">
-                <!-- Top bar buttons (App Approvals(Admin) and Application(User)) -->
-                <a href="{% url 'app_approve' %}" class="settings-btn" id="approve-btn">
-                    <i class="fa fa-check-square-o"></i> App Approval
-                </a>
-                <a href="{% url 'application' %}" class="settings-btn" id="event-app-btn">
-                    <i class="fa fa-file-text"></i> Event Manager Application
-                </a>
-                <!-- Instead of linking to a separate weather page, clicking this will open the overlay -->
+<head>
+  <meta charset="UTF-8">
+  <title>Event Radar - Home</title>
+  <meta id="user_role" data-role="{{ user_role|default:'User' }}">
 
-                <a href="#" class="settings-btn" onclick="openWeatherOverlay()">
-                    <i class="fas fa-cloud"></i> Weather
-                </a>
-                <a href="{% url 'settings' %}" class="settings-btn">
-                    <i class="fas fa-cog"></i> Settings
-                </a>
-            </div>
-        </div>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+  <link rel="stylesheet" href="{% static 'css/overlay.css' %}">
 
-        <div class="main-content">
-            <div id="loadingOverlay">
-                <div>
-                    <i class="fas fa-spinner"></i><br>
-                    <p id="loadingText">Fetching events... Please hang tight!</p>
-                </div>
-            </div>
-            <!-- Filter for events and locations -->
-            <div class="search-controls">
-                <form method="post" action="{% url 'homepage' %}">
-                    {% csrf_token %}
-                    <!-- Filter for location -->
-                    <div class="search-bar">
-                        <div class="input-group">
-                            <span class="input-icon"><i class="fas fa-map-marker-alt"></i></span>
-                            <input type="text" id="locationInput" name="location" placeholder="Location" value="{{ current_location|default:'Milwaukee' }}">
-                        </div>
-                        <!-- filter for radius -->
-                        <div class="input-group">
-                            <span class="input-icon"><i class="fas fa-circle-notch"></i></span>
-                            <input type="number" id="radiusInput" name="radius" placeholder="Radius (miles)" value="{{ current_radius|default:5 }}" min="1" max="50">
-                        </div>
-                        <!-- filter for event times -->
-                        <div class="input-group">
-                            <span class="input-icon"><i class="fas fa-map-marker-alt"></i></span>
-                            <input type="text" id="timeInput" name="time" placeholder="Date and Time" value="{{ current_location|default:'Milwaukee' }}">
-                        </div>
-                        <button type="submit" id="searchButton" class="search-btn">
-                            <i class="fas fa-search"></i> Search
-                        </button>
-                    </div>
-                </form>
-            </div>
+  <style>
+    #map-container {
+      width: 100%;
+      height: 500px;
+    }
+    .main-content {
+      position: relative;
+    }
+    #loadingOverlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(255, 255, 255, 0.8);
+      z-index: 10;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-size: 1.2em;
+      color: #333;
+    }
+    #loadingOverlay i {
+      margin-bottom: 15px;
+      font-size: 2em;
+      animation: fa-spin 2s infinite linear;
+    }
+  </style>
+</head>
 
-            <div class="content-container">
-                <div class="map-container">
-                    <!-- Rendered map HTML -->
-                    {{ map_html|safe }}
-                </div>
-                <!-- Side where events show up -->
-                <div class="events-list">
-                    <h2>Events Near You</h2>
-                    {% if sample_events %}
-                        {% for event in sample_events %}
-                        <div class="event-card">
-                            <div class="event-header">
-                                <h3>{{ event.title }}</h3>
-                                <span class="event-category">{{ event.category }}</span>
-                            </div>
-                            <p class="event-date">{{ event.event_date|date:"F j, Y" }} at {{ event.event_date|date:"g:i A" }}</p>
-                            <p class="event-description">{{ event.description }}</p>
-                            <a href="#" class="event-details-btn">View Details</a>
-                        </div>
-                        {% endfor %}
-                    {% else %}
-                        <p>No events found in this area. Try expanding your search radius or changing the location.</p>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
+<body class="homepage-body">
 
-<!-- Weather Overlay -->
-<div id="weatherOverlay" class="weather-overlay">
-    <div class="overlay-content">
-        <div class="overlay-header">
-            <h2>Weather Forecast</h2>
-            <button class="close-btn" onclick="closeWeatherOverlay()">&times;</button>
-        </div>
-        
-        <form id="weatherForm">
-            <div class="form-row">
-                <label>
-                    <input type="radio" name="locationType" value="city" checked> City
-                </label>
-                <label>
-                    <input type="radio" name="locationType" value="zip"> Zip Code
-                </label>
-                <label>
-                    <input type="radio" name="locationType" value="coords"> Coordinates
-                </label>
-            </div>
-
-            <div class="form-input-row">
-                <input type="text" id="locationInputWeather" placeholder="Enter location" required>
-            </div>
-
-            <div class="unit-toggle">
-                <span>°F</span>
-                <label class="switch">
-                    <input type="checkbox" id="unitToggle">
-                    <span class="slider round"></span>
-                </label>
-                <span>°C</span>
-            </div>
-
-            <div class="overlay-controls">
-                <button type="button" class="submit-btn" onclick="fetchWeather()">
-                    <i class="fas fa-cloud-sun"></i> Get Forecast
-                </button>
-                <button type="button" class="home-btn" onclick="closeWeatherOverlay()">
-                    <i class="fas fa-home"></i> Close
-                </button>
-            </div>
-        </form>
-
-        <div class="forecast-container">
-            <div id="forecastResults" class="forecast-results"></div>
-        </div>
+  <div class="top-navbar">
+    <div class="logo-container">
+      <img id="logo" src="{% static 'media/eventradar_logo2.png' %}" alt="Event Radar Logo">
     </div>
-</div>
+    <div class="nav-actions">
+      <a href="{% url 'app_approve' %}" class="settings-btn" id="approve-btn">
+        <i class="fa fa-check-square-o"></i> App Approval
+      </a>
+      <a href="{% url 'application' %}" class="settings-btn" id="event-app-btn">
+        <i class="fa fa-file-text"></i> Event Manager Application
+      </a>
+      <a href="#" class="settings-btn" onclick="openWeatherOverlay()">
+        <i class="fas fa-cloud"></i> Weather
+      </a>
+      <a href="{% url 'settings' %}" class="settings-btn">
+        <i class="fas fa-cog"></i> Settings
+      </a>
+    </div>
+  </div>
 
+  <div id="needsFetchData"
+       data-needs-fetch="{{ needs_fetch|yesno:'true,false' }}"
+       data-latitude="{{ current_latitude|default_if_none:'null' }}"
+       data-longitude="{{ current_longitude|default_if_none:'null' }}"
+       data-radius="{{ current_radius|default_if_none:'null' }}"
+       data-location="{{ current_location|escapejs }}"
+       style="display: none;">
+  </div>
 
-        <!-- Include the weather JavaScript file -->
-        <script src="{% static 'js/weather.js' %}"></script>
+  <div id="loadingOverlay">
+    <div>
+      <i class="fas fa-spinner"></i><br>
+      <p id="loadingText">Fetching events... Please hang tight!</p>
+    </div>
+  </div>
 
-        <script>
-            function getCsrfToken() {
-                return document.querySelector('input[name="csrfmiddlewaretoken"]').value;
-            }
+  <div class="main-content">
+    <div class="search-controls">
+      <form method="post" action="{% url 'homepage' %}">
+        {% csrf_token %}
+        <div class="search-bar">
+          <div class="input-group">
+            <span class="input-icon"><i class="fas fa-map-marker-alt"></i></span>
+            <input type="text" id="locationInput" name="location"
+                   placeholder="Location"
+                   value="{{ current_location|default:'Milwaukee' }}">
+          </div>
+          <div class="input-group">
+            <span class="input-icon"><i class="fas fa-circle-notch"></i></span>
+            <input type="number" id="radiusInput" name="radius"
+                   placeholder="Radius (miles)"
+                   value="{{ current_radius|default:5 }}"
+                   min="1" max="50">
+          </div>
+          <button type="submit" id="searchButton" class="search-btn">
+            <i class="fas fa-search"></i> Search
+          </button>
+        </div>
+      </form>
+    </div>
 
-            async function triggerEventFetch(latitude, longitude, radius, locationName) {
-                const loadingOverlay = document.getElementById('loadingOverlay');
-                const loadingText = document.getElementById('loadingText');
-                const locationInput = document.getElementById('locationInput');
-                const radiusInput = document.getElementById('radiusInput');
-                const searchButton = document.getElementById('searchButton');
+    <div class="content-container">
+      <div class="map-container" id="map-container"></div>
 
-                if (loadingText) loadingText.textContent = 'Fetching events... Please hang tight!';
-                loadingOverlay.style.display = 'flex';
-                locationInput.disabled = true;
-                radiusInput.disabled = true;
-                searchButton.disabled = true;
+      <div class="events-list">
+        <h2>Points of Interest Near You</h2>
+        {% if event_categories %}
+          <div class="category-tabs">
+            {% for category in event_categories %}
+              <button class="category-tab category-tab-{{ category.name|slugify }}"
+                      onclick="showCategory('{{ category.name|slugify }}')">
+                {{ category.name }} ({{ category.events|length }})
+              </button>
+            {% endfor %}
+          </div>
+          {% for category in event_categories %}
+            <div id="category-{{ category.name|slugify }}"
+                 class="category-content"
+                 style="display: none;">
+              <h3>{{ category.name }}</h3>
+              {% for event in category.events %}
+                <div class="event-card"
+                     data-event-id="{{ event.id }}"
+                     data-latitude="{{ event.latitude }}"
+                     data-longitude="{{ event.longitude }}"
+                     data-title="{{ event.title|escapejs }}"
+                     data-location="{{ event.location_name|escapejs }}"
+                     data-description="{{ event.short_description|default_if_none:''|escapejs }}"
+                     data-category="{{ event.category|default:'Uncategorized' }}">
+                  <div class="event-header"
+                       onclick="toggleEventDetails('{{ event.id }}')">
+                    <h4>{{ event.title }}</h4>
+                  </div>
+                  <div class="event-details"
+                       id="event-details-{{ event.id }}"
+                       style="display: none;">
+                    <p><strong>Address:</strong> {{ event.location_name }}</p>
+                    <p><strong>Description:</strong> {{ event.short_description }}</p>
+                    {% if event.phone %}
+                      <p><strong>Phone:</strong> {{ event.phone }}</p>
+                    {% endif %}
+                    {% if event.website %}
+                      <p><strong>Website:</strong>
+                        <a href="{{ event.website }}" target="_blank">Visit</a>
+                      </p>
+                    {% endif %}
+                    <a href="{% url 'event_details_page' event.id %}" class="view-landmark-btn">View Landmark</a>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% endfor %}
+        {% else %}
+          <p>No events found. Try expanding your search radius or changing the location.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
 
-                console.log(`Triggering fetch for: lat=${latitude}, lon=${longitude}, radius=${radius}`);
+  <div id="weatherOverlay" class="weather-overlay">
+    <div class="overlay-content">
+      <div class="overlay-header">
+        <h2>Weather Forecast</h2>
+        <button class="close-btn" onclick="closeWeatherOverlay()">&times;</button>
+      </div>
+    </div>
+  </div>
 
-                try {
-                    const response = await fetch("{% url 'fetch_events_api' %}", {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRFToken': getCsrfToken()
-                        },
-                        body: JSON.stringify({
-                            latitude: latitude,
-                            longitude: longitude,
-                            radius: radius,
-                            location_name: locationName
-                        })
-                    });
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin="">
+  </script>
+  <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
 
-                    const result = await response.json();
-
-                    if (response.ok && result.status === 'success') {
-                        console.log('Fetch successful:', result.message);
-                        const processedCount = result.processed_count || 0;
-                        if (loadingText) {
-                            loadingText.textContent = `Processed ${processedCount} potential events. Reloading...`;
-                        }
-                        console.log(`Fetch process successful. Processed ${processedCount}. Reloading page shortly...`);
-
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 1500);
-                    } else {
-                        console.error('Fetch failed:', result.message || response.statusText || 'Unknown error');
-                        if (loadingText) loadingText.textContent = 'Fetching events... Please hang tight!';
-                        loadingOverlay.style.display = 'none';
-                        locationInput.disabled = false;
-                        radiusInput.disabled = false;
-                        searchButton.disabled = false;
-                        alert('Failed to fetch events: ' + (result.message || 'Please try again.'));
-                    }
-                } catch (error) {
-                    console.error('Error during fetch request:', error);
-                    if (loadingText) loadingText.textContent = 'Fetching events... Please hang tight!';
-                    loadingOverlay.style.display = 'none';
-                    locationInput.disabled = false;
-                    radiusInput.disabled = false;
-                    searchButton.disabled = false;
-                    alert('An error occurred while trying to fetch events. Please check your connection and try again.');
-                }
-            }
-
-            document.addEventListener('DOMContentLoaded', () => {
-                const needsFetch = {{ needs_fetch|yesno:"true,false" }};
-                const currentLat = {{ current_latitude|default_if_none:"null" }};
-                const currentLon = {{ current_longitude|default_if_none:"null" }};
-                const currentRadius = {{ current_radius|default_if_none:"null" }};
-                const currentLocation = "{{ current_location|escapejs }}";
-
-                if (needsFetch && currentLat !== null && currentLon !== null && currentRadius !== null) {
-                    console.log("Needs fetch is true. Initiating API call.");
-                    triggerEventFetch(currentLat, currentLon, currentRadius, currentLocation);
-                } else {
-                    // Hide loading overlay if no fetch is needed on initial load
-                    const loadingOverlay = document.getElementById('loadingOverlay');
-                    if (loadingOverlay) {
-                        loadingOverlay.style.display = 'none';
-                    }
-                    console.log("No fetch needed on initial load or missing data.");
-                }
-            });
-        </script>
-     <script src="{% static 'js/permissions.js' %}"></script>
-    </body>
+  <script src="{% static 'js/weather.js' %}"></script>
+  <script src="{% static 'js/permissions.js' %}"></script>
+  <script src="{% static 'js/homepage.js' %}"></script>
+</body>
 </html>

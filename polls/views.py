@@ -64,6 +64,7 @@ from polls.config.category_mapping import category_mapping
 import math
 from django.db.models import Max
 import time
+from django.conf import settings
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -158,16 +159,63 @@ class HomePage(SessionLoginRequiredMixin,View):
 
         events = self.get_events_within_radius(location[0], location[1], radius)
         logger.info(f"Displaying {len(events)} events currently in DB within {radius} miles.")
+        
+        categorized_events = {}
+        for event in events:
+            category = event.category or "Uncategorized"
+            if category not in categorized_events:
+                categorized_events[category] = []
+            categorized_events[category].append(event)
+        
+        sorted_categories = sorted(categorized_events.keys())
+        
+        event_categories = []
+        for category in sorted_categories:
+            sorted_events = sorted(
+                categorized_events[category],
+                key=lambda e: self.calculate_distance(location[0], location[1], e.latitude, e.longitude)
+            )
+            event_categories.append({
+                'name': category,
+                'events': sorted_events 
+            })
+        
+        for category_group in event_categories:
+            for event in category_group['events']:
+                event.is_expanded = False
 
         map_html = self.generate_map(location[0], location[1], radius, events)
 
         # Returning user's role (For permissions)
         email = request.session.get("email")
-        user = User.objects.get(email=email)  # Find user by email
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            logger.error(f"User with email {email} does not exist. Redirecting to login.")
+            request.session.flush()
+            return redirect("login")
+
         user_role = user.role
+        
+        for category_group in event_categories:
+            for event in category_group['events']:
+                event.distance = round(self.calculate_distance(
+                    location[0], location[1], event.latitude, event.longitude
+                ), 1)
+                
+                if event.description:
+                    lines = event.description.split('\n')
+                    event.short_description = lines[0] if lines else ""
+                    
+                    phone_match = re.search(r'\b(?:\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}\b', event.description)
+                    event.phone = phone_match.group(0) if phone_match else None
+                    
+                    website_match = re.search(r'https?://[^\s]+', event.description)
+                    event.website = website_match.group(0) if website_match else None
+        
         context = {
             'map_html': map_html,
-            'sample_events': events[:20],
+            'event_categories': event_categories,
             'current_location': request.session.get('location_name', 'Milwaukee'),
             'current_radius': radius,
             'current_latitude': location[0],
@@ -475,7 +523,7 @@ class WeatherView(View):
         if not location_input:
             return render(request, "weather.html", {'error': 'Please enter a location.'})
 
-        api_url = f'https://api.openweathermap.org/data/2.5/forecast?appid={api_key}&units=metric'
+        api_url = f'httpshttps://api.openweathermap.org/data/2.5/forecast?appid={api_key}&units=metric'
 
         try:
             if location_type == 'city':
@@ -569,7 +617,7 @@ def fetch_and_save_events_api(request):
         api_end_time = time.time()
         logger.info(f"API fetch took {api_end_time - api_start_time:.2f} seconds.")
 
-        if features is not None:
+        if features:
             logger.info(f"API returned {len(features)} events.")
 
             logger.info("Starting bulk processing and saving/updating events...")
@@ -577,6 +625,8 @@ def fetch_and_save_events_api(request):
             num_processed = 0
             events_to_create = []
             events_to_update = []
+            created_count = 0
+            updated_count = 0
             update_fields = ['title', 'latitude', 'longitude', 'description', 'location_name', 'event_date', 'category', 'image_url'] # Fields to update
 
             try:
@@ -602,14 +652,88 @@ def fetch_and_save_events_api(request):
 
                     latitude = geometry['coordinates'][1]
                     longitude = geometry['coordinates'][0]
-                    description_parts = [props.get(key) for key in ['address_line1', 'address_line2', 'phone', 'website'] if props.get(key)]
+                    
+                    description_parts = []
+                    for key in ['address_line1', 'address_line2', 'address_line3', 'phone', 'website', 'datasource_name']:
+                        if props.get(key):
+                            description_parts.append(props.get(key))
+                    
+                    street = props.get('street')
+                    if street and street not in description_parts:
+                        description_parts.append(f"Street: {street}")
+                    
                     description = "\n".join(description_parts)
-                    api_category = props.get('categories', ['unknown'])[0]
-                    category_label = category_mapping.get(api_category, 'Other Landmark')
-                    title = props.get('name', 'Unnamed Event')
+                    
+                    title = None
+                    
+                    if props.get('name'):
+                        title = props.get('name')
+                    
+                    elif props.get('street'):
+                        house_number = props.get('housenumber', '')
+                        street = props.get('street', '')
+                        if house_number and street:
+                            title = f"{house_number} {street}"
+                        else:
+                            title = street
+                    
+                    elif props.get('city') or props.get('locality'):
+                        location_prefix = props.get('city') or props.get('locality')
+                        street = props.get('street', '')
+                        if street:
+                            title = f"{street}, {location_prefix}"
+                        else:
+                            title = location_prefix
+                    
+                    elif props.get('formatted'):
+                        address_parts = props.get('formatted', '').split(',')
+                        if address_parts:
+                            title = address_parts[0].strip()
+                    
+                    if not title:
+                        api_categories = props.get('categories', [])
+                        if api_categories:
+                            category_parts = api_categories[0].split('.')
+                            title = category_parts[-1].replace('_', ' ').title()
+                        else:
+                            title = "Location Point"
+                    
+                    api_categories = props.get('categories', [])
+                    category_label = None
+                    
+                    if api_categories:
+                        for cat in api_categories:
+                            if cat in category_mapping:
+                                category_label = category_mapping[cat]
+                                break
+                    
+                    if not category_label and api_categories:
+                        for cat in api_categories:
+                            cat_prefix = cat.split('.')[0]
+                            for map_key, map_value in category_mapping.items():
+                                if map_key.startswith(cat_prefix):
+                                    category_label = map_value
+                                    break
+                            if category_label:
+                                break
+                    
+                    if not category_label and api_categories:
+                        main_parts = api_categories[0].split('.')
+                        
+                        if len(main_parts) > 1:
+                            specific_type = main_parts[-1].replace('_', ' ').title()
+                            category_label = specific_type
+                        else:
+                            category_label = main_parts[0].replace('_', ' ').title()
+                    
+                    if not category_label:
+                        category_label = 'Point of Interest'
+                    
                     formatted_location = props.get('formatted', location_name)
                     image_url = props.get('datasource', {}).get('raw', {}).get('image')
-
+                    
+                    logger.info(f"Processing place: {title} | Categories: {api_categories} | Mapped to: {category_label}")
+                    
                     existing_event = existing_events.get(place_id)
 
                     if existing_event:
@@ -674,6 +798,8 @@ def fetch_and_save_events_api(request):
                 'processed_count': num_processed
             })
         else:
+            created_count = 0
+            num_processed = 0
             logger.info(f"Updating SearchedArea: lat={lat}, lon={lon}, radius={radius}, has_events=False (API fetch failed)")
             SearchedArea.objects.update_or_create(
                 latitude=lat, longitude=lon, radius=radius,
@@ -760,4 +886,53 @@ class Approval(AdminRequiredMixin,View):
 
         # If something went wrong, redirect back to the same page
         return redirect('app_approve')
+
+def get_event_details(request, event_id):
+    try:
+        event = Event.objects.get(id=event_id)
+
+        phone = None
+        website = None
+        if event.description:
+            phone_match = re.search(r'\b(?:\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}\b', event.description)
+            phone = phone_match.group(0) if phone_match else None
+            website_match = re.search(r'https?://[^\s]+', event.description)
+            website = website_match.group(0) if website_match else None
+
+
+        return JsonResponse({
+            'id': str(event.id),
+            'title': event.title,
+            'description': event.description,
+            'location_name': event.location_name,
+            'latitude': event.latitude,
+            'longitude': event.longitude,
+            'category': event.category,
+            'image_url': event.image_url,
+            'event_date': event.event_date.strftime('%B %d, %Y at %I:%M %p') if event.event_date else None,
+            'phone': phone,
+            'website': website
+        })
+    except Event.DoesNotExist:
+        return JsonResponse({'error': 'Event not found'}, status=404)
+
+def event_details_page(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+    place_details = fetch_place_details(event.place_id)
+
+    context = {
+        'event': event,
+        'place_details': place_details
+    }
+    return render(request, 'event_details.html', context)
+
+def fetch_place_details(place_id):
+    api_url = f"https://api.geoapify.com/v2/place-details?id={place_id}&apiKey={settings.EVENT_API_KEY}"
+    try:
+        response = requests.get(api_url)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Failed to fetch place details: {e}")
+    return None
 
