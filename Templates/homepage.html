@@ -167,21 +167,60 @@
     </div>
   </div>
 
-  <div id="weatherOverlay" class="weather-overlay">
-    <div class="overlay-content">
-      <div class="overlay-header">
-        <h2>Weather Forecast</h2>
-        <button class="close-btn" onclick="closeWeatherOverlay()">&times;</button>
-      </div>
-    </div>
-  </div>
-
-  <script
+   <script
     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
     crossorigin="">
   </script>
   <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+ <div id="weatherOverlay" class="weather-overlay">
+    <div class="overlay-content">
+        <div class="overlay-header">
+            <h2>Weather Forecast</h2>
+            <button class="close-btn" onclick="closeWeatherOverlay()">&times;</button>
+        </div>
+
+        <form id="weatherForm">
+            <div class="form-row">
+                <label>
+                    <input type="radio" name="locationType" value="city" checked> City
+                </label>
+                <label>
+                    <input type="radio" name="locationType" value="zip"> Zip Code
+                </label>
+                <label>
+                    <input type="radio" name="locationType" value="coords"> Coordinates
+                </label>
+            </div>
+
+            <div class="form-input-row">
+                <input type="text" id="locationInputWeather" placeholder="Enter location" required>
+            </div>
+
+            <div class="unit-toggle">
+                <span>°F</span>
+                <label class="switch">
+                    <input type="checkbox" id="unitToggle">
+                    <span class="slider round"></span>
+                </label>
+                <span>°C</span>
+            </div>
+
+            <div class="overlay-controls">
+                <button type="button" class="submit-btn" onclick="fetchWeather()">
+                    <i class="fas fa-cloud-sun"></i> Get Forecast
+                </button>
+                <button type="button" class="home-btn" onclick="closeWeatherOverlay()">
+                    <i class="fas fa-home"></i> Close
+                </button>
+            </div>
+        </form>
+
+        <div class="forecast-container">
+            <div id="forecastResults" class="forecast-results"></div>
+        </div>
+    </div>
+</div>
 
   <script src="{% static 'js/weather.js' %}"></script>
   <script src="{% static 'js/permissions.js' %}"></script>
