@@ -636,7 +636,7 @@ def fetch_and_save_events_api(request):
         lat = float(data['latitude'])
         lon = float(data['longitude'])
         radius = float(data['radius'])
-        location_name = data.get('location_name', 'Unknown Location')
+        location_name = str(data.get('location_name', 'Unknown Location'))
 
         logger.info(f"API endpoint called: Fetching events for lat={lat}, lon={lon}, radius={radius}")
         api_start_time = time.time()
@@ -654,7 +654,7 @@ def fetch_and_save_events_api(request):
             events_to_update = []
             created_count = 0
             updated_count = 0
-            update_fields = ['title', 'latitude', 'longitude', 'description', 'location_name', 'event_date', 'category', 'image_url'] # Fields to update
+            update_fields = ['title', 'latitude', 'longitude', 'description', 'location_name', 'event_date', 'category', 'image_url']
 
             try:
                 admin_user = User.objects.get(email='system@eventradar.local')
@@ -677,118 +677,127 @@ def fetch_and_save_events_api(request):
                     if not place_id or not geometry or 'coordinates' not in geometry:
                         continue
 
-                    latitude = geometry['coordinates'][1]
-                    longitude = geometry['coordinates'][0]
-                    
-                    description_parts = []
-                    for key in ['address_line1', 'address_line2', 'address_line3', 'phone', 'website', 'datasource_name']:
-                        if props.get(key):
-                            description_parts.append(props.get(key))
-                    
-                    street = props.get('street')
-                    if street and street not in description_parts:
-                        description_parts.append(f"Street: {street}")
-                    
-                    description = "\n".join(description_parts)
-                    
-                    title = None
-                    
-                    if props.get('name'):
-                        title = props.get('name')
-                    
-                    elif props.get('street'):
-                        house_number = props.get('housenumber', '')
-                        street = props.get('street', '')
-                        if house_number and street:
-                            title = f"{house_number} {street}"
-                        else:
-                            title = street
-                    
-                    elif props.get('city') or props.get('locality'):
-                        location_prefix = props.get('city') or props.get('locality')
-                        street = props.get('street', '')
-                        if street:
-                            title = f"{street}, {location_prefix}"
-                        else:
-                            title = location_prefix
-                    
-                    elif props.get('formatted'):
-                        address_parts = props.get('formatted', '').split(',')
-                        if address_parts:
-                            title = address_parts[0].strip()
-                    
-                    if not title:
-                        api_categories = props.get('categories', [])
-                        if api_categories:
-                            category_parts = api_categories[0].split('.')
-                            title = category_parts[-1].replace('_', ' ').title()
-                        else:
-                            title = "Location Point"
-                    
-                    api_categories = props.get('categories', [])
-                    category_label = None
-                    
-                    if api_categories:
-                        for cat in api_categories:
-                            if cat in category_mapping:
-                                category_label = category_mapping[cat]
-                                break
-                    
-                    if not category_label and api_categories:
-                        for cat in api_categories:
-                            cat_prefix = cat.split('.')[0]
-                            for map_key, map_value in category_mapping.items():
-                                if map_key.startswith(cat_prefix):
-                                    category_label = map_value
-                                    break
-                            if category_label:
-                                break
-                    
-                    if not category_label and api_categories:
-                        main_parts = api_categories[0].split('.')
+                    try:
+                        latitude = float(geometry['coordinates'][1])
+                        longitude = float(geometry['coordinates'][0])
                         
-                        if len(main_parts) > 1:
-                            specific_type = main_parts[-1].replace('_', ' ').title()
-                            category_label = specific_type
-                        else:
-                            category_label = main_parts[0].replace('_', ' ').title()
-                    
-                    if not category_label:
-                        category_label = 'Point of Interest'
-                    
-                    formatted_location = props.get('formatted', location_name)
-                    image_url = props.get('datasource', {}).get('raw', {}).get('image')
-                    
-                    logger.info(f"Processing place: {title} | Categories: {api_categories} | Mapped to: {category_label}")
-                    
-                    existing_event = existing_events.get(place_id)
+                        description_parts = []
+                        for key in ['address_line1', 'address_line2', 'address_line3', 'phone', 'website', 'datasource_name']:
+                            value = props.get(key)
+                            if value is not None:
+                                description_parts.append(str(value))
+                        
+                        street = props.get('street')
+                        if street and str(street) not in description_parts:
+                            description_parts.append(f"Street: {str(street)}")
+                        
+                        description = "\n".join(description_parts)
+                        
+                        title = None
+                        
+                        if props.get('name'):
+                            title = str(props.get('name'))
+                        
+                        elif props.get('street'):
+                            house_number = str(props.get('housenumber', ''))
+                            street = str(props.get('street', ''))
+                            if house_number and street:
+                                title = f"{house_number} {street}"
+                            else:
+                                title = street
+                        
+                        elif props.get('city') or props.get('locality'):
+                            location_prefix = str(props.get('city') or props.get('locality'))
+                            street = str(props.get('street', ''))
+                            if street:
+                                title = f"{street}, {location_prefix}"
+                            else:
+                                title = location_prefix
+                        
+                        elif props.get('formatted'):
+                            address_parts = str(props.get('formatted', '')).split(',')
+                            if address_parts:
+                                title = address_parts[0].strip()
+                        
+                        if not title:
+                            api_categories = props.get('categories', [])
+                            if api_categories:
+                                category_parts = str(api_categories[0]).split('.')
+                                title = category_parts[-1].replace('_', ' ').title()
+                            else:
+                                title = "Location Point"
+                        
+                        api_categories = props.get('categories', [])
+                        category_label = None
+                        
+                        api_categories = [str(cat) for cat in api_categories]
+                        
+                        if api_categories:
+                            for cat in api_categories:
+                                if cat in category_mapping:
+                                    category_label = category_mapping[cat]
+                                    break
+                        
+                        if not category_label and api_categories:
+                            for cat in api_categories:
+                                cat_prefix = cat.split('.')[0]
+                                for map_key, map_value in category_mapping.items():
+                                    if map_key.startswith(cat_prefix):
+                                        category_label = map_value
+                                        break
+                                if category_label:
+                                    break
+                        
+                        if not category_label and api_categories:
+                            main_parts = api_categories[0].split('.')
+                            
+                            if len(main_parts) > 1:
+                                specific_type = main_parts[-1].replace('_', ' ').title()
+                                category_label = specific_type
+                            else:
+                                category_label = main_parts[0].replace('_', ' ').title()
+                        
+                        if not category_label:
+                            category_label = 'Point of Interest'
+                        
+                        formatted_location = str(props.get('formatted', location_name))
+                        image_url = props.get('datasource', {}).get('raw', {}).get('image')
+                        if image_url is not None:
+                            image_url = str(image_url)
+                        
+                        logger.info(f"Processing place: {title} | Categories: {api_categories} | Mapped to: {category_label}")
+                        
+                        existing_event = existing_events.get(place_id)
 
-                    if existing_event:
-                        update_needed = False
-                        for field in update_fields:
-                            new_value = locals().get(field)
-                            if field == 'event_date': new_value = timezone.now()
-                            if getattr(existing_event, field) != new_value:
-                                setattr(existing_event, field, new_value)
-                                update_needed = True
-                        if update_needed:
-                            events_to_update.append(existing_event)
-                    else:
-                        events_to_create.append(
-                            Event(
-                                place_id=place_id,
-                                title=title,
-                                latitude=latitude,
-                                longitude=longitude,
-                                description=description,
-                                location_name=formatted_location,
-                                event_date=timezone.now(),
-                                created_by=admin_user,
-                                category=category_label,
-                                image_url=image_url,
+                        if existing_event:
+                            update_needed = False
+                            for field in update_fields:
+                                new_value = locals().get(field)
+                                if field == 'event_date': new_value = timezone.now()
+                                if getattr(existing_event, field) != new_value:
+                                    setattr(existing_event, field, new_value)
+                                    update_needed = True
+                            if update_needed:
+                                events_to_update.append(existing_event)
+                        else:
+                            events_to_create.append(
+                                Event(
+                                    place_id=place_id,
+                                    title=title,
+                                    latitude=latitude,
+                                    longitude=longitude,
+                                    description=description,
+                                    location_name=formatted_location,
+                                    event_date=timezone.now(),
+                                    created_by=admin_user,
+                                    category=category_label,
+                                    image_url=image_url,
+                                )
                             )
-                        )
-                    num_processed += 1
+                        num_processed += 1
+                    except (TypeError, ValueError) as e:
+                        logger.error(f"Error processing feature {place_id}: {e}")
+                        continue
 
                 created_count = 0
                 if events_to_create:
