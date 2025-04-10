@@ -22,7 +22,8 @@ from django.urls import path
 
 from polls.views import LoginAuth, CreateAcct, SettingPage, SignOutView, HomePage, PasswordResetView, \
     PasswordResetDoneView, PasswordResetConfirmView, WeatherView, DeleteView, DeleteCompleteView, \
-    fetch_and_save_events_api, Application, Approval, App_Confirm, ApplicationClass
+    fetch_and_save_events_api, Application, Approval, App_Confirm, ApplicationClass, get_event_details, \
+    event_details_page
 
 #for id
 import uuid
@@ -54,5 +55,7 @@ urlpatterns = [
     path('delete_complete/', DeleteCompleteView.as_view(), name='delete_complete'),
 
     path('api/fetch_events/', fetch_and_save_events_api, name='fetch_events_api'),
+    path('api/event/<uuid:event_id>/', get_event_details, name='get_event_details'),
+    path('event/<uuid:event_id>/details/', event_details_page, name='event_details_page'),
 ]
 

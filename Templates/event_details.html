@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ event.title }}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="event-details-container">
+        <h1>{{ event.title }}</h1>
+        <p><strong>Date:</strong> {{ event.event_date }}</p>
+        <p><strong>Location:</strong> {{ event.location_name }}</p>
+        <p><strong>Description:</strong> {{ event.description }}</p>
+        <p><strong>Category:</strong> {{ event.category }}</p>
+        {% if event.image_url %}
+            <img src="{{ event.image_url }}" alt="{{ event.title }}">
+        {% endif %}
+        <a href="https://maps.google.com/maps?q={{ event.latitude }},{{ event.longitude }}" target="_blank">Get Directions</a>
+
+        {% if place_details %}
+            <h2>Additional Information</h2>
+            <p><strong>Address:</strong> {{ place_details.properties.formatted }}</p>
+            <p><strong>Categories:</strong> {{ place_details.properties.categories|join:", " }}</p>
+            <p><strong>Conditions:</strong> {{ place_details.properties.conditions|join:", " }}</p>
+        {% endif %}
+    </div>
+</body>
+</html> 
