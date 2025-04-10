@@ -9,6 +9,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.core.exceptions import ValidationError
 from django.utils import timezone
+from datetime import datetime
 
 #Login
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -122,6 +123,23 @@ class CreateAcct(View):
 class HomePage(SessionLoginRequiredMixin,View):
     @method_decorator(never_cache)
     def get(self, request, *args, **kwargs):
+        start_date_str = request.GET.get('start_date', '')
+        end_date_str = request.GET.get('end_date', '')
+        start_date = None
+        end_date = None
+
+        if start_date_str:
+            try:
+                start_date = datetime.strptime(start_date_str, '%Y-%m-%d')
+            except ValueError:
+                start_date = None
+
+        if end_date_str:
+            try:
+                end_date = datetime.strptime(end_date_str, '%Y-%m-%d')
+            except ValueError:
+                end_date = None
+
         radius = request.session.get('radius', 5)
         location_name = request.session.get('location', 'Milwaukee')
         location_coords = request.session.get('location_coords')
@@ -159,7 +177,14 @@ class HomePage(SessionLoginRequiredMixin,View):
 
         events = self.get_events_within_radius(location[0], location[1], radius)
         logger.info(f"Displaying {len(events)} events currently in DB within {radius} miles.")
-        
+
+        if start_date and end_date:
+            events = [event for event in events if start_date <= event.event_date <= end_date]
+        elif start_date:
+            events = [event for event in events if event.event_date >= start_date]
+        elif end_date:
+            events = [event for event in events if event.event_date <= end_date]
+
         categorized_events = {}
         for event in events:
             category = event.category or "Uncategorized"
@@ -221,7 +246,9 @@ class HomePage(SessionLoginRequiredMixin,View):
             'current_latitude': location[0],
             'current_longitude': location[1],
             'needs_fetch': needs_fetch,
-            'user_role': user_role
+            'user_role': user_role,
+            'event_date1': start_date_str,
+            'event_date2': end_date_str
         }
 
         return render(request, "homepage.html", context)

@@ -102,6 +102,16 @@
                    value="{{ current_radius|default:5 }}"
                    min="1" max="50">
           </div>
+            <!--Date start-->
+            <div class="input-group"> <label for="dateInput1">Start Date</label>
+            <input type="date" id="dateInput1" name="start_date"
+                   value="{{ event_date1|default:'Start Date' }}">
+          </div>
+            <!--Date end-->
+            <div class="input-group"> <label for="dateInput1">End Date</label>
+            <input type="date" id="dateInput2" name="end_date"
+                   value="{{ event_date2|default:'End Date' }}">
+          </div>
           <button type="submit" id="searchButton" class="search-btn">
             <i class="fas fa-search"></i> Search
           </button>
