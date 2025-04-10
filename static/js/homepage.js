@@ -2,6 +2,36 @@ document.addEventListener('DOMContentLoaded', function() {
     initMap();
     initializePage();
     setupModalCloseListeners();
+    
+    const style = document.createElement('style');
+    style.textContent = `
+      .category-tab {
+        background-color: #f0e6ff;
+        color: #7a3bda;
+        border: none;
+        border-radius: 8px;
+        padding: 8px 12px;
+        margin: 4px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+      }
+      
+      .category-tab:hover {
+        background-color: #e6d9ff;
+        box-shadow: 0 2px 4px rgba(122, 59, 218, 0.2);
+      }
+      
+      .category-tab.active {
+        background-color: #7a3bda;
+        color: white;
+        box-shadow: 0 2px 6px rgba(122, 59, 218, 0.4);
+      }
+      
+      .fa-map-marker-alt, .fas {
+        color: #7a3bda;
+      }
+    `;
+    document.head.appendChild(style);
 });
 
 window.selectedMarker = null;
@@ -165,6 +195,18 @@ function initializePage() {
   const currentRadius = (radiusStr !== 'null') ? parseFloat(radiusStr) : null;
 
   if (needsFetch && currentLat !== null && currentLon !== null && currentRadius !== null) {
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    if (loadingOverlay) {
+      loadingOverlay.style.display = 'flex';
+      loadingOverlay.style.position = 'fixed'; 
+      loadingOverlay.style.top = '0';
+      loadingOverlay.style.left = '0';
+      loadingOverlay.style.width = '100%';
+      loadingOverlay.style.height = '100%';
+      loadingOverlay.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+      loadingOverlay.style.zIndex = '1000';
+    }
+    
     triggerEventFetch(currentLat, currentLon, currentRadius, locationName);
   } else {
     hideLoadingOverlay();
@@ -179,8 +221,16 @@ async function triggerEventFetch(latitude, longitude, radius, locationName) {
   const searchButton = document.getElementById('searchButton');
 
   if (loadingOverlay) {
-    if (loadingText) loadingText.textContent = 'Fetching events... Please hang tight!';
+    loadingOverlay.style.position = 'fixed';
+    loadingOverlay.style.top = '0';
+    loadingOverlay.style.left = '0';
+    loadingOverlay.style.width = '100%';
+    loadingOverlay.style.height = '100%';
+    loadingOverlay.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+    loadingOverlay.style.zIndex = '1000';
     loadingOverlay.style.display = 'flex';
+    
+    if (loadingText) loadingText.textContent = 'Fetching events... Please hang tight!';
   }
   if (locationInput) locationInput.disabled = true;
   if (radiusInput) radiusInput.disabled = true;
@@ -189,7 +239,6 @@ async function triggerEventFetch(latitude, longitude, radius, locationName) {
   const csrfToken = getCsrfToken();
   if (!csrfToken) {
     alert('Security token missing. Please refresh and try again.');
-    if (loadingOverlay) loadingOverlay.style.display = 'none';
     if (locationInput) locationInput.disabled = false;
     if (radiusInput) radiusInput.disabled = false;
     if (searchButton) searchButton.disabled = false;
@@ -221,25 +270,20 @@ async function triggerEventFetch(latitude, longitude, radius, locationName) {
       }, 1500);
     } else {
       if (loadingText) loadingText.textContent = 'Fetching events... Please hang tight!';
-      if (loadingOverlay) loadingOverlay.style.display = 'none';
+      alert('Failed to fetch events: ' + (result.message || 'Please try again.'));
       if (locationInput) locationInput.disabled = false;
       if (radiusInput) radiusInput.disabled = false;
       if (searchButton) searchButton.disabled = false;
-      alert('Failed to fetch events: ' + (result.message || 'Please try again.'));
+      if (loadingOverlay) loadingOverlay.style.display = 'none';
     }
   } catch (error) {
     if (loadingText) loadingText.textContent = 'Fetching events... Please hang tight!';
-    if (loadingOverlay) loadingOverlay.style.display = 'none';
+    alert('An error occurred while trying to fetch events.');
     if (locationInput) locationInput.disabled = false;
     if (radiusInput) radiusInput.disabled = false;
     if (searchButton) searchButton.disabled = false;
-    alert('An error occurred while trying to fetch events.');
+    if (loadingOverlay) loadingOverlay.style.display = 'none';
   }
-
-  if (loadingOverlay) loadingOverlay.style.display = 'none';
-  if (locationInput) locationInput.disabled = false;
-  if (radiusInput) radiusInput.disabled = false;
-  if (searchButton) searchButton.disabled = false;
 }
 
 function setupModalCloseListeners() {}
