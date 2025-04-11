@@ -8,8 +8,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.core.exceptions import ValidationError
+from datetime import datetime, time, timedelta
 from django.utils import timezone
-from datetime import datetime
+
 
 #Login
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -123,20 +124,24 @@ class CreateAcct(View):
 class HomePage(SessionLoginRequiredMixin,View):
     @method_decorator(never_cache)
     def get(self, request, *args, **kwargs):
-        start_date_str = request.GET.get('start_date', '')
-        end_date_str = request.GET.get('end_date', '')
+
+       #retrieving the start date and end date
+        start_date_str = request.session.get('start_date')
+        end_date_str = request.session.get('end_date')
+        error=None
+
         start_date = None
         end_date = None
 
         if start_date_str:
             try:
-                start_date = datetime.strptime(start_date_str, '%Y-%m-%d')
+                start_date = timezone.make_aware(datetime.strptime(start_date_str, '%Y-%m-%d %H:%M:%S'))
             except ValueError:
                 start_date = None
 
         if end_date_str:
             try:
-                end_date = datetime.strptime(end_date_str, '%Y-%m-%d')
+                end_date = timezone.make_aware(datetime.strptime(end_date_str, '%Y-%m-%d %H:%M:%S'))
             except ValueError:
                 end_date = None
 
@@ -177,13 +182,28 @@ class HomePage(SessionLoginRequiredMixin,View):
 
         events = self.get_events_within_radius(location[0], location[1], radius)
         logger.info(f"Displaying {len(events)} events currently in DB within {radius} miles.")
+        #Error if start_date is larger than end_date or end-date is less than start date
+        if start_date and end_date and start_date > end_date:
+            error = "Start date must be before end date"
+        elif start_date and end_date and end_date < start_date:
+            error = "End date must be after start date"
 
+        #checking user made events in dates
+        system_user=User.objects.get(email="system@eventradar.local")
+            #adjust after poi model is made
+        user_events=self.get_events_within_radius2(location[0],location[1],radius,system_user)
+        #check is user event is between start or end date
         if start_date and end_date:
-            events = [event for event in events if start_date <= event.event_date <= end_date]
+            user_events = [event for event in user_events if start_date <= event.event_date <= end_date]
+            print(user_events)
         elif start_date:
-            events = [event for event in events if event.event_date >= start_date]
+            user_events = [event for event in user_events if event.event_date >= start_date]
+            print(user_events)
         elif end_date:
-            events = [event for event in events if event.event_date <= end_date]
+            user_events = [event for event in user_events if event.event_date <= end_date]
+            print(user_events)
+        else:
+            user_events = user_events
 
         categorized_events = {}
         for event in events:
@@ -247,13 +267,44 @@ class HomePage(SessionLoginRequiredMixin,View):
             'current_longitude': location[1],
             'needs_fetch': needs_fetch,
             'user_role': user_role,
-            'event_date1': start_date_str,
-            'event_date2': end_date_str
+            'user_events': user_events,
+            'error':error
         }
 
         return render(request, "homepage.html", context)
 
     def post(self, request):
+        start_date_str = request.POST.get('start_date_str', '')
+        end_date_str = request.POST.get('end_date_str', '')
+        start_date = None
+        end_date = None
+
+        if start_date_str:
+            try:
+                start_date = datetime.strptime(start_date_str, '%Y-%m-%d')
+                start_date = timezone.make_aware(start_date)
+            except ValueError:
+                start_date = None
+
+        if end_date_str:
+            try:
+                end_date = datetime.strptime(end_date_str, '%Y-%m-%d')
+                #making sure end of day is the current day and 23 hrs +59 min
+                end_of_day = (end_date + timedelta(days=1)).replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(seconds=1)
+                end_date = timezone.make_aware(end_of_day)
+            except ValueError:
+                end_date = None
+
+        #Put the date into session
+        if start_date:
+            request.session['start_date'] = start_date.strftime('%Y-%m-%d %H:%M:%S')
+        else:
+            request.session.pop('start_date', None)
+        if end_date:
+            request.session['end_date'] =end_date.strftime('%Y-%m-%d %H:%M:%S')
+        else:
+            request.session.pop('end_date', None)
+
         location_name = request.POST.get('location', 'Milwaukee')
         radius = request.POST.get('radius', 5)
 
@@ -275,7 +326,25 @@ class HomePage(SessionLoginRequiredMixin,View):
             request.session['radius'] = radius
             request.session['location_coords'] = location_coords
             logger.info(f"POST request: Updated session location_name='{location_name}', radius={radius}, coords={location_coords}")
-        return redirect('homepage')
+
+            # Fetch events within the radius for the system user
+            system_user = User.objects.get(email="system@eventradar.local")
+            user_events = self.get_events_within_radius2(location_coords[0], location_coords[1], radius, system_user)
+
+            # Filter user-made events based on the start and end date
+            if start_date and end_date:
+                user_events = [event for event in user_events if start_date <= event.event_date <= end_date]
+                print(user_events)
+            elif start_date:
+                user_events = [event for event in user_events if event.event_date >= start_date]
+                print(user_events)
+            elif end_date:
+                user_events = [event for event in user_events if event.event_date <= end_date]
+                print(user_events)
+            else:
+                user_events = []
+                print("NO EVENTS")
+        return redirect("homepage")
 
     def get_events_within_radius(self, center_lat, center_lon, radius_miles):
         lat_change_per_mile = 1.0 / 69.0
@@ -292,6 +361,33 @@ class HomePage(SessionLoginRequiredMixin,View):
             longitude__gte=min_lon,
             longitude__lte=max_lon
         )
+        logger.info(f"Found {potential_events.count()} potential events in bounding box for Haversine check.")
+
+        nearby_events = []
+        for event in potential_events:
+            distance = self.calculate_distance(center_lat, center_lon, event.latitude, event.longitude)
+            if distance <= radius_miles:
+                nearby_events.append(event)
+
+        logger.info(f"Filtered down to {len(nearby_events)} events within precise radius.")
+        return nearby_events
+    #THIS IS TEMPORARY UNTIL WE HAVE SEPARATE EVENTS AND POIS!!!
+    def get_events_within_radius2(self, center_lat, center_lon, radius_miles,system_user):
+        lat_change_per_mile = 1.0 / 69.0
+        lon_change_per_mile = 1.0 / (69.0 * math.cos(math.radians(center_lat)))
+
+        min_lat = center_lat - (radius_miles * lat_change_per_mile)
+        max_lat = center_lat + (radius_miles * lat_change_per_mile)
+        min_lon = center_lon - (radius_miles * lon_change_per_mile)
+        max_lon = center_lon + (radius_miles * lon_change_per_mile)
+
+        potential_events = Event.objects.filter(
+            latitude__gte=min_lat,
+            latitude__lte=max_lat,
+            longitude__gte=min_lon,
+            longitude__lte=max_lon,
+
+        ).exclude(created_by=system_user)
         logger.info(f"Found {potential_events.count()} potential events in bounding box for Haversine check.")
 
         nearby_events = []
