@@ -27,7 +27,7 @@
       position: relative;
     }
     #loadingOverlay {
-      position: absolute; 
+      position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
       background-color: rgba(255, 255, 255, 0.8);
       z-index: 10;
@@ -85,7 +85,7 @@
   </div>
 
   <div class="main-content">
-    <div class="search-controls">
+    <div class="search-controls"></div>
       <form method="post" action="{% url 'homepage' %}">
         {% csrf_token %}
         <div class="search-bar">
@@ -102,87 +102,160 @@
                    value="{{ current_radius|default:5 }}"
                    min="1" max="50">
           </div>
+            <!--Date start-->
+            <div class="input-group"> <label for="start_date_str">Start Date</label>
+            <input type="date" id="start_date_str" name="start_date_str"
+                   value="{{ event_date1|default:'Start Date' }}">
+          </div>
+            <!--Date end-->
+            <div class="input-group"> <label for="end_date_str">End Date</label>
+            <input type="date" id="end_date_str" name="end_date_str"
+                   value="{{ event_date2|default:'End Date' }}">
+          </div>
           <button type="submit" id="searchButton" class="search-btn">
             <i class="fas fa-search"></i> Search
           </button>
         </div>
       </form>
+      {% if error %}
+           <div class="error">{{ error }}</div>
+        {% endif %}
     </div>
 
     <div class="content-container">
-      <div class="map-container" id="map-container"></div>
+  <div class="map-container" id="map-container"></div>
 
-      <div class="events-list">
-        <h2>Points of Interest Near You</h2>
-        {% if event_categories %}
-          <div class="category-tabs">
-            {% for category in event_categories %}
-              <button class="category-tab category-tab-{{ category.name|slugify }}"
-                      onclick="showCategory('{{ category.name|slugify }}')">
-                {{ category.name }} ({{ category.events|length }})
-              </button>
-            {% endfor %}
-          </div>
-          {% for category in event_categories %}
-            <div id="category-{{ category.name|slugify }}"
-                 class="category-content"
-                 style="display: none;">
-              <h3>{{ category.name }}</h3>
-              {% for event in category.events %}
-                <div class="event-card"
-                     data-event-id="{{ event.id }}"
-                     data-latitude="{{ event.latitude }}"
-                     data-longitude="{{ event.longitude }}"
-                     data-title="{{ event.title|escapejs }}"
-                     data-location="{{ event.location_name|escapejs }}"
-                     data-description="{{ event.short_description|default_if_none:''|escapejs }}"
-                     data-category="{{ event.category|default:'Uncategorized' }}">
-                  <div class="event-header"
-                       onclick="toggleEventDetails('{{ event.id }}')">
-                    <h4>{{ event.title }}</h4>
-                  </div>
-                  <div class="event-details"
-                       id="event-details-{{ event.id }}"
-                       style="display: none;">
-                    <p><strong>Address:</strong> {{ event.location_name }}</p>
-                    <p><strong>Description:</strong> {{ event.short_description }}</p>
-                    {% if event.phone %}
-                      <p><strong>Phone:</strong> {{ event.phone }}</p>
-                    {% endif %}
-                    {% if event.website %}
-                      <p><strong>Website:</strong>
-                        <a href="{{ event.website }}" target="_blank">Visit</a>
-                      </p>
-                    {% endif %}
-                    <a href="{% url 'event_details_page' event.id %}" class="view-landmark-btn">View Landmark</a>
-                  </div>
-                </div>
-              {% endfor %}
+  <div class="events-list">
+
+    <!-- User-made events -->
+    <h2>Events Near You</h2>
+    {% if user_events %}
+        {% for event in user_events %}
+        <div class="event-card">
+            <div class="event-header">
+                <h3>{{ event.title }}</h3>
+                <span class="event-category">{{ event.category }}</span>
+            </div>
+            <p class="event-date">{{ event.event_date|date:"F j, Y" }} at {{ event.event_date|date:"g:i A" }}</p>
+            <p class="event-description">{{ event.description }}</p>
+            <a href="#" class="event-details-btn">View Details</a>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No events hosted at this given time.</p>
+    {% endif %}
+
+    <!-- Points of interest -->
+    <h2>Points of Interest Near You</h2>
+    {% if event_categories %}
+      <div class="category-tabs">
+        {% for category in event_categories %}
+          <button class="category-tab category-tab-{{ category.name|slugify }}"
+                  onclick="showCategory('{{ category.name|slugify }}')">
+            {{ category.name }} ({{ category.events|length }})
+          </button>
+        {% endfor %}
+      </div>
+      {% for category in event_categories %}
+        <div id="category-{{ category.name|slugify }}"
+             class="category-content"
+             style="display: none;">
+          <h3>{{ category.name }}</h3>
+          {% for event in category.events %}
+            <div class="event-card"
+                 data-event-id="{{ event.id }}"
+                 data-latitude="{{ event.latitude }}"
+                 data-longitude="{{ event.longitude }}"
+                 data-title="{{ event.title|escapejs }}"
+                 data-location="{{ event.location_name|escapejs }}"
+                 data-description="{{ event.short_description|default_if_none:''|escapejs }}"
+                 data-category="{{ event.category|default:'Uncategorized' }}">
+              <div class="event-header"
+                   onclick="toggleEventDetails('{{ event.id }}')">
+                <h4>{{ event.title }}</h4>
+              </div>
+              <div class="event-details"
+                   id="event-details-{{ event.id }}"
+                   style="display: none;">
+                <p><strong>Address:</strong> {{ event.location_name }}</p>
+                <p><strong>Description:</strong> {{ event.short_description }}</p>
+                {% if event.phone %}
+                  <p><strong>Phone:</strong> {{ event.phone }}</p>
+                {% endif %}
+                {% if event.website %}
+                  <p><strong>Website:</strong>
+                    <a href="{{ event.website }}" target="_blank">Visit</a>
+                  </p>
+                {% endif %}
+                <a href="{% url 'event_details_page' event.id %}" class="view-landmark-btn">View Landmark</a>
+              </div>
             </div>
           {% endfor %}
-        {% else %}
-          <p>No events found. Try expanding your search radius or changing the location.</p>
-        {% endif %}
-      </div>
-    </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>No events found. Try expanding your search radius or changing the location.</p>
+    {% endif %}
+
+  </div>
+</div>
   </div>
 
-  <div id="weatherOverlay" class="weather-overlay">
-    <div class="overlay-content">
-      <div class="overlay-header">
-        <h2>Weather Forecast</h2>
-        <button class="close-btn" onclick="closeWeatherOverlay()">&times;</button>
-      </div>
-    </div>
-  </div>
-
-  <script
+   <script
     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
     crossorigin="">
   </script>
   <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
-  
+ <div id="weatherOverlay" class="weather-overlay">
+    <div class="overlay-content">
+        <div class="overlay-header">
+            <h2>Weather Forecast</h2>
+            <button class="close-btn" onclick="closeWeatherOverlay()">&times;</button>
+        </div>
+
+        <form id="weatherForm">
+            <div class="form-row">
+                <label>
+                    <input type="radio" name="locationType" value="city" checked> City
+                </label>
+                <label>
+                    <input type="radio" name="locationType" value="zip"> Zip Code
+                </label>
+                <label>
+                    <input type="radio" name="locationType" value="coords"> Coordinates
+                </label>
+            </div>
+
+            <div class="form-input-row">
+                <input type="text" id="locationInputWeather" placeholder="Enter location" required>
+            </div>
+
+            <div class="unit-toggle">
+                <span>°F</span>
+                <label class="switch">
+                    <input type="checkbox" id="unitToggle">
+                    <span class="slider round"></span>
+                </label>
+                <span>°C</span>
+            </div>
+
+            <div class="overlay-controls">
+                <button type="button" class="submit-btn" onclick="fetchWeather()">
+                    <i class="fas fa-cloud-sun"></i> Get Forecast
+                </button>
+                <button type="button" class="home-btn" onclick="closeWeatherOverlay()">
+                    <i class="fas fa-home"></i> Close
+                </button>
+            </div>
+        </form>
+
+        <div class="forecast-container">
+            <div id="forecastResults" class="forecast-results"></div>
+        </div>
+    </div>
+</div>
+
   <script src="{% static 'js/weather.js' %}"></script>
   <script src="{% static 'js/permissions.js' %}"></script>
   <script src="{% static 'js/homepage.js' %}"></script>
