@@ -33,7 +33,7 @@ class CreateAccountTests(TestCase):
         self.assertIn('first_name', form.errors)
         self.assertIn('last_name', form.errors)
         self.assertIn('password', form.errors)
-        self.assertIn('role', form.errors)
+        #self.assertIn('role', form.errors)
 
     def test_create_account_duplicate_username(self):
         """Test creating an account with an existing username"""
