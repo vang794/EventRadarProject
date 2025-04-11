@@ -2,6 +2,7 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from polls.models import User, Roles
 from Methods.Login import Login
+from django.contrib.auth.hashers import make_password #added
 
 
 class LogInAcceptanceTests(TestCase):
@@ -13,15 +14,24 @@ class LogInAcceptanceTests(TestCase):
             'first_name': 'Test',
             'last_name': 'User',
             'email': 'test@example.com',
-            'password': 'testpass123',
+            'password': make_password('testpass123'), #hashed
             'phone_number': 1234567890,
             'role': Roles.USER
         }
 
-        # Create user instance and save to database
-        self.user = User.objects.create(**self.user_data)
+    
+        User.objects.create(
+            username="username",
+            first_name="firstName",
+            last_name="lastName",
+            email="system@eventradar.local",
+            password=make_password("password"),
+            phone_number=0,
+            role=Roles.USER  
+        )
+        
 
-        # Initialize login handler
+        self.user = User.objects.create(**self.user_data)
         self.login = Login()
 
     def test_user_can_sign_in(self):
