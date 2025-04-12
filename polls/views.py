@@ -497,9 +497,12 @@ class SettingPage(SessionLoginRequiredMixin,View):
 
         if "update_email" in request.POST:
             new_email = request.POST.get("email") #clicked on
+
             if new_email: #user entered something
                 result = change_account_details(user, new_email=new_email)
+
                 if result:
+                    request.session["email"] = user.email  
                     success_message = "Your email has been updated successfully"
                 else:
                     error_message = "Failed to update email"

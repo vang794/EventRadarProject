@@ -63,11 +63,11 @@ class ChangeAccountDetailsTest(TestCase):
     #will work once primary key is changed and not username 
     
     #test username success 
-    # def test_username_success(self):
-    #     self.user.email = "annaliseharms@example.com"
-    #     self.user.save()
-    #     result = change_account_details(self.user, new_username = "happy123")
-    #     self.assertTrue(result)
+    def test_username_success(self):
+         self.user.email = "annaliseharms@example.com"
+         self.user.save()
+         result = change_account_details(self.user, new_username = "happy123")
+         self.assertTrue(result)
     
     #test if first_name is blank
     def test_first_name_blank(self):
