@@ -3,9 +3,6 @@ from datetime import timezone, datetime
 from polls.models import User, Event  # imports user model from poll app
 from datetime import datetime, time, timedelta
 from django.utils import timezone
-#for email validation
-from django.core.validators import validate_email
-from django.core.exceptions import ValidationError
 
 class CreateEvent:
     #get the user
@@ -46,14 +43,27 @@ class CreateEvent:
         pass
 
     def set_title(self, event,title):
-        #if user exists, allow change title
         event.title = title
         event.save()
+
+    #overall check title
+    def check_title(self,title):
+        pass
+    def title_length(self,title):
+        title_length = len(title)
+        #check title length meets requirements (more than 0 characters and less than 100 characters)
+        if 0<title_length<=100:
+            return False
+        else:
+            return True
+
     def set_desc(self, event, description):
         event.description = description
         event.save()
+
     def set_location_name(self, user, location_name):
         pass
+
     def set_latitude(self, user, latitude):
         pass
     def set_longitude(self, user, longitude):
