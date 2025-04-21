@@ -38,10 +38,7 @@ class CreateEvent:
         if event is not None:
             return event.objects.filter(title=title) is not None
 
-    #from getting queue, set place id
-    def set_place_id(self):
-        pass
-
+    #title methods
     def set_title(self, event,title):
         event.title = title
         event.save()
@@ -57,18 +54,24 @@ class CreateEvent:
         else:
             return True
 
+    #description methods
     def set_desc(self, event, description):
         event.description = description
         event.save()
 
+    #set location name after getting the information from the queue
     def set_location_name(self, user, location_name):
         pass
 
+    # set location latitude after getting the information from the queue
     def set_latitude(self, user, latitude):
         pass
+
+    # set location longitude after getting the information from the queue
     def set_longitude(self, user, longitude):
         pass
 
+    # convert date of the given information into a format suitable for the model
     def date_conversion(self, event_date_str):
         event_date_str=event_date_str
         event_date = None
@@ -92,13 +95,8 @@ class CreateEvent:
     #def set_end_date(self, user, event_date):
         #pass
 
-    def set_user(self, user):
+    #Set category
+    def set_category(self, event, category):
         pass
-    def change_account_role(self, user, role):
-        #Check if user exists and is not None
-        if user is not None:
-            self.change_role(user, role)
-
-    def change_role(self, user, role):
-        user.role = role  #Update the user's role
-        user.save()
+    def get_category(self):
+        pass

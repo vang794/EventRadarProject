@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="Create event.py made">
+    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="edited create event and parkinglot">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Methods/create_event.py" beforeDir="false" afterPath="$PROJECT_DIR$/Methods/create_event.py" afterDir="false" />
     </list>
@@ -49,36 +49,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Django Server.Unnamed.executor": "Run",
-    "Django tests.Test: polls.tests.acceptance_tests.test_acceptance_reset.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_change_account_details.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_create_account.CreateAccountTests.test_create_account_missing_required_fields.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_mixin.MixinUnitTests.test_allows_access_if_authenticated.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_mixin.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_correct_email.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_find.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_not_blank.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_set_password.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_sign_out.SignOutTests.test_unauthenticated_user_redirect.executor": "Run",
-    "Django tests.Test: polls.tests.unit_tests.test_unit_sign_out.executor": "Run",
-    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "django.template.preview.state": "SHOW_EDITOR_AND_PREVIEW",
-    "git-widget-placeholder": "vang__create__event",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Django Server.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.acceptance_tests.test_acceptance_reset.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_change_account_details.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_create_account.CreateAccountTests.test_create_account_missing_required_fields.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_mixin.MixinUnitTests.test_allows_access_if_authenticated.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_mixin.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_correct_email.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_find.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_not_blank.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_set_password.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_sign_out.SignOutTests.test_unauthenticated_user_redirect.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_sign_out.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.pycharm.django.structure.promotion.once.per.project&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR_AND_PREVIEW&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;vang__create__event&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Django Server.Unnamed">
     <configuration name="Test: polls.tests.acceptance_tests.test_acceptance_delete" type="DjangoTestsConfigurationType" temporary="true">
       <module name="EventRadarProject" />
@@ -304,6 +304,7 @@
       <workItem from="1744228364159" duration="2309000" />
       <workItem from="1744232033711" duration="1432000" />
       <workItem from="1744301893571" duration="297000" />
+      <workItem from="1745264598407" duration="3521000" />
     </task>
     <task id="LOCAL-00004" summary="Updated Workspace">
       <option name="closed" value="true" />
@@ -393,7 +394,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745203788060</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="edited create event and parkinglot">
+      <option name="closed" value="true" />
+      <created>1745223673650</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1745223673650</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -428,7 +437,8 @@
     <MESSAGE value="Updated some html and views" />
     <MESSAGE value="Reworked homepage and implemented methods in views." />
     <MESSAGE value="Create event.py made" />
-    <option name="LAST_COMMIT_MESSAGE" value="Create event.py made" />
+    <MESSAGE value="edited create event and parkinglot" />
+    <option name="LAST_COMMIT_MESSAGE" value="edited create event and parkinglot" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -439,32 +449,32 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/polls/views.py</url>
-          <line>275</line>
+          <line>329</line>
           <option name="timeStamp" value="27" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/polls/views.py</url>
-          <line>282</line>
+          <line>336</line>
           <option name="timeStamp" value="28" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/polls/views.py</url>
-          <line>319</line>
+          <line>373</line>
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/polls/views.py</url>
-          <line>322</line>
+          <line>376</line>
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/polls/views.py</url>
-          <line>325</line>
+          <line>379</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/polls/views.py</url>
-          <line>328</line>
+          <line>382</line>
           <option name="timeStamp" value="33" />
         </line-breakpoint>
       </breakpoints>
