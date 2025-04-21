@@ -22,9 +22,8 @@ from Methods.Login import Login
 from Methods.Verification import VerifyAccount
 from Methods.forms import CreateAccountForm
 
-from polls.models import User, Event, SearchedArea, Application, ApplicationStatus
+from polls.models import User, POI, Event, SearchedArea, Application, ApplicationStatus
 from Methods.sendgrid_reset import CustomTokenGenerator, send_reset_email
-from polls.models import User
 from EventRadarProject.settings import EVENT_API_KEY
 import re
 
@@ -54,7 +53,7 @@ from django.contrib.auth.hashers import make_password
 from Methods.SessionLoginMixin import SessionLoginRequiredMixin
 from Methods.userPermissions import UserRequiredMixin,AdminManagerRequiredMixin,EventManagerRequiredMixin,AdminRequiredMixin
 
-from polls.api import fetch_events_from_api
+from polls.api import fetch_pois_from_api
 import json
 
 # Create your views here.
@@ -180,18 +179,73 @@ class HomePage(SessionLoginRequiredMixin,View):
 
         logger.info(f"Final decision for needs_fetch: {needs_fetch}")
 
-        events = self.get_events_within_radius(location[0], location[1], radius)
-        logger.info(f"Displaying {len(events)} events currently in DB within {radius} miles.")
+        pois = self.get_pois_within_radius(location[0], location[1], radius)
+        logger.info(f"Displaying {len(pois)} POIs currently in DB within {radius} miles.")
         #Error if start_date is larger than end_date or end-date is less than start date
         if start_date and end_date and start_date > end_date:
             error = "Start date must be before end date"
         elif start_date and end_date and end_date < start_date:
             error = "End date must be after start date"
 
+        system_email = "system@eventradar.local"
+        system_user = User.objects.filter(email=system_email).first()
+        if not system_user:
+            system_user = User.objects.create(
+                username="system",
+                first_name="System",
+                last_name="User",
+                email=system_email,
+                password="!",
+                role="Admin"
+            )
+
         #checking user made events in dates
-        system_user=User.objects.get(email="system@eventradar.local")
-            #adjust after poi model is made
         user_events=self.get_events_within_radius2(location[0],location[1],radius,system_user)
+
+        if not user_events:
+            now = timezone.now()
+            user_events = [
+                type('Event', (), {
+                    'id': 'placeholder-1',
+                    'title': 'Music in the Park',
+                    'description': 'Enjoy live music at Cathedral Square Park.',
+                    'location_name': 'Cathedral Square Park, Milwaukee, WI',
+                    'latitude': 43.0437,
+                    'longitude': -87.9065,
+                    'event_date': now + timedelta(days=2, hours=18),
+                    'category': 'Music',
+                })(),
+                type('Event', (), {
+                    'id': 'placeholder-2',
+                    'title': 'Food Festival',
+                    'description': 'Sample delicious foods from local vendors.',
+                    'location_name': 'Milwaukee Public Market, Milwaukee, WI',
+                    'latitude': 43.0336,
+                    'longitude': -87.9076,
+                    'event_date': now + timedelta(days=5, hours=12),
+                    'category': 'Festival',
+                })(),
+                type('Event', (), {
+                    'id': 'placeholder-3',
+                    'title': 'Art Exhibition',
+                    'description': 'See works from local artists.',
+                    'location_name': 'Milwaukee Art Museum, Milwaukee, WI',
+                    'latitude': 43.0392,
+                    'longitude': -87.8977,
+                    'event_date': now + timedelta(days=7, hours=15),
+                    'category': 'Art',
+                })(),
+                type('Event', (), {
+                    'id': 'placeholder-4',
+                    'title': 'Tech Meetup',
+                    'description': 'Networking for tech professionals.',
+                    'location_name': 'Ward4, Milwaukee, WI',
+                    'latitude': 43.0389,
+                    'longitude': -87.9065,
+                    'event_date': now + timedelta(days=10, hours=18),
+                    'category': 'Networking',
+                })(),
+            ]
         #check is user event is between start or end date
         if start_date and end_date:
             user_events = [event for event in user_events if start_date <= event.event_date <= end_date]
@@ -205,31 +259,31 @@ class HomePage(SessionLoginRequiredMixin,View):
         else:
             user_events = user_events
 
-        categorized_events = {}
-        for event in events:
-            category = event.category or "Uncategorized"
-            if category not in categorized_events:
-                categorized_events[category] = []
-            categorized_events[category].append(event)
+        categorized_pois = {}
+        for poi in pois:
+            category = poi.category or "Uncategorized"
+            if category not in categorized_pois:
+                categorized_pois[category] = []
+            categorized_pois[category].append(poi)
         
-        sorted_categories = sorted(categorized_events.keys())
+        sorted_categories = sorted(categorized_pois.keys())
         
-        event_categories = []
+        poi_categories = []
         for category in sorted_categories:
-            sorted_events = sorted(
-                categorized_events[category],
+            sorted_pois = sorted(
+                categorized_pois[category],
                 key=lambda e: self.calculate_distance(location[0], location[1], e.latitude, e.longitude)
             )
-            event_categories.append({
+            poi_categories.append({
                 'name': category,
-                'events': sorted_events 
+                'events': sorted_pois 
             })
         
-        for category_group in event_categories:
-            for event in category_group['events']:
-                event.is_expanded = False
+        for category_group in poi_categories:
+            for poi in category_group['events']:
+                poi.is_expanded = False
 
-        map_html = self.generate_map(location[0], location[1], radius, events)
+        map_html = self.generate_map(location[0], location[1], radius, pois)
 
         # Returning user's role (For permissions)
         email = request.session.get("email")
@@ -242,25 +296,25 @@ class HomePage(SessionLoginRequiredMixin,View):
 
         user_role = user.role
         
-        for category_group in event_categories:
-            for event in category_group['events']:
-                event.distance = round(self.calculate_distance(
-                    location[0], location[1], event.latitude, event.longitude
+        for category_group in poi_categories:
+            for poi in category_group['events']:
+                poi.distance = round(self.calculate_distance(
+                    location[0], location[1], poi.latitude, poi.longitude
                 ), 1)
                 
-                if event.description:
-                    lines = event.description.split('\n')
-                    event.short_description = lines[0] if lines else ""
+                if poi.description:
+                    lines = poi.description.split('\n')
+                    poi.short_description = lines[0] if lines else ""
                     
-                    phone_match = re.search(r'\b(?:\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}\b', event.description)
-                    event.phone = phone_match.group(0) if phone_match else None
+                    phone_match = re.search(r'\b(?:\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}\b', poi.description)
+                    poi.phone = phone_match.group(0) if phone_match else None
                     
-                    website_match = re.search(r'https?://[^\s]+', event.description)
-                    event.website = website_match.group(0) if website_match else None
+                    website_match = re.search(r'https?://[^\s]+', poi.description)
+                    poi.website = website_match.group(0) if website_match else None
         
         context = {
             'map_html': map_html,
-            'event_categories': event_categories,
+            'event_categories': poi_categories,
             'current_location': request.session.get('location_name', 'Milwaukee'),
             'current_radius': radius,
             'current_latitude': location[0],
@@ -346,7 +400,7 @@ class HomePage(SessionLoginRequiredMixin,View):
                 print("NO EVENTS")
         return redirect("homepage")
 
-    def get_events_within_radius(self, center_lat, center_lon, radius_miles):
+    def get_pois_within_radius(self, center_lat, center_lon, radius_miles):
         lat_change_per_mile = 1.0 / 69.0
         lon_change_per_mile = 1.0 / (69.0 * math.cos(math.radians(center_lat)))
 
@@ -355,24 +409,24 @@ class HomePage(SessionLoginRequiredMixin,View):
         min_lon = center_lon - (radius_miles * lon_change_per_mile)
         max_lon = center_lon + (radius_miles * lon_change_per_mile)
 
-        potential_events = Event.objects.filter(
+        potential_pois = POI.objects.filter(
             latitude__gte=min_lat,
             latitude__lte=max_lat,
             longitude__gte=min_lon,
             longitude__lte=max_lon
         )
-        logger.info(f"Found {potential_events.count()} potential events in bounding box for Haversine check.")
+        logger.info(f"Found {potential_pois.count()} potential POIs in bounding box for Haversine check.")
 
-        nearby_events = []
-        for event in potential_events:
-            distance = self.calculate_distance(center_lat, center_lon, event.latitude, event.longitude)
+        nearby_pois = []
+        for poi in potential_pois:
+            distance = self.calculate_distance(center_lat, center_lon, poi.latitude, poi.longitude)
             if distance <= radius_miles:
-                nearby_events.append(event)
+                nearby_pois.append(poi)
 
-        logger.info(f"Filtered down to {len(nearby_events)} events within precise radius.")
-        return nearby_events
-    #THIS IS TEMPORARY UNTIL WE HAVE SEPARATE EVENTS AND POIS!!!
-    def get_events_within_radius2(self, center_lat, center_lon, radius_miles,system_user):
+        logger.info(f"Filtered down to {len(nearby_pois)} POIs within precise radius.")
+        return nearby_pois
+
+    def get_events_within_radius2(self, center_lat, center_lon, radius_miles, system_user):
         lat_change_per_mile = 1.0 / 69.0
         lon_change_per_mile = 1.0 / (69.0 * math.cos(math.radians(center_lat)))
 
@@ -388,7 +442,7 @@ class HomePage(SessionLoginRequiredMixin,View):
             longitude__lte=max_lon,
 
         ).exclude(created_by=system_user)
-        logger.info(f"Found {potential_events.count()} potential events in bounding box for Haversine check.")
+        logger.info(f"Found {potential_events.count()} potential user events in bounding box for Haversine check.")
 
         nearby_events = []
         for event in potential_events:
@@ -396,7 +450,7 @@ class HomePage(SessionLoginRequiredMixin,View):
             if distance <= radius_miles:
                 nearby_events.append(event)
 
-        logger.info(f"Filtered down to {len(nearby_events)} events within precise radius.")
+        logger.info(f"Filtered down to {len(nearby_events)} user events within precise radius.")
         return nearby_events
     
     def calculate_distance(self, lat1, lon1, lat2, lon2):
@@ -424,7 +478,7 @@ class HomePage(SessionLoginRequiredMixin,View):
         
         return distance
 
-    def generate_map(self, center_lat, center_lon, radius_miles, events):
+    def generate_map(self, center_lat, center_lon, radius_miles, pois):
         m = folium.Map(location=[center_lat, center_lon], zoom_start=12)
         radius_in_meters = radius_miles * 1609.34
 
@@ -439,25 +493,25 @@ class HomePage(SessionLoginRequiredMixin,View):
         ).add_to(m)
         marker_cluster = MarkerCluster().add_to(m)
 
-        for event in events:
+        for poi in pois:
             try:
-                event_date_str = event.event_date.strftime('%B %d, %Y at %I:%M %p')
+                event_date_str = poi.event_date.strftime('%B %d, %Y at %I:%M %p')
             except AttributeError:
                 event_date_str = "Date not available"
 
             popup_html = f"""
             <div class="event-popup">
-                <h3>{event.title}</h3>
+                <h3>{poi.title}</h3>
                 <p><strong>Date:</strong> {event_date_str}</p>
-                <p><strong>Category:</strong> {event.category or 'N/A'}</p>
-                <p>{event.description or 'No description available.'}</p>
+                <p><strong>Category:</strong> {poi.category or 'N/A'}</p>
+                <p>{poi.description or 'No description available.'}</p>
             </div>
             """
 
             folium.Marker(
-                location=[event.latitude, event.longitude],
+                location=[poi.latitude, poi.longitude],
                 popup=folium.Popup(popup_html, max_width=300),
-                tooltip=event.title,
+                tooltip=poi.title,
                 icon=folium.Icon(icon="info-sign", prefix='fa', color="blue"),
             ).add_to(marker_cluster)
 
@@ -739,7 +793,7 @@ def fetch_and_save_events_api(request):
 
         logger.info(f"API endpoint called: Fetching events for lat={lat}, lon={lon}, radius={radius}")
         api_start_time = time.time()
-        features = fetch_events_from_api(lat, lon, radius, EVENT_API_KEY)
+        features = fetch_pois_from_api(lat, lon, radius, EVENT_API_KEY)
         api_end_time = time.time()
         logger.info(f"API fetch took {api_end_time - api_start_time:.2f} seconds.")
 
@@ -749,8 +803,8 @@ def fetch_and_save_events_api(request):
             logger.info("Starting bulk processing and saving/updating events...")
             start_time = time.time()
             num_processed = 0
-            events_to_create = []
-            events_to_update = []
+            pois_to_create = []
+            pois_to_update = []
             created_count = 0
             updated_count = 0
             update_fields = ['title', 'latitude', 'longitude', 'description', 'location_name', 'event_date', 'category', 'image_url']
@@ -765,8 +819,8 @@ def fetch_and_save_events_api(request):
             if not api_place_ids:
                  logger.info("No valid place_ids found in API response.")
             else:
-                existing_events = Event.objects.filter(place_id__in=api_place_ids).in_bulk(field_name='place_id')
-                logger.info(f"Found {len(existing_events)} existing events in DB for comparison.")
+                existing_pois = POI.objects.filter(place_id__in=api_place_ids).in_bulk(field_name='place_id')
+                logger.info(f"Found {len(existing_pois)} existing POIs in DB for comparison.")
 
                 for feature in features:
                     props = feature.get('properties', {})
@@ -866,21 +920,21 @@ def fetch_and_save_events_api(request):
                         
                         logger.info(f"Processing place: {title} | Categories: {api_categories} | Mapped to: {category_label}")
                         
-                        existing_event = existing_events.get(place_id)
+                        existing_poi = existing_pois.get(place_id)
 
-                        if existing_event:
+                        if existing_poi:
                             update_needed = False
                             for field in update_fields:
                                 new_value = locals().get(field)
                                 if field == 'event_date': new_value = timezone.now()
-                                if getattr(existing_event, field) != new_value:
-                                    setattr(existing_event, field, new_value)
+                                if getattr(existing_poi, field) != new_value:
+                                    setattr(existing_poi, field, new_value)
                                     update_needed = True
                             if update_needed:
-                                events_to_update.append(existing_event)
+                                pois_to_update.append(existing_poi)
                         else:
-                            events_to_create.append(
-                                Event(
+                            pois_to_create.append(
+                                POI(
                                     place_id=place_id,
                                     title=title,
                                     latitude=latitude,
@@ -899,26 +953,26 @@ def fetch_and_save_events_api(request):
                         continue
 
                 created_count = 0
-                if events_to_create:
+                if pois_to_create:
                     try:
-                        created_objs = Event.objects.bulk_create(events_to_create)
+                        created_objs = POI.objects.bulk_create(pois_to_create)
                         created_count = len(created_objs)
-                        logger.info(f"Bulk created {created_count} new events.")
+                        logger.info(f"Bulk created {created_count} new POIs.")
                     except Exception as e:
                         logger.error(f"Error during bulk_create: {e}")
 
                 updated_count = 0
-                if events_to_update:
+                if pois_to_update:
                     try:
-                        updated_count = Event.objects.bulk_update(events_to_update, update_fields)
-                        logger.info(f"Bulk updated {updated_count} existing events.")
+                        updated_count = POI.objects.bulk_update(pois_to_update, update_fields)
+                        logger.info(f"Bulk updated {updated_count} existing POIs.")
                     except Exception as e:
                         logger.error(f"Error during bulk_update: {e}")
 
 
             end_time = time.time()
             total_time = end_time - start_time
-            logger.info(f"Finished bulk processing {num_processed} events in {total_time:.2f} seconds.")
+            logger.info(f"Finished bulk processing {num_processed} POIs in {total_time:.2f} seconds.")
 
             logger.info(f"Updating SearchedArea: lat={lat}, lon={lon}, radius={radius}, has_events=True")
             SearchedArea.objects.update_or_create(
@@ -926,10 +980,10 @@ def fetch_and_save_events_api(request):
                 defaults={'has_events': True, 'last_checked': timezone.now()}
             )
 
-            logger.info(f"API endpoint: Saved {created_count} new events via bulk.")
+            logger.info(f"API endpoint: Saved {created_count} new POIs via bulk.")
             return JsonResponse({
                 'status': 'success',
-                'message': f'{created_count} new events found and saved.',
+                'message': f'{created_count} new POIs found and saved.',
                 'processed_count': num_processed
             })
         else:
@@ -940,10 +994,10 @@ def fetch_and_save_events_api(request):
                 latitude=lat, longitude=lon, radius=radius,
                 defaults={'has_events': False, 'last_checked': timezone.now()}
             )
-            logger.info("API endpoint: No events found or API error occurred.")
+            logger.info("API endpoint: No POIs found or API error occurred.")
             return JsonResponse({
                 'status': 'success',
-                'message': 'No new events found or API error occurred.',
+                'message': 'No new POIs found or API error occurred.',
                 'processed_count': 0
             })
 

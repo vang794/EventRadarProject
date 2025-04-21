@@ -1,7 +1,7 @@
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.utils import timezone
-from polls.models import User, Event
+from polls.models import User, POI, Event
 from bs4 import BeautifulSoup
 
 class MapAcceptanceTests(TestCase):
@@ -116,4 +116,4 @@ class MapAcceptanceTests(TestCase):
         map_html = soup.select_one('.map-container').decode_contents()
         
         for title in event_titles_in_list:
-            self.assertIn(title, map_html, f"Event '{title}' should appear in map HTML") 
+            self.assertIn(title, map_html, f"Event '{title}' should appear in map HTML")
