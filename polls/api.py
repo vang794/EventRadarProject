@@ -4,9 +4,12 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-def fetch_events_from_api(lat, lon, radius_miles, api_key):
+def fetch_pois_from_api(lat, lon, radius_miles, api_key):
     categories = [
-        'parking.cars',
+        'parking.cars.surface',
+        'parking.cars.multistorey',
+        'parking.cars.underground',
+        'parking.cars.rooftop',
         'tourism.attraction.artwork',
         'tourism.attraction.viewpoint',
         'tourism.attraction.fountain',
@@ -54,7 +57,7 @@ def fetch_events_from_api(lat, lon, radius_miles, api_key):
         'apiKey': api_key
     }
 
-    logger.info(f"Fetching events from Geoapify API. URL: {api_url}, Params: {params}")
+    logger.info(f"Fetching POIs from Geoapify API. URL: {api_url}, Params: {params}")
 
     try:
         response = requests.get(api_url, params=params)
