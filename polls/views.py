@@ -1125,3 +1125,7 @@ def fetch_place_details(place_id):
         logger.error(f"Failed to fetch place details: {e}")
     return None
 
+class EventPlan(UserRequiredMixin,View):
+    def get(self, request):
+
+        return render(request, "eventplan.html")
