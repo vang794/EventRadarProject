@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="Reworked homepage and implemented methods in views.">
+    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="Altering the models for the project">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/polls/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/polls/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/polls/migrations/0006_remove_event_place_id_poi.py" beforeDir="false" afterPath="$PROJECT_DIR$/polls/migrations/0006_remove_event_place_id_poi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/polls/migrations/0006_remove_user_groups_remove_user_is_active_and_more.py" beforeDir="false" afterPath="$PROJECT_DIR$/polls/migrations/0006_remove_user_groups_remove_user_is_active_and_more.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -401,7 +402,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745293623601</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Altering the models for the project">
+      <option name="closed" value="true" />
+      <created>1745294571711</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1745294571711</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -436,7 +445,8 @@
     <MESSAGE value="Updated some html and views" />
     <MESSAGE value="Reworked homepage and implemented methods in views." />
     <MESSAGE value="Implementing the event plan url and map" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implementing the event plan url and map" />
+    <MESSAGE value="Altering the models for the project" />
+    <option name="LAST_COMMIT_MESSAGE" value="Altering the models for the project" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
