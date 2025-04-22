@@ -3,9 +3,6 @@ import uuid
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-import polls.models
-
-
 # Create your models here.
 
 class Roles(models.TextChoices):
@@ -44,6 +41,16 @@ class POI(models.Model):
     def __str__(self):
         return self.title
 
+class EventType(models.TextChoices):
+    Festival = 'Festival', 'Festival'
+    Convention = 'Convention', 'Convention'
+    Business = 'Business', 'Business'
+    Concert = 'Concert', 'Concert'
+    Exhibition = 'Exhibition', 'Exhibition'
+    Recreational = 'Recreational', 'Recreational'
+    Social = 'Social', 'Social'
+    Misc = 'Misc', 'Misc'
+
 class Event(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     title = models.CharField(max_length=100)
@@ -54,7 +61,7 @@ class Event(models.Model):
     event_date = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='events')
-    category = models.CharField(max_length=50, blank=True, null=True)
+    category = models.CharField(max_length=50,choices=EventType.choices,blank=True, null=True)
     image_url = models.URLField(blank=True, null=True)
     
     def __str__(self):
@@ -86,3 +93,21 @@ class Application(models.Model):
 
     def __str__(self):
         return f"Application from {self.user.username} - Status: {self.get_status_display()}"
+
+class Plan(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="plans")
+    name = models.CharField(max_length=100, blank=True)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    events = models.ManyToManyField("Event", blank=True, related_name="plans")
+
+    def __str__(self):
+        return self.name or f"Plan from {self.start_date} to {self.end_date}"
+
+class Parking(models.Model):
+    events = models.ManyToManyField("Event", blank=True, related_name="parkings")
+    poi = models.ForeignKey("POI", related_name="parkings", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Parking at {self.poi.title}"

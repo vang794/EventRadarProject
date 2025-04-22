@@ -7,9 +7,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('polls', '0005_alter_user_password_alter_user_role_application'),
-    ]
+
 
     operations = [
         migrations.RemoveField(
