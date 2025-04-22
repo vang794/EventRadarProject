@@ -27,7 +27,7 @@ class User(models.Model):
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.role})"
 
-class Event(models.Model):
+class POI(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     place_id = models.CharField(max_length=255, unique=True, null=True, blank=True, help_text="Unique ID from the data source (e.g., Geoapify place_id)")
     title = models.CharField(max_length=100)
@@ -37,8 +37,23 @@ class Event(models.Model):
     longitude = models.FloatField()
     event_date = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='events')
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='pois')
+    category = models.CharField(max_length=50, blank=True, null=True)
+    image_url = models.URLField(blank=True, null=True)
     
+    def __str__(self):
+        return self.title
+
+class Event(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    location_name = models.CharField(max_length=100)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    event_date = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='events')
     category = models.CharField(max_length=50, blank=True, null=True)
     image_url = models.URLField(blank=True, null=True)
     

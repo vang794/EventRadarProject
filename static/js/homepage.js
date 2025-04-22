@@ -146,22 +146,24 @@ function initMap() {
       });
 
       const headerEl = card.querySelector('.event-header');
-      headerEl.addEventListener('click', () => {
-        toggleEventDetails(card.getAttribute('data-event-id'));
-        window.map.setView([lat, lng], 18);
-        marker.openPopup();
-        if (window.selectedMarker && window.selectedMarker !== marker) {
-          if (window.selectedMarker.normalIcon) {
-            window.selectedMarker.setIcon(window.selectedMarker.normalIcon);
+      if (headerEl) {
+        headerEl.addEventListener('click', () => {
+          toggleEventDetails(card.getAttribute('data-event-id'));
+          window.map.setView([lat, lng], 18);
+          marker.openPopup();
+          if (window.selectedMarker && window.selectedMarker !== marker) {
+            if (window.selectedMarker.normalIcon) {
+              window.selectedMarker.setIcon(window.selectedMarker.normalIcon);
+            }
+            if (window.selectedMarker.cardEl) {
+              window.selectedMarker.cardEl.classList.remove('selected-event');
+            }
           }
-          if (window.selectedMarker.cardEl) {
-            window.selectedMarker.cardEl.classList.remove('selected-event');
-          }
-        }
-        window.selectedMarker = marker;
-        marker.setIcon(makeEnlargedDivIconForCategory(category));
-        card.classList.add('selected-event');
-      });
+          window.selectedMarker = marker;
+          marker.setIcon(makeEnlargedDivIconForCategory(category));
+          card.classList.add('selected-event');
+        });
+      }
 
       markersCluster.addLayer(marker);
     }
@@ -300,10 +302,14 @@ function hideLoadingOverlay() {
 }
 
 function toggleEventDetails(eventId) {
+  document.querySelectorAll('.event-details').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.event-card').forEach(el => el.classList.remove('selected-event'));
+
   const detailsElement = document.getElementById(`event-details-${eventId}`);
-  if (!detailsElement) return;
-  const isVisible = (detailsElement.style.display === 'block');
-  detailsElement.style.display = isVisible ? 'none' : 'block';
+  const card = document.querySelector(`[data-event-id="${eventId}"]`);
+  if (!detailsElement || !card) return;
+  detailsElement.style.display = 'block';
+  card.classList.add('selected-event');
 }
 
 function showCategory(slug) {
@@ -319,6 +325,19 @@ function showCategory(slug) {
   const clickedTab = document.querySelector('.category-tab-' + slug);
   if (clickedTab) clickedTab.classList.add('active');
 }
+
+function showSidebarTab(tab) {
+  document.querySelectorAll('.sidebar-tab').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.sidebar-tab-content').forEach(div => div.style.display = 'none');
+  if (tab === 'user-events') {
+    document.querySelector('.sidebar-tab').classList.add('active');
+    document.getElementById('sidebar-user-events').style.display = 'block';
+  } else {
+    document.querySelectorAll('.sidebar-tab')[1].classList.add('active');
+    document.getElementById('sidebar-pois').style.display = 'block';
+  }
+}
+window.showSidebarTab = showSidebarTab;
 
 window.toggleEventDetails = toggleEventDetails;
 window.showCategory = showCategory;
