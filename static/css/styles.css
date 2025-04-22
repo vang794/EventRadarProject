@@ -1090,3 +1090,79 @@ ul.messages li.error {
 .view-landmark-btn:hover {
     background-color: #6429c8;
 }
+
+/* Style for Eventplan */
+ .plan-wrapper {
+    width: 800px;
+    border: 2px solid #C0C0C0;
+    border-radius: 25px;
+    overflow: hidden; /* Smooth rounded edges */
+    background-color: #f9f9f9;
+  }
+
+  /* Plan title bar */
+  .plan-title {
+    background-color: #C0C0C0; /* Different color than event title */
+    color: black;
+    text-align: center;
+    padding: 15px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  /* Scrollable plan container */
+  #plan-container {
+    padding: 20px;
+    height: 250px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
+
+  /* Scrollable content */
+  .scrollplan {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+
+
+  /* Scrollable content wrapper */
+  .scrollplan {
+    display: flex;
+    flex-direction: row; /* Row instead of column */
+    gap: 20px; /* Space between events */
+  }
+
+  /* Individual event container */
+  .event-container {
+    border-radius: 25px;
+    border: 2px solid #4a2b7a;
+    width: 200px;
+    min-width: 200px; /* Important for horizontal scroll */
+    overflow: hidden;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Stretch to fit the container height */
+  }
+
+  /* Event title section */
+  .event-title {
+    background-color: #4a2b7a;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+
+  /* Event body section */
+  .event-body {
+    flex: 3;
+    padding: 10px;
+    background-color: #eee;
+  }
