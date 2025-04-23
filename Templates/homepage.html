@@ -59,8 +59,11 @@
       <a href="{% url 'application' %}" class="settings-btn" id="event-app-btn">
         <i class="fa fa-file-text"></i> Event Manager Application
       </a>
-      <a href="{% url 'event_plan' %}" class="settings-btn" id="event-app-btn">
-        <i class="fa fa-calendar"></i> Create a Plan
+      <a href="{% url 'event_plan' %}" class="settings-btn" id="event-plan-btn">
+        <i class="fa fa-calendar"></i> Manage Plans
+      </a>
+      <a href="{% url 'my_plans' %}" class="settings-btn" id="my-plans-btn">
+        <i class="fa fa-folder-open"></i> View My Plans
       </a>
       <a href="#" class="settings-btn" onclick="openWeatherOverlay()">
         <i class="fas fa-cloud"></i> Weather
@@ -156,6 +159,10 @@
                 {% if event.id|stringformat:"s"|length == 36 %}
                   <a href="{% url 'event_details_page' event.id %}" class="view-landmark-btn">View Details</a>
                 {% endif %}
+                <button class="btn btn-outline-primary btn-sm add-to-plan-btn"
+                        onclick="event.stopPropagation(); showAddToPlanModal('event', '{{ event.id }}');">
+                  Add to Plan
+                </button>
               </div>
             </div>
             {% endfor %}
@@ -206,6 +213,10 @@
                         </p>
                       {% endif %}
                       <a href="{% url 'event_details_page' event.id %}" class="view-landmark-btn">View Landmark</a>
+                      <button class="btn btn-outline-primary btn-sm add-to-plan-btn"
+                              onclick="event.stopPropagation(); showAddToPlanModal('poi', '{{ event.id }}');">
+                        Add to Plan
+                      </button>
                     </div>
                   </div>
                 {% endfor %}
@@ -218,6 +229,8 @@
       </div>
     </div>
   </div>
+
+  <div id="addToPlanModal" style="display:none"></div>
 
   <script
     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"

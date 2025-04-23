@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Plans</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="logo-container">
+        <img id="logo" src="{% static 'media/eventradar_logo2.png' %}" alt="Event Radar Logo">
+    </div>
+    <div style="text-align: right; margin: 10px 30px 0 0;">
+        <a href="{% url 'homepage' %}" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    </div>
+    <div class="planner-form-wrapper" style="max-width:500px;margin:30px auto;">
+        <form method="get" action="{% url 'my_plans' %}">
+            <div class="form-group">
+                <label for="plan_id">Select a Plan:</label>
+                <select name="plan_id" id="plan_id" onchange="this.form.submit()">
+                    <option value="">-- Choose a Plan --</option>
+                    {% for plan in plans %}
+                        <option value="{{ plan.id }}" {% if selected_plan and plan.id == selected_plan.id %}selected{% endif %}>
+                            {{ plan.name }} ({{ plan.start_date }} - {{ plan.end_date }})
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+    </div>
+    {% if selected_plan %}
+        <div class="plan" style="max-width:700px;margin:0 auto;">
+            <div class="plan__title-bar">
+                <span class="plan__title">{{ selected_plan.name }}</span>
+            </div>
+            <div class="plan__content-wrapper" style="display:block;">
+                <div class="plan__content">
+                    <div class="scrollplan">
+                        {% if selected_plan.events.all %}
+                            {% for event in selected_plan.events.all %}
+                                <div class="event-container">
+                                    <div class="event-title">{{ event.title }}</div>
+                                    <div class="event-body">
+                                        <p><strong>User:</strong> {{ event.created_by.username }}</p>
+                                        <p><strong>Category:</strong> {{ event.category }}</p>
+                                        <p><strong>Start Date:</strong> {{ event.start_date|date:"F j, Y" }} at {{ event.start_date|date:"g:i A" }}</p>
+                                        <p><strong>End Date:</strong> {{ event.end_date|date:"F j, Y" }} at {{ event.end_date|date:"g:i A" }}</p>
+                                        <p><strong>Location:</strong> {{ event.location_name }}</p>
+                                        <p><strong>Description:</strong> {{ event.description }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        {% if selected_plan.pois.all %}
+                            {% for poi in selected_plan.pois.all %}
+                                <div class="event-container">
+                                    <div class="event-title">{{ poi.title }}</div>
+                                    <div class="event-body">
+                                        <p><strong>Category:</strong> {{ poi.category }}</p>
+                                        <p><strong>Date:</strong> {{ poi.event_date|date:"F j, Y" }} at {{ poi.event_date|date:"g:i A" }}</p>
+                                        <p><strong>Location:</strong> {{ poi.location_name }}</p>
+                                        <p><strong>Description:</strong> {{ poi.description }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        {% if not selected_plan.events.all and not selected_plan.pois.all %}
+                            <p>No events or POIs in this plan yet.</p>
+                        {% endif %}
+                        <div class="scroll-spacer"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</body>
+</html>

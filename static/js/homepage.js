@@ -36,6 +36,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 window.selectedMarker = null;
 
+let parkingMarkers = [];
+let nonParkingMarkers = [];
+
 function getCategoryIcon(category) {
   const c = (category || '').toLowerCase();
   if (c.includes('activity park')) return 'fa-person-running';
@@ -105,6 +108,9 @@ function initMap() {
   const markersCluster = L.markerClusterGroup();
   window.markersCluster = markersCluster;
 
+  parkingMarkers = [];
+  nonParkingMarkers = [];
+
   const eventCards = document.querySelectorAll('.event-card');
   eventCards.forEach((card) => {
     const lat = parseFloat(card.getAttribute('data-latitude'));
@@ -145,6 +151,13 @@ function initMap() {
         }
       });
 
+      if ((category || '').toLowerCase() === 'parking') {
+        parkingMarkers.push(marker);
+      } else {
+        nonParkingMarkers.push(marker);
+        markersCluster.addLayer(marker);
+      }
+
       const headerEl = card.querySelector('.event-header');
       if (headerEl) {
         headerEl.addEventListener('click', () => {
@@ -164,8 +177,6 @@ function initMap() {
           card.classList.add('selected-event');
         });
       }
-
-      markersCluster.addLayer(marker);
     }
   });
 
@@ -324,6 +335,20 @@ function showCategory(slug) {
   allTabs.forEach(t => t.classList.remove('active'));
   const clickedTab = document.querySelector('.category-tab-' + slug);
   if (clickedTab) clickedTab.classList.add('active');
+
+  if (slug === 'parking') {
+    parkingMarkers.forEach(marker => {
+      if (!window.markersCluster.hasLayer(marker)) {
+        window.markersCluster.addLayer(marker);
+      }
+    });
+  } else {
+    parkingMarkers.forEach(marker => {
+      if (window.markersCluster.hasLayer(marker)) {
+        window.markersCluster.removeLayer(marker);
+      }
+    });
+  }
 }
 
 function showSidebarTab(tab) {
@@ -341,3 +366,75 @@ window.showSidebarTab = showSidebarTab;
 
 window.toggleEventDetails = toggleEventDetails;
 window.showCategory = showCategory;
+
+function showAddToPlanModal(itemType, itemId) {
+  let modal = document.getElementById('addToPlanModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'addToPlanModal';
+    modal.style.display = 'none';
+    document.body.appendChild(modal);
+  }
+
+  fetch('/api/get_user_plans/')
+    .then(res => res.json())
+    .then(data => {
+      if (!data.plans || data.plans.length === 0) {
+        alert('You must create a plan before adding items.');
+        window.location.href = '/event_plan/';
+        return;
+      }
+      modal.innerHTML = `
+        <div style="background:#fff;max-width:400px;margin:10vh auto;padding:24px;border-radius:8px;position:relative;box-shadow:0 2px 12px rgba(0,0,0,0.15)">
+          <h3 style="margin-top:0;">Select a Plan</h3>
+          <select id="planSelect" style="width:100%;padding:8px 6px;border-radius:6px;border:1px solid #ccc;">
+            ${data.plans.map(plan =>
+              `<option value="${plan.id}">${plan.name} (${plan.start_date} - ${plan.end_date})</option>`
+            ).join('')}
+          </select>
+          <div style="margin-top:16px;text-align:right;">
+            <button id="confirmAddToPlan" class="btn btn-primary">Add</button>
+            <button id="cancelAddToPlan" class="btn btn-outline" style="margin-left:8px;">Cancel</button>
+          </div>
+        </div>
+      `;
+      modal.style.position = 'fixed';
+      modal.style.top = '0';
+      modal.style.left = '0';
+      modal.style.width = '100vw';
+      modal.style.height = '100vh';
+      modal.style.background = 'rgba(0,0,0,0.4)';
+      modal.style.zIndex = '9999';
+      modal.style.display = 'block';
+
+      modal.querySelector('#cancelAddToPlan').onclick = () => { modal.style.display = 'none'; };
+      modal.querySelector('#confirmAddToPlan').onclick = () => {
+        const planId = modal.querySelector('#planSelect').value;
+        addToPlan(planId, itemType, itemId, modal);
+      };
+      modal.onclick = function(e) {
+        if (e.target === modal) modal.style.display = 'none';
+      };
+    });
+}
+
+function addToPlan(planId, itemType, itemId, modal) {
+  const csrfToken = getCsrfToken();
+  fetch('/api/add_to_plan/', {
+    method: 'POST',
+    headers: {
+      'X-CSRFToken': csrfToken,
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: `plan_id=${encodeURIComponent(planId)}&item_type=${encodeURIComponent(itemType)}&item_id=${encodeURIComponent(itemId)}`
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      alert('Added to plan!');
+      if (modal) modal.style.display = 'none';
+    } else {
+      alert('Failed to add to plan: ' + (data.error || 'Unknown error'));
+    }
+  });
+}

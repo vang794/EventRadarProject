@@ -102,6 +102,7 @@ class Plan(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     events = models.ManyToManyField("Event", blank=True, related_name="plans")
+    pois = models.ManyToManyField("POI", blank=True, related_name="plans")
 
     def __str__(self):
         return self.name or f"Plan from {self.start_date} to {self.end_date}"

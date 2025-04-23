@@ -66,6 +66,7 @@ import math
 from django.db.models import Max
 import time
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -199,65 +200,15 @@ class HomePage(SessionLoginRequiredMixin,View):
                 role="Admin"
             )
 
-        #checking user made events in dates
-        user_events=self.get_events_within_radius2(location[0],location[1],radius,system_user)
+        user_events = self.get_events_within_radius2(location[0], location[1], radius, system_user)
 
-        if not user_events:
-            now = timezone.now()
-            user_events = [
-                type('Event', (), {
-                    'id': 'placeholder-1',
-                    'title': 'Music in the Park',
-                    'description': 'Enjoy live music at Cathedral Square Park.',
-                    'location_name': 'Cathedral Square Park, Milwaukee, WI',
-                    'latitude': 43.0437,
-                    'longitude': -87.9065,
-                    'event_date': now + timedelta(days=2, hours=18),
-                    'category': 'Music',
-                })(),
-                type('Event', (), {
-                    'id': 'placeholder-2',
-                    'title': 'Food Festival',
-                    'description': 'Sample delicious foods from local vendors.',
-                    'location_name': 'Milwaukee Public Market, Milwaukee, WI',
-                    'latitude': 43.0336,
-                    'longitude': -87.9076,
-                    'event_date': now + timedelta(days=5, hours=12),
-                    'category': 'Festival',
-                })(),
-                type('Event', (), {
-                    'id': 'placeholder-3',
-                    'title': 'Art Exhibition',
-                    'description': 'See works from local artists.',
-                    'location_name': 'Milwaukee Art Museum, Milwaukee, WI',
-                    'latitude': 43.0392,
-                    'longitude': -87.8977,
-                    'event_date': now + timedelta(days=7, hours=15),
-                    'category': 'Art',
-                })(),
-                type('Event', (), {
-                    'id': 'placeholder-4',
-                    'title': 'Tech Meetup',
-                    'description': 'Networking for tech professionals.',
-                    'location_name': 'Ward4, Milwaukee, WI',
-                    'latitude': 43.0389,
-                    'longitude': -87.9065,
-                    'event_date': now + timedelta(days=10, hours=18),
-                    'category': 'Networking',
-                })(),
-            ]
-        #check is user event is between start or end date
         if start_date and end_date:
             user_events = [event for event in user_events if start_date <= event.event_date <= end_date]
-            print(user_events)
         elif start_date:
             user_events = [event for event in user_events if event.event_date >= start_date]
-            print(user_events)
         elif end_date:
             user_events = [event for event in user_events if event.event_date <= end_date]
-            print(user_events)
-        else:
-            user_events = user_events
+        # else: user_events already filtered by radius
 
         categorized_pois = {}
         for poi in pois:
@@ -493,7 +444,11 @@ class HomePage(SessionLoginRequiredMixin,View):
         ).add_to(m)
         marker_cluster = MarkerCluster().add_to(m)
 
+        # Only show non-parking POIs by default
         for poi in pois:
+            if (poi.category or '').lower() == 'parking':
+                continue  # Skip parking POIs for default map display
+
             try:
                 event_date_str = poi.event_date.strftime('%B %d, %Y at %I:%M %p')
             except AttributeError:
@@ -1125,29 +1080,197 @@ def fetch_place_details(place_id):
         logger.error(f"Failed to fetch place details: {e}")
     return None
 
-class EventPlan(SessionLoginRequiredMixin,View):
+class EventPlan(SessionLoginRequiredMixin, View):
     def get(self, request):
         email = request.session.get("email")
         user = User.objects.get(email=email)  # Find user by email
         plans = Plan.objects.filter(user=user).prefetch_related('events')
+        user_plans = plans
         return render(request, "eventplan.html", {
-            'plans': plans
+            'plans': plans,
+            'user_plans': user_plans,
         })
+
     def post(self, request):
-        #If create form
-        #title = request.POST.get('create_name','')
-        #start_date_str = request.POST.get('start_date_str')
-        #end_date_str = request.POST.get('end_date_str')
+        email = request.session.get("email")
+        user = User.objects.get(email=email)
+        plans = Plan.objects.filter(user=user).prefetch_related('events')
+        user_plans = plans
 
+        # Handle create form
+        if "create_name" in request.POST:
+            name = request.POST.get("create_name", "").strip()
+            start_date_str = request.POST.get("start_date_str", "").strip()
+            end_date_str = request.POST.get("end_date_str", "").strip()
+            error = None
 
+            if not name or not start_date_str or not end_date_str:
+                error = "All fields are required."
+            else:
+                try:
+                    start_date = datetime.strptime(start_date_str, "%Y-%m-%d").date()
+                    end_date = datetime.strptime(end_date_str, "%Y-%m-%d").date()
+                    if start_date > end_date:
+                        error = "Start date must be before or equal to end date."
+                except ValueError:
+                    error = "Invalid date format."
 
-        # If edit form
-        # plan_id = request.POST.get('selected_plan')
-        # new_title = request.POST.get('edit_name')
-        # start_date_str = request.POST.get('edit_start_date')
-        # end_date_str = request.POST.get('edit_end_date')
+            if not error:
+                Plan.objects.create(
+                    user=user,
+                    name=name,
+                    start_date=start_date,
+                    end_date=end_date
+                )
+                plans = Plan.objects.filter(user=user).prefetch_related('events')
+                user_plans = plans
+                return render(request, "eventplan.html", {
+                    'plans': plans,
+                    'user_plans': user_plans,
+                    'success': "Plan created successfully!"
+                })
+            else:
+                return render(request, "eventplan.html", {
+                    'plans': plans,
+                    'user_plans': user_plans,
+                    'error': error
+                })
 
-        #If delete form
-        #plan_id = request.POST.get('del_selected')
+        # Handle edit form
+        elif "edit_name" in request.POST:
+            plan_id = request.POST.get("selected_plan")
+            new_name = request.POST.get("edit_name", "").strip()
+            new_start = request.POST.get("edit_start_date", "").strip()
+            new_end = request.POST.get("edit_end_date", "").strip()
+            error = None
 
-     return render(request, "eventplan.html", {"error": "Invalid message"})
+            if not plan_id or not new_name or not new_start or not new_end:
+                error = "All fields are required."
+            else:
+                try:
+                    plan = Plan.objects.get(id=plan_id, user=user)
+                    start_date = datetime.strptime(new_start, "%Y-%m-%d").date()
+                    end_date = datetime.strptime(new_end, "%Y-%m-%d").date()
+                    if start_date > end_date:
+                        error = "Start date must be before or equal to end date."
+                    else:
+                        plan.name = new_name
+                        plan.start_date = start_date
+                        plan.end_date = end_date
+                        plan.save()
+                except Plan.DoesNotExist:
+                    error = "Plan not found."
+                except ValueError:
+                    error = "Invalid date format."
+
+            plans = Plan.objects.filter(user=user).prefetch_related('events')
+            user_plans = plans
+            if not error:
+                return render(request, "eventplan.html", {
+                    'plans': plans,
+                    'user_plans': user_plans,
+                    'success': "Plan updated successfully!",
+                    'edit_mode': True
+                })
+            else:
+                return render(request, "eventplan.html", {
+                    'plans': plans,
+                    'user_plans': user_plans,
+                    'error': error,
+                    'edit_mode': True
+                })
+
+        # Handle delete form
+        elif "del_selected" in request.POST:
+            plan_id = request.POST.get("del_selected")
+            error = None
+            if not plan_id:
+                error = "Please select a plan to delete."
+            else:
+                try:
+                    plan = Plan.objects.get(id=plan_id, user=user)
+                    plan.delete()
+                except Plan.DoesNotExist:
+                    error = "Plan not found."
+
+            plans = Plan.objects.filter(user=user).prefetch_related('events')
+            user_plans = plans
+            if not error:
+                return render(request, "eventplan.html", {
+                    'plans': plans,
+                    'user_plans': user_plans,
+                    'success': "Plan deleted successfully!",
+                    'delete_mode': True
+                })
+            else:
+                return render(request, "eventplan.html", {
+                    'plans': plans,
+                    'user_plans': user_plans,
+                    'error': error,
+                    'delete_mode': True
+                })
+
+        # Fallback
+        return render(request, "eventplan.html", {
+            'plans': plans,
+            'user_plans': user_plans,
+            'error': "Invalid message"
+        })
+
+@csrf_exempt
+@require_POST
+def add_to_plan(request):
+    """
+    Add a POI or Event to a user's plan.
+    POST data: plan_id, item_type ('poi' or 'event'), item_id
+    """
+    user_email = request.session.get("email")
+    if not user_email:
+        return JsonResponse({'success': False, 'error': 'Not authenticated'}, status=403)
+    user = User.objects.get(email=user_email)
+    plan_id = request.POST.get('plan_id')
+    item_type = request.POST.get('item_type')
+    item_id = request.POST.get('item_id')
+    if not (plan_id and item_type and item_id):
+        return JsonResponse({'success': False, 'error': 'Missing data'}, status=400)
+    try:
+        plan = Plan.objects.get(id=plan_id, user=user)
+        if item_type == 'event':
+            event = Event.objects.get(id=item_id)
+            plan.events.add(event)
+        elif item_type == 'poi':
+            poi = POI.objects.get(id=item_id)
+            plan.pois.add(poi)
+        else:
+            return JsonResponse({'success': False, 'error': 'Invalid item type'}, status=400)
+        return JsonResponse({'success': True})
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)}, status=400)
+
+@login_required
+def get_user_plans(request):
+    user_email = request.session.get("email")
+    if not user_email:
+        return JsonResponse({'success': False, 'error': 'Not authenticated'}, status=403)
+    user = User.objects.get(email=user_email)
+    plans = Plan.objects.filter(user=user)
+    return JsonResponse({
+        'plans': [
+            {'id': str(plan.id), 'name': plan.name, 'start_date': str(plan.start_date), 'end_date': str(plan.end_date)}
+            for plan in plans
+        ]
+    })
+
+class MyPlansView(SessionLoginRequiredMixin, View):
+    def get(self, request):
+        email = request.session.get("email")
+        user = User.objects.get(email=email)
+        plans = Plan.objects.filter(user=user).prefetch_related('events', 'pois')
+        selected_plan_id = request.GET.get('plan_id')
+        selected_plan = None
+        if selected_plan_id:
+            selected_plan = plans.filter(id=selected_plan_id).first()
+        return render(request, "myplans.html", {
+            'plans': plans,
+            'selected_plan': selected_plan,
+        })
