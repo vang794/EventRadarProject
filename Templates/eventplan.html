@@ -185,7 +185,9 @@
                                         <div class="event-title">{{ event.title }}</div>
                                         <div class="event-body">
                                             <p><strong>User:</strong> {{ event.created_by.username }}</p>
-                                            <p><strong>Date:</strong> {{ event.start_date|date:"F j, Y" }} at {{ event.start_date|date:"g:i A" }}</p>
+                                            <p><strong>Category:</strong> {{ event.category }}</p>
+                                            <p><strong>Start Date:</strong> {{ event.start_date|date:"F j, Y" }} at {{ event.start_date|date:"g:i A" }}</p>
+                                            <p><strong>End Date:</strong> {{ event.end_date|date:"F j, Y" }} at {{ event.end_date|date:"g:i A" }}</p>
                                             <p><strong>Location:</strong> {{ event.location_name }}</p>
                                             <p><strong>Description:</strong> {{ event.description }}</p>
                                         </div>

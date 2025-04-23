@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="edited the html, added butto to homepage, added more css, added notes for views">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/polls/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/polls/views.py" afterDir="false" />
+    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="reworked views to add notes">
+      <change beforePath="$PROJECT_DIR$/Templates/eventplan.html" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/eventplan.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -445,7 +444,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745398497896</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="reworked views to add notes">
+      <option name="closed" value="true" />
+      <created>1745400879433</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1745400879433</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -486,7 +493,8 @@
     <MESSAGE value="created java script for expanding a tab, edited the html and css of page and added temporary form" />
     <MESSAGE value="edited html and css, include javascript for switching between forms" />
     <MESSAGE value="edited the html, added butto to homepage, added more css, added notes for views" />
-    <option name="LAST_COMMIT_MESSAGE" value="edited the html, added butto to homepage, added more css, added notes for views" />
+    <MESSAGE value="reworked views to add notes" />
+    <option name="LAST_COMMIT_MESSAGE" value="reworked views to add notes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
