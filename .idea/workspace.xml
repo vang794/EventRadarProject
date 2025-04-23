@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="Altering the models for the project">
+    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="created java script for expanding a tab, edited the html and css of page and added temporary form">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Templates/eventplan.html" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/eventplan.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/styles.css" afterDir="false" />
@@ -422,7 +422,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745361970348</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="created java script for expanding a tab, edited the html and css of page and added temporary form">
+      <option name="closed" value="true" />
+      <created>1745388946245</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1745388946245</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -460,7 +468,8 @@
     <MESSAGE value="Altering the models for the project" />
     <MESSAGE value="Make new migrations to include start and end date" />
     <MESSAGE value="git merge main" />
-    <option name="LAST_COMMIT_MESSAGE" value="git merge main" />
+    <MESSAGE value="created java script for expanding a tab, edited the html and css of page and added temporary form" />
+    <option name="LAST_COMMIT_MESSAGE" value="created java script for expanding a tab, edited the html and css of page and added temporary form" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

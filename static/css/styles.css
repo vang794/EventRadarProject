@@ -1206,3 +1206,31 @@ ul.messages li.error {
     align-items: center;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
+.planner-form-wrapper {
+  width: 500px;
+  margin: 50px auto;
+  border: 3px solid rebeccapurple;
+  border-radius: 0 0 10px 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.planner-form-title {
+  background-color: rebeccapurple;
+  color: white;
+  padding: 12px 20px;
+  font-size: 1.2em;
+  text-align: center;
+  font-weight: bold;
+}
+
+.planner-form-box {
+  padding: 20px;
+  background-color: white;
+}
+
+.btn-edit {
+    background: #b5b3b3;
+    color: white;
+}
