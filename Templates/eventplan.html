@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>Event Radar - Event Planning</title>
+    <meta id="user_role" data-role="{{ user_role|default:'User' }}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/overlay.css' %}">
+</head>
+<body>
+    <div id="planner-top-header">
+        <div class="logo-container">
+            <img id="logo" src="{% static 'media/eventradar_logo2.png' %}" alt="Event Radar Logo">
+        </div>
+
+        <!-- create form-->
+        <div id="create-form">
+            <div class="planner-form-wrapper">
+                <div class="planner-form-title">
+                    Create a New Plan
+                </div>
+                <div class="planner-form-box">
+                    <form method="post">
+                        {% csrf_token %}
+                        <!-- Name Input -->
+                        <div class="form-group">
+                            <label for="create_name">Title:</label>
+                            <input type="text" id="create_name" name="create_name" required>
+                        </div>
+
+                        <div>
+                            <label for="start_date_str">Start Date</label>
+                            <input type="date" id="start_date_str" name="start_date_str"
+                                   value="{{ event_date1|default:'Start Date' }}">
+                        </div>
+
+                        <div>
+                            <label for="end_date_str">End Date</label>
+                            <input type="date" id="end_date_str" name="end_date_str"
+                                   value="{{ event_date2|default:'End Date' }}">
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="form-group">
+                            <input type="submit" value="Create a new Plan">
+                        </div>
+
+                        {% if error %}
+                            <div class="error">
+                                <p>{{ error }}</p>
+                            </div>
+                        {% endif %}
+
+                        <button type="button" class="btn btn-edit" onclick="showForm('edit')">Edit a Plan</button>
+                        <button type="button" class="btn btn-danger" onclick="showForm('delete')">Delete a Plan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- edit form-->
+        <div id="edit-form" style="display:none;">
+            <div class="planner-form-wrapper">
+                <div class="planner-form-title">
+                    Edit a Plan
+                </div>
+                <div class="planner-form-box">
+                    <form method="post">
+                        {% csrf_token %}
+                        <!-- Choose the plan -->
+                        <div class="form-group">
+                            <label for="selected_plan">Choose a Plan:</label>
+                            <select id="selected_plan" name="selected_plan" required>
+                                <option value="">-- Select a Plan --</option>
+                                {% for plan in user_plans %}
+                                    <option value="{{ plan.id }}">
+                                        {{ plan.name }} ({{ plan.start_date }} - {{ plan.end_date }})
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <!-- Name Input -->
+                        <div class="form-group">
+                            <label for="edit_name">Title:</label>
+                            <input type="text" id="edit_name" name="edit_name" required>
+                        </div>
+
+                        <div>
+                            <label for="edit_start_date">Start Date</label>
+                            <input type="date" id="edit_start_date" name="edit_start_date"
+                                   value="{{ event_date1_1|default:'Start Date' }}">
+                        </div>
+
+                        <div>
+                            <label for="end_date_str">End Date</label>
+                            <input type="date" id="end_date_str" name="end_date_str"
+                                   value="{{ event_date2_1|default:'End Date' }}">
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="form-group">
+                            <input type="submit" value="Edit Plan">
+                        </div>
+
+                        {% if error %}
+                            <div class="error">
+                                <p>{{ error }}</p>
+                            </div>
+                        {% endif %}
+
+                        <!-- Create Button -->
+                        <button type="button" onclick="showForm('create')" class="btn btn-edit">Create a Plan</button>
+
+                        <!-- Delete Button -->
+                        <button type="button" onclick="showForm('delete')" class="btn btn-danger">Delete a Plan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- delete form-->
+        <div id="delete-form" style="display:none;">
+            <div class="planner-form-wrapper">
+                <div class="planner-form-title">
+                    Delete a Plan
+                </div>
+                <div class="planner-form-box">
+                    <form method="post">
+                        {% csrf_token %}
+                        <!-- Choose the plan -->
+                        <div class="form-group">
+                            <label for="del_selected">Choose a Plan:</label>
+                            <select id="del_selected" name="del_selected" required>
+                                <option value="">-- Select a Plan --</option>
+                                {% for plan in user_plans %}
+                                    <option value="{{ plan.id }}">
+                                        {{ plan.name }} ({{ plan.start_date }} - {{ plan.end_date }})
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <!-- Submit Button -->
+                        <div class="form-group">
+                            <input type="submit" value="Delete Plan">
+                        </div>
+
+                        {% if error %}
+                            <div class="error">
+                                <p>{{ error }}</p>
+                            </div>
+                        {% endif %}
+
+                        <!-- Create Button -->
+                        <button type="button" onclick="showForm('create')" class="btn btn-edit">Create a Plan</button>
+
+                        <!-- Edit Button -->
+                        <button type="button" onclick="showForm('edit')" class="btn btn-edit">Edit a Plan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!--loading of plans-->
+        <div class="page-wrapper">
+            {% if plans %}
+                {% for plan in plans %}
+                    <div class="plan">
+                        <div class="plan__title-bar">
+                            <span class="plan__title">{{ plan.name }}</span>
+                            <ion-icon class="plan__icon" name="chevron-back-outline"></ion-icon>
+                        </div>
+                        <div class="plan__content-wrapper">
+                            <div class="plan__content">
+                                <div class="scrollplan">
+                                    {% if plan.events.all %}
+                                        {% for event in plan.events.all %}
+                                            <div class="event-container">
+                                                <div class="event-title">{{ event.title }}</div>
+                                                <div class="event-body">
+                                                    <p><strong>User:</strong> {{ event.created_by.username }}</p>
+                                                    <p><strong>Category:</strong> {{ event.category }}</p>
+                                                    <p><strong>Start Date:</strong> {{ event.start_date|date:"F j, Y" }} at {{ event.start_date|date:"g:i A" }}</p>
+                                                    <p><strong>End Date:</strong> {{ event.end_date|date:"F j, Y" }} at {{ event.end_date|date:"g:i A" }}</p>
+                                                    <p><strong>Location:</strong> {{ event.location_name }}</p>
+                                                    <p><strong>Description:</strong> {{ event.description }}</p>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% else %}
+                                        <p>No events in this plan yet.</p>
+                                    {% endif %}
+                                    <div class="scroll-spacer"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>You don't have any plans yet.</p>
+            {% endif %}
+        </div>
+
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+        <script src="{% static 'js/expand.js' %}"></script>
+        <script src="{% static 'js/eventplanbtn.js' %}"></script>
+</body>
+</html>
