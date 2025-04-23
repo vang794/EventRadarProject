@@ -136,8 +136,8 @@
             {% csrf_token %}
             <!-- Choose the plan -->
             <div class="form-group">
-                <label for="selected_plan">Choose a Plan:</label>
-                <select id="selected_plan" name="selected_plan" required>
+                <label for="del_selected">Choose a Plan:</label>
+                <select id="del_selected" name="del_selected" required>
                     <option value="">-- Select a Plan --</option>
                     {% for plan in user_plans %}
                         <option value="{{ plan.id }}">
@@ -169,55 +169,40 @@
 
     <!--loading of plans-->
 <div class="page-wrapper">
-<div class="plan">
-    <div class="plan__title-bar">
-        <span class="plan__title">Expandable section #1</span>
-        <ion-icon class="plan__icon" name="chevron-back-outline"></ion-icon>
-    </div>
-    <div class="plan__content-wrapper">
-        <div class="plan__content">
-            <div class="scrollplan">
-                <div class="event-container">
-                    <div class="event-title">Event Title 1</div>
-                    <div class="event-body">EVENT DETAIL EVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAIL
-                    EVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAIL
-                    EVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAIL</div>
+    {% if plans %}
+        {% for plan in plans %}
+            <div class="plan">
+                <div class="plan__title-bar">
+                    <span class="plan__title">{{ plan.name }}</span>
+                    <ion-icon class="plan__icon" name="chevron-back-outline"></ion-icon>
                 </div>
-
-                <div class="event-container">
-                    <div class="event-title">Event Title 1</div>
-                    <div class="event-body">EVENT DETAIL EVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAIL
-                    EVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAIL
-                    EVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAIL</div>
+                <div class="plan__content-wrapper">
+                    <div class="plan__content">
+                        <div class="scrollplan">
+                            {% if plan.events.all %}
+                                {% for event in plan.events.all %}
+                                    <div class="event-container">
+                                        <div class="event-title">{{ event.title }}</div>
+                                        <div class="event-body">
+                                            <p><strong>User:</strong> {{ event.created_by.username }}</p>
+                                            <p><strong>Date:</strong> {{ event.start_date|date:"F j, Y" }} at {{ event.start_date|date:"g:i A" }}</p>
+                                            <p><strong>Location:</strong> {{ event.location_name }}</p>
+                                            <p><strong>Description:</strong> {{ event.description }}</p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <p>No events in this plan yet.</p>
+                            {% endif %}
+                            <div class="scroll-spacer"></div>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="event-container">
-                    <div class="event-title">Event Title 1</div>
-                    <div class="event-body">EVENT DETAIL EVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAIL
-                    EVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAIL
-                    EVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAIL</div>
-                </div>
-
-                <div class="event-container">
-                    <div class="event-title">Event Title 1</div>
-                    <div class="event-body">EVENT DETAIL EVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAIL
-                    EVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAIL
-                    EVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAIL</div>
-                </div>
-
-                <div class="event-container">
-                    <div class="event-title">Event Title 1</div>
-                    <div class="event-body">EVENT DETAIL EVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAIL
-                    EVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAIL
-                    EVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAILEVENT DETAIL</div>
-                </div>
-
-                <div class="scroll-spacer"></div>
             </div>
-        </div>
-    </div>
-    </div>
-</div>
+        {% endfor %}
+    {% else %}
+        <p>You don't have any plans yet.</p>
+    {% endif %}
 </div>
 
 

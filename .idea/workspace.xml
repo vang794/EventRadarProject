@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="created java script for expanding a tab, edited the html and css of page and added temporary form">
+    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="edited html and css, include javascript for switching between forms">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Templates/eventplan.html" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/eventplan.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Templates/homepage.html" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/homepage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/polls/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/polls/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -430,7 +432,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745388946245</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="edited html and css, include javascript for switching between forms">
+      <option name="closed" value="true" />
+      <created>1745395253390</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1745395253390</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -469,7 +479,8 @@
     <MESSAGE value="Make new migrations to include start and end date" />
     <MESSAGE value="git merge main" />
     <MESSAGE value="created java script for expanding a tab, edited the html and css of page and added temporary form" />
-    <option name="LAST_COMMIT_MESSAGE" value="created java script for expanding a tab, edited the html and css of page and added temporary form" />
+    <MESSAGE value="edited html and css, include javascript for switching between forms" />
+    <option name="LAST_COMMIT_MESSAGE" value="edited html and css, include javascript for switching between forms" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -22,7 +22,7 @@ from Methods.Login import Login
 from Methods.Verification import VerifyAccount
 from Methods.forms import CreateAccountForm
 
-from polls.models import User, POI, Event, SearchedArea, Application, ApplicationStatus
+from polls.models import User, POI, Event, SearchedArea, Application, ApplicationStatus, Plan
 from Methods.sendgrid_reset import CustomTokenGenerator, send_reset_email
 from EventRadarProject.settings import EVENT_API_KEY
 import re
@@ -1125,7 +1125,27 @@ def fetch_place_details(place_id):
         logger.error(f"Failed to fetch place details: {e}")
     return None
 
-class EventPlan(UserRequiredMixin,View):
+class EventPlan(SessionLoginRequiredMixin,View):
     def get(self, request):
+        email = request.session.get("email")
+        user = User.objects.get(email=email)  # Find user by email
+        plans = Plan.objects.filter(user=user).prefetch_related('events')
+        return render(request, "eventplan.html", {
+            'plans': plans
+        })
+    def post(self, request):
+        #If create form
+            #title = request.POST.get('create_name')
+            #start_date_str = request.POST.get('start_date_str')
+            #end_date_str = request.POST.get('end_date_str')
 
-        return render(request, "eventplan.html")
+        # If edit form
+        # plan_id = request.POST.get('selected_plan')
+        # new_title = request.POST.get('edit_name')
+        # start_date_str = request.POST.get('edit_start_date')
+        # end_date_str = request.POST.get('edit_end_date')
+
+        #If delete form
+        #plan_id = request.POST.get('del_selected')
+
+     return render(request, "eventplan.html", {"error": "Invalid message"})
