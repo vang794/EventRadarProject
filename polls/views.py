@@ -840,31 +840,27 @@ def fetch_and_save_events_api(request):
                         
                         api_categories = [str(cat) for cat in api_categories]
                         
-                        if api_categories:
-                            for cat in api_categories:
-                                if cat in category_mapping:
-                                    category_label = category_mapping[cat]
-                                    break
-                        
+                        for cat in reversed(api_categories):
+                            if cat in category_mapping:
+                                category_label = category_mapping[cat]
+                                break
+
                         if not category_label and api_categories:
-                            for cat in api_categories:
-                                cat_prefix = cat.split('.')[0]
-                                for map_key, map_value in category_mapping.items():
-                                    if map_key.startswith(cat_prefix):
-                                        category_label = map_value
+                            for cat in reversed(api_categories):
+                                cat_parts = cat.split('.')
+                                for i in range(len(cat_parts), 0, -1):
+                                    prefix = '.'.join(cat_parts[:i])
+                                    if prefix in category_mapping:
+                                        category_label = category_mapping[prefix]
                                         break
                                 if category_label:
                                     break
-                        
+
                         if not category_label and api_categories:
-                            main_parts = api_categories[0].split('.')
-                            
-                            if len(main_parts) > 1:
-                                specific_type = main_parts[-1].replace('_', ' ').title()
-                                category_label = specific_type
-                            else:
-                                category_label = main_parts[0].replace('_', ' ').title()
-                        
+                            last_cat = api_categories[-1]
+                            last_segment = last_cat.split('.')[-1]
+                            category_label = last_segment.replace('_', ' ').title()
+
                         if not category_label:
                             category_label = 'Point of Interest'
                         

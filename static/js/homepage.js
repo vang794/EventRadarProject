@@ -243,7 +243,7 @@ async function triggerEventFetch(latitude, longitude, radius, locationName) {
     loadingOverlay.style.zIndex = '1000';
     loadingOverlay.style.display = 'flex';
     
-    if (loadingText) loadingText.textContent = 'Fetching events... Please hang tight!';
+    if (loadingText) loadingText.textContent = 'Fetching POIs... Please hang tight!';
   }
   if (locationInput) locationInput.disabled = true;
   if (radiusInput) radiusInput.disabled = true;
@@ -276,7 +276,7 @@ async function triggerEventFetch(latitude, longitude, radius, locationName) {
 
     if (response.ok && result.status === 'success') {
       if (loadingText) {
-        loadingText.textContent = `Processed ${result.processed_count || 0} potential events. Reloading...`;
+        loadingText.textContent = `Processed ${result.processed_count || 0} points of interest. Reloading...`;
       }
       setTimeout(() => {
         window.location.reload();
