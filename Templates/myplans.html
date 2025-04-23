@@ -5,73 +5,464 @@
     <meta charset="UTF-8">
     <title>My Plans</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        .plan-select-bar {
+            width: 100%;
+            max-width: none;
+            margin: 32px auto 0 auto;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            padding: 0 24px 12px 24px;
+        }
+        .plan-select-wrapper {
+            min-width: 260px;
+            max-width: 340px;
+            margin: 0;
+        }
+        .plan-main-content {
+            width: 100%;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        .plan {
+            margin: 0 0 0 0;
+            max-width: none;
+        }
+        .cards-wrapper {
+            margin: 0 0 32px 0;
+            border-radius: 12px;
+            max-width: 100%;
+        }
+        .plan-content-row {
+            display: flex;
+            flex-direction: row;
+            gap: 32px;
+            align-items: stretch;
+            width: 100%;
+        }
+        .plan-details-panel {
+            flex: 0 0 340px;
+            min-width: 260px;
+            max-width: 370px;
+            background: #fff;
+            border: 1.5px solid #e0d6f5;
+            border-radius: 10px;
+            padding: 22px 20px 16px 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            margin-bottom: 32px;
+            min-height: 220px;
+            font-size: 1.04rem;
+        }
+        .plan-details-panel .empty-msg {
+            color: #888;
+            font-size: 1.04rem;
+            text-align: center;
+            margin: 0;
+        }
+        .plan-details-fields {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .plan-details-field {
+            padding: 0 0 8px 0;
+            border-bottom: 1px solid #ece6fa;
+        }
+        .plan-details-field:last-child {
+            border-bottom: none;
+        }
+        .plan-details-label {
+            font-weight: 600;
+            color: #7a3bda;
+            margin-bottom: 2px;
+            display: block;
+        }
+        .plan-details-value {
+            color: #333;
+            word-break: break-word;
+        }
+        .plan-map {
+            flex: 1 1 0;
+            min-width: 340px;
+            max-width: 65vw;
+            height: 440px;
+            margin: 0 0 32px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            background: #faf8ff;
+            display: flex;
+            align-items: stretch;
+            justify-content: stretch;
+        }
+        @media (max-width: 1100px) {
+            .plan-content-row {
+                flex-direction: column;
+                gap: 16px;
+            }
+            .plan-map, .plan-details-panel {
+                width: 100%;
+                min-width: 0;
+                max-width: 100vw;
+            }
+        }
+        @media (max-width: 900px) {
+            .plan-main-content, .plan-map, .cards-wrapper { max-width: 100vw; }
+            .plan-select-bar { flex-direction: column; align-items: stretch; padding: 0 8px 12px 8px; }
+            .plan-main-content { padding: 0 8px; }
+            .plan-details-panel, .plan-map {
+                min-width: 0;
+                max-width: 100vw;
+            }
+        }
+        .plan-card-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #7a3bda;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.05em;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            margin-right: 10px;
+            margin-bottom: 4px;
+            float: left;
+            box-shadow: 0 1px 3px rgba(122,59,218,0.10);
+            flex-shrink: 0;
+        }
+        .event-card-h h4 {
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 6px;
+        }
+        .event-card-h {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .event-card-h .plan-card-number {
+            margin-bottom: 8px;
+        }
+        .selected-event {
+            background: #f3edff;
+            border-left: 4px solid #7a3bda;
+        }
+        .event-card-h.dragging {
+            opacity: 0.5;
+            border: 2px dashed #7a3bda;
+        }
+        .event-card-h.drag-over {
+            border: 2px solid #4a2b7a;
+            background: #e8e0fa;
+        }
+    </style>
 </head>
 <body>
     <div class="logo-container">
         <img id="logo" src="{% static 'media/eventradar_logo2.png' %}" alt="Event Radar Logo">
     </div>
-    <div style="text-align: right; margin: 10px 30px 0 0;">
+    <div style="text-align:right;margin:10px 30px 0 0;">
         <a href="{% url 'homepage' %}" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back to Home</a>
     </div>
-    <div class="planner-form-wrapper" style="max-width:500px;margin:30px auto;">
-        <form method="get" action="{% url 'my_plans' %}">
-            <div class="form-group">
-                <label for="plan_id">Select a Plan:</label>
+
+    <div class="plan-select-bar">
+        <div class="plan-select-wrapper">
+            <form method="get" action="{% url 'my_plans' %}">
+                <label for="plan_id"><b>Select a Plan:</b></label>
                 <select name="plan_id" id="plan_id" onchange="this.form.submit()">
                     <option value="">-- Choose a Plan --</option>
                     {% for plan in plans %}
                         <option value="{{ plan.id }}" {% if selected_plan and plan.id == selected_plan.id %}selected{% endif %}>
-                            {{ plan.name }} ({{ plan.start_date }} - {{ plan.end_date }})
+                            {{ plan.name }} ({{ plan.start_date }} – {{ plan.end_date }})
                         </option>
                     {% endfor %}
                 </select>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-    {% if selected_plan %}
-        <div class="plan" style="max-width:700px;margin:0 auto;">
-            <div class="plan__title-bar">
-                <span class="plan__title">{{ selected_plan.name }}</span>
-            </div>
-            <div class="plan__content-wrapper" style="display:block;">
-                <div class="plan__content">
-                    <div class="scrollplan">
-                        {% if selected_plan.events.all %}
-                            {% for event in selected_plan.events.all %}
-                                <div class="event-container">
-                                    <div class="event-title">{{ event.title }}</div>
-                                    <div class="event-body">
-                                        <p><strong>User:</strong> {{ event.created_by.username }}</p>
-                                        <p><strong>Category:</strong> {{ event.category }}</p>
-                                        <p><strong>Start Date:</strong> {{ event.start_date|date:"F j, Y" }} at {{ event.start_date|date:"g:i A" }}</p>
-                                        <p><strong>End Date:</strong> {{ event.end_date|date:"F j, Y" }} at {{ event.end_date|date:"g:i A" }}</p>
-                                        <p><strong>Location:</strong> {{ event.location_name }}</p>
-                                        <p><strong>Description:</strong> {{ event.description }}</p>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        {% endif %}
-                        {% if selected_plan.pois.all %}
-                            {% for poi in selected_plan.pois.all %}
-                                <div class="event-container">
-                                    <div class="event-title">{{ poi.title }}</div>
-                                    <div class="event-body">
-                                        <p><strong>Category:</strong> {{ poi.category }}</p>
-                                        <p><strong>Date:</strong> {{ poi.event_date|date:"F j, Y" }} at {{ poi.event_date|date:"g:i A" }}</p>
-                                        <p><strong>Location:</strong> {{ poi.location_name }}</p>
-                                        <p><strong>Description:</strong> {{ poi.description }}</p>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        {% endif %}
-                        {% if not selected_plan.events.all and not selected_plan.pois.all %}
-                            <p>No events or POIs in this plan yet.</p>
-                        {% endif %}
-                        <div class="scroll-spacer"></div>
-                    </div>
+
+    <div class="plan-main-content">
+        {% if selected_plan %}
+            <div class="plan">
+                <h2 style="text-align:center;margin:0 0 12px 0">{{ selected_plan.name }}</h2>
+                <div class="cards-wrapper" id="plan-cards-wrapper">
+                    {% for item in merged_items %}
+                        <div class="event-card-h"
+                             tabindex="0"
+                             draggable="true"
+                             data-idx="{{ forloop.counter0 }}"
+                             data-id="{{ item.id }}"
+                             data-latitude="{{ item.latitude }}"
+                             data-longitude="{{ item.longitude }}"
+                             data-title="{{ item.title|escapejs }}"
+                             data-location="{{ item.location_name|escapejs }}"
+                             data-category="{{ item.category|escapejs }}"
+                             data-description="{{ item.description|default_if_none:''|escapejs }}"
+                             {% if item.start_date %} data-start="{{ item.start_date|date:'F j, Y g:i A' }}"{% endif %}
+                             {% if item.end_date %} data-end="{{ item.end_date|date:'F j, Y g:i A' }}"{% endif %}
+                             {% if item.event_date %} data-date="{{ item.event_date|date:'F j, Y g:i A' }}"{% endif %}
+                        >
+                            <div class="plan-card-number">{{ forloop.counter }}</div>
+                            <h4>{{ item.title }}</h4>
+                            {% if item.start_date %}
+                                <p><strong>Start:</strong> {{ item.start_date|date:"F j, Y g:i A" }}</p>
+                                <p><strong>End:</strong> {{ item.end_date|date:"F j, Y g:i A" }}</p>
+                            {% else %}
+                                <p><strong>Date:</strong> {{ item.event_date|date:"F j, Y g:i A" }}</p>
+                            {% endif %}
+                            <p><strong>Location:</strong> {{ item.location_name }}</p>
+                            <p style="margin-bottom:0"><strong>Category:</strong> {{ item.category }}</p>
+                        </div>
+                    {% empty %}
+                        <p>No events or POIs in this plan yet.</p>
+                    {% endfor %}
                 </div>
             </div>
-        </div>
-    {% endif %}
+
+            <div class="plan-content-row">
+                <div class="plan-details-panel" id="plan-details-panel">
+                    <div class="empty-msg">Select an event or POI above to see details.</div>
+                </div>
+
+                {% if map_html %}
+                    <div class="plan-map" id="plan-map">
+                        {{ map_html|safe }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const cards  = document.querySelectorAll('.event-card-h');
+        const panel  = document.getElementById('plan-details-panel');
+        const cardsWrapper = document.getElementById('plan-cards-wrapper');
+        const planId = document.getElementById('plan_id')?.value;
+
+        let dragSrcIdx = null;
+        let dragOverIdx = null;
+
+        function getCardIdx(card) {
+            return parseInt(card.getAttribute('data-idx'), 10);
+        }
+
+        function swapCards(idxA, idxB) {
+            if (idxA === idxB) return;
+            const cardA = cardsWrapper.querySelector(`[data-idx="${idxA}"]`);
+            const cardB = cardsWrapper.querySelector(`[data-idx="${idxB}"]`);
+            if (!cardA || !cardB) return;
+            if (idxA < idxB) {
+                cardsWrapper.insertBefore(cardB, cardA);
+            } else {
+                cardsWrapper.insertBefore(cardA, cardB);
+            }
+            Array.from(cardsWrapper.children).forEach((el, i) => el.setAttribute('data-idx', i));
+            updateMapMarkersOrder();
+            savePlanOrder();
+        }
+
+        function savePlanOrder() {
+            const ids = Array.from(cardsWrapper.children).map(card => card.getAttribute('data-id'));
+            fetch('/api/save_plan_order/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': (document.querySelector('input[name="csrfmiddlewaretoken"]') || {}).value || ''
+                },
+                body: `plan_id=${encodeURIComponent(planId)}&order=${encodeURIComponent(JSON.stringify(ids))}`
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    updateMapMarkersOrder();
+                    updateCardNumbers();
+                    refreshPlanMap();
+                } else {
+                    alert('Failed to save order: ' + (data.error || 'Unknown error'));
+                }
+            });
+        }
+
+        function refreshPlanMap() {
+            const mapDiv = document.getElementById('plan-map');
+            if (!mapDiv) return;
+            fetch(`/api/get_plan_map/?plan_id=${encodeURIComponent(planId)}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success && data.map_html) {
+                        mapDiv.innerHTML = data.map_html;
+                    }
+                });
+        }
+
+        function updateCardNumbers() {
+            Array.from(cardsWrapper.children).forEach((el, i) => {
+                const numEl = el.querySelector('.plan-card-number');
+                if (numEl) numEl.textContent = i + 1;
+            });
+        }
+
+        function updateMapMarkersOrder() {
+            let fmap = null;
+            for (const k in window) {
+                if (k.startsWith('map_') && window[k] && typeof window[k].setView === 'function') {
+                    fmap = window[k];
+                    break;
+                }
+            }
+            if (!fmap) return;
+
+            fmap.eachLayer(function(layer) {
+                if (layer instanceof L.Marker || layer instanceof L.Polyline) {
+                    fmap.removeLayer(layer);
+                }
+            });
+
+            const newCards = Array.from(cardsWrapper.querySelectorAll('.event-card-h'));
+            const coords = [];
+            newCards.forEach((card, idx) => {
+                const lat = parseFloat(card.getAttribute('data-latitude'));
+                const lng = parseFloat(card.getAttribute('data-longitude'));
+                const title = card.getAttribute('data-title');
+                const loc = card.getAttribute('data-location');
+                if (!isNaN(lat) && !isNaN(lng)) {
+                    coords.push([lat, lng]);
+                    const marker = L.marker([lat, lng], {
+                        icon: L.divIcon({
+                            html: `<div style="background:#7a3bda;color:#fff;border-radius:50%;width:28px;height:28px;line-height:28px;text-align:center;font-weight:bold;">${idx+1}</div>`,
+                            iconSize: [28, 28],
+                            iconAnchor: [14, 14]
+                        }),
+                        title: title
+                    }).addTo(fmap);
+                    marker.bindPopup(`<b>${title}</b><br>${loc}`);
+                }
+            });
+            if (coords.length > 1) {
+                const poly = L.polyline(coords, {color: "#7a3bda", weight: 4, opacity: 0.85}).addTo(fmap);
+                if (window.L && L.Polyline && L.Polyline.prototype.setText) {
+                    poly.setText('   ➔   ', {repeat: true, offset: 6, attributes: {fill: "#7a3bda"}});
+                }
+            }
+        }
+
+        cardsWrapper.addEventListener('dragstart', function(e) {
+            const card = e.target.closest('.event-card-h');
+            if (!card) return;
+            dragSrcIdx = getCardIdx(card);
+            card.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+        });
+
+        cardsWrapper.addEventListener('dragend', function(e) {
+            document.querySelectorAll('.event-card-h').forEach(card => card.classList.remove('dragging', 'drag-over'));
+            dragSrcIdx = null;
+            dragOverIdx = null;
+        });
+
+        cardsWrapper.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            const overCard = e.target.closest('.event-card-h');
+            if (!overCard) return;
+            dragOverIdx = getCardIdx(overCard);
+            document.querySelectorAll('.event-card-h').forEach(card => card.classList.remove('drag-over'));
+            overCard.classList.add('drag-over');
+        });
+
+        cardsWrapper.addEventListener('drop', function(e) {
+            e.preventDefault();
+            const dropCard = e.target.closest('.event-card-h');
+            if (!dropCard) return;
+            const dropIdx = getCardIdx(dropCard);
+            swapCards(dragSrcIdx, dropIdx);
+            document.querySelectorAll('.event-card-h').forEach(card => card.classList.remove('drag-over', 'dragging'));
+        });
+
+        function renderDetails(card) {
+            if (!card) {
+                panel.innerHTML =
+                    '<div class="empty-msg">Select an event or POI above to see details.</div>';
+                return;
+            }
+            const g = a => card.getAttribute(a) || '';
+            const isEvent = !!g('data-start') || !!g('data-end');
+            let html = `
+                <div class="plan-details-fields">
+                    <div class="plan-details-field"><span class="plan-details-label">Title:</span>
+                        <span class="plan-details-value">${g('data-title')}</span></div>
+            `;
+            if (isEvent && g('data-start') && g('data-end')) {
+                html += `
+                    <div class="plan-details-field"><span class="plan-details-label">Start:</span>
+                        <span class="plan-details-value">${g('data-start')}</span></div>
+                    <div class="plan-details-field"><span class="plan-details-label">End:</span>
+                        <span class="plan-details-value">${g('data-end')}</span></div>
+                `;
+            } else if (isEvent && g('data-date')) {
+                html += `
+                    <div class="plan-details-field"><span class="plan-details-label">Date:</span>
+                        <span class="plan-details-value">${g('data-date')}</span></div>
+                `;
+            }
+            html += `
+                    <div class="plan-details-field"><span class="plan-details-label">Location:</span>
+                        <span class="plan-details-value">${g('data-location')}</span></div>
+                    <div class="plan-details-field"><span class="plan-details-label">Category:</span>
+                        <span class="plan-details-value">${g('data-category')}</span></div>
+                </div>`;
+            panel.innerHTML = html;
+        }
+
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                cards.forEach(c => c.classList.remove('selected-event'));
+                card.classList.add('selected-event');
+                renderDetails(card);
+            });
+            card.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    card.click();
+                }
+            });
+        });
+
+        let fmap = null;
+        for (const k in window) {
+            if (k.startsWith('map_') && window[k] && typeof window[k].setView === 'function') {
+                fmap = window[k];
+                break;
+            }
+        }
+        if (!fmap) return;
+
+        fmap.whenReady(() => {
+            const markerLayers = [];
+            function collect(layer) {
+                if (layer instanceof L.Marker) {
+                    markerLayers.push(layer);
+                } else if (layer instanceof L.LayerGroup) {
+                    layer.eachLayer(collect);
+                }
+            }
+            fmap.eachLayer(collect);
+
+            cards.forEach((card, idx) => {
+                card.addEventListener('click', () => {
+                    const m = markerLayers[idx];
+                    if (m) {
+                        fmap.setView(m.getLatLng(), 18, { animate: true });
+                        if (m.openPopup) m.openPopup();
+                    }
+                });
+            });
+        });
+    });
+    </script>
 </body>
 </html>

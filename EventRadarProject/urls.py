@@ -23,7 +23,7 @@ from django.urls import path
 from polls.views import LoginAuth, CreateAcct, SettingPage, SignOutView, HomePage, PasswordResetView, \
     PasswordResetDoneView, PasswordResetConfirmView, WeatherView, DeleteView, DeleteCompleteView, \
     fetch_and_save_events_api, Application, Approval, App_Confirm, ApplicationClass, get_event_details, \
-    event_details_page, EventPlan, add_to_plan, get_user_plans, MyPlansView
+    event_details_page, EventPlan, add_to_plan, get_user_plans, MyPlansView, save_plan_order, get_plan_map
 
 #for id
 import uuid
@@ -62,5 +62,7 @@ urlpatterns = [
     path('my_plans/', MyPlansView.as_view(), name='my_plans'),
     path('api/add_to_plan/', add_to_plan, name='add_to_plan'),
     path('api/get_user_plans/', get_user_plans, name='get_user_plans'),
+    path('api/save_plan_order/', save_plan_order, name='save_plan_order'),
+    path('api/get_plan_map/', get_plan_map, name='get_plan_map'),
 ]
 
