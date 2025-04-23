@@ -22,7 +22,7 @@ from Methods.Login import Login
 from Methods.Verification import VerifyAccount
 from Methods.forms import CreateAccountForm
 
-from polls.models import User, POI, Event, SearchedArea, Application, ApplicationStatus, Plan
+from polls.models import User, POI, Event, SearchedArea, Application, ApplicationStatus, Plan, PlanOrder
 from Methods.sendgrid_reset import CustomTokenGenerator, send_reset_email
 from EventRadarProject.settings import EVENT_API_KEY
 import re
@@ -44,7 +44,8 @@ from Methods.sendgrid_email import send_confirmation_email
 
 
 import folium
-from folium.plugins import MarkerCluster
+from folium import DivIcon
+from folium.plugins import MarkerCluster, PolyLineTextPath
 
 from polls.geocoding import GeocodingService
 from django.contrib.auth.hashers import make_password
@@ -59,14 +60,13 @@ import json
 # Create your views here.
 import logging
 from django.http import JsonResponse
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST, require_GET
 from django.views.decorators.csrf import csrf_exempt
 from polls.config.category_mapping import category_mapping
 import math
 from django.db.models import Max
 import time
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -430,7 +430,7 @@ class HomePage(SessionLoginRequiredMixin,View):
         return distance
 
     def generate_map(self, center_lat, center_lon, radius_miles, pois):
-        m = folium.Map(location=[center_lat, center_lon], zoom_start=12)
+        m = folium.Map(location=[center_lat, center_lon], zoom_start=15)
         radius_in_meters = radius_miles * 1609.34
 
         folium.Circle(
@@ -1247,7 +1247,7 @@ def add_to_plan(request):
     except Exception as e:
         return JsonResponse({'success': False, 'error': str(e)}, status=400)
 
-@login_required
+@csrf_exempt
 def get_user_plans(request):
     user_email = request.session.get("email")
     if not user_email:
@@ -1263,14 +1263,190 @@ def get_user_plans(request):
 
 class MyPlansView(SessionLoginRequiredMixin, View):
     def get(self, request):
-        email = request.session.get("email")
-        user = User.objects.get(email=email)
-        plans = Plan.objects.filter(user=user).prefetch_related('events', 'pois')
-        selected_plan_id = request.GET.get('plan_id')
-        selected_plan = None
-        if selected_plan_id:
-            selected_plan = plans.filter(id=selected_plan_id).first()
-        return render(request, "myplans.html", {
-            'plans': plans,
-            'selected_plan': selected_plan,
-        })
+        user = User.objects.get(email=request.session["email"])
+        plans = (
+            Plan.objects.filter(user=user)
+            .prefetch_related("events", "pois")
+            .order_by("-start_date")
+        )
+
+        selected_plan_id = request.GET.get("plan_id")
+        selected_plan = plans.filter(id=selected_plan_id).first() if selected_plan_id else None
+
+        merged_items: list = []
+        if selected_plan:
+            order = getattr(selected_plan, "plan_order", None)
+            if order and order.order_json:
+                try:
+                    import json
+                    order_list = json.loads(order.order_json)
+                    items_by_id = {str(obj.id): obj for obj in list(selected_plan.events.all()) + list(selected_plan.pois.all())}
+                    merged_items = [items_by_id[iid] for iid in order_list if iid in items_by_id]
+                    for obj in list(selected_plan.events.all()) + list(selected_plan.pois.all()):
+                        if str(obj.id) not in order_list:
+                            merged_items.append(obj)
+                except Exception:
+                    merged_items = sorted(
+                        list(selected_plan.events.all()) + list(selected_plan.pois.all()),
+                        key=lambda obj: getattr(obj, "start_date", None) or getattr(obj, "event_date", None) or timezone.now(),
+                    )
+            else:
+                for e in selected_plan.events.all():
+                    e._plan_date = e.start_date
+                for p in selected_plan.pois.all():
+                    p._plan_date = p.event_date
+                merged_items = sorted(
+                    list(selected_plan.events.all()) + list(selected_plan.pois.all()),
+                    key=lambda obj: getattr(obj, "_plan_date", None) or timezone.now(),
+                )
+
+        map_html = None
+        if selected_plan and merged_items:
+            coords = [
+                (obj.latitude, obj.longitude)
+                for obj in merged_items
+                if obj.latitude is not None and obj.longitude is not None
+            ]
+            centre = coords[0] if coords else (43.0389, -87.9065)
+
+            fm = folium.Map(location=centre, zoom_start=15, control_scale=True)
+            mcluster = MarkerCluster().add_to(fm)
+
+            for idx, obj in enumerate(merged_items, start=1):
+                folium.Marker(
+                    location=[obj.latitude, obj.longitude],
+                    tooltip=f"{idx}. {obj.title}",
+                    popup=folium.Popup(f"<b>{obj.title}</b><br>{obj.location_name}", max_width=280),
+                    icon=DivIcon(
+                        icon_size=(28, 28),
+                        icon_anchor=(14, 14),
+                        html=(
+                            f'<div style="background:#7a3bda;color:#fff;'
+                            f'border-radius:50%;width:28px;height:28px;'
+                            f'line-height:28px;text-align:center;font-weight:bold;">{idx}</div>'
+                        ),
+                    ),
+                ).add_to(mcluster)
+
+            if len(coords) > 1:
+                base_line = folium.PolyLine(
+                    coords, color="#7a3bda", weight=4, opacity=0.85
+                ).add_to(fm)
+                try:
+                    PolyLineTextPath(
+                        base_line,
+                        "   ➔   ",
+                        repeat=True,
+                        offset=6,
+                        attributes={"font-size": "14", "fill": "#7a3bda"},
+                    ).add_to(fm)
+                except Exception:
+                    pass
+
+            map_html = fm._repr_html_()
+
+        return render(
+            request,
+            "myplans.html",
+            {
+                "plans": plans,
+                "selected_plan": selected_plan,
+                "merged_items": merged_items,
+                "map_html": map_html,
+            },
+        )
+
+@csrf_exempt
+@require_POST
+def save_plan_order(request):
+    import json
+    user_email = request.session.get("email")
+    if not user_email:
+        return JsonResponse({'success': False, 'error': 'Not authenticated'}, status=403)
+    user = User.objects.get(email=user_email)
+    plan_id = request.POST.get('plan_id')
+    order_json = request.POST.get('order')
+    if not (plan_id and order_json):
+        return JsonResponse({'success': False, 'error': 'Missing data'}, status=400)
+    try:
+        plan = Plan.objects.get(id=plan_id, user=user)
+        plan_order, _ = PlanOrder.objects.get_or_create(plan=plan)
+        plan_order.order_json = order_json
+        plan_order.save()
+        return JsonResponse({'success': True})
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)}, status=400)
+
+@csrf_exempt
+@require_GET
+def get_plan_map(request):
+    user_email = request.session.get("email")
+    if not user_email:
+        return JsonResponse({'success': False, 'error': 'Not authenticated'}, status=403)
+    user = User.objects.get(email=user_email)
+    plan_id = request.GET.get('plan_id')
+    if not plan_id:
+        return JsonResponse({'success': False, 'error': 'Missing plan_id'}, status=400)
+    try:
+        plan = Plan.objects.get(id=plan_id, user=user)
+        order = getattr(plan, "plan_order", None)
+        if order and order.order_json:
+            import json
+            order_list = json.loads(order.order_json)
+            items_by_id = {str(obj.id): obj for obj in list(plan.events.all()) + list(plan.pois.all())}
+            merged_items = [items_by_id[iid] for iid in order_list if iid in items_by_id]
+            for obj in list(plan.events.all()) + list(plan.pois.all()):
+                if str(obj.id) not in order_list:
+                    merged_items.append(obj)
+        else:
+            for e in plan.events.all():
+                e._plan_date = e.start_date
+            for p in plan.pois.all():
+                p._plan_date = p.event_date
+            merged_items = sorted(
+                list(plan.events.all()) + list(plan.pois.all()),
+                key=lambda obj: getattr(obj, "_plan_date", None) or timezone.now(),
+            )
+        map_html = None
+        if merged_items:
+            coords = [
+                (obj.latitude, obj.longitude)
+                for obj in merged_items
+                if obj.latitude is not None and obj.longitude is not None
+            ]
+            centre = coords[0] if coords else (43.0389, -87.9065)
+            fm = folium.Map(location=centre, zoom_start=15, control_scale=True)
+            mcluster = MarkerCluster().add_to(fm)
+            for idx, obj in enumerate(merged_items, start=1):
+                folium.Marker(
+                    location=[obj.latitude, obj.longitude],
+                    tooltip=f"{idx}. {obj.title}",
+                    popup=folium.Popup(f"<b>{obj.title}</b><br>{obj.location_name}", max_width=280),
+                    icon=DivIcon(
+                        icon_size=(28, 28),
+                        icon_anchor=(14, 14),
+                        html=(
+                            f'<div style="background:#7a3bda;color:#fff;'
+                            f'border-radius:50%;width:28px;height:28px;'
+                            f'line-height:28px;text-align:center;font-weight:bold;">{idx}</div>'
+                        ),
+                    ),
+                ).add_to(mcluster)
+            if len(coords) > 1:
+                base_line = folium.PolyLine(
+                    coords, color="#7a3bda", weight=4, opacity=0.85
+                ).add_to(fm)
+                try:
+                    PolyLineTextPath(
+                        base_line,
+                        "   ➔   ",
+                        repeat=True,
+                        offset=6,
+                        attributes={"font-size": "14", "fill": "#7a3bda"},
+                    ).add_to(fm)
+                except Exception:
+                    pass
+            map_html = fm._repr_html_()
+        return JsonResponse({'success': True, 'map_html': map_html})
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)}, status=400)

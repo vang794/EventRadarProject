@@ -107,6 +107,13 @@ class Plan(models.Model):
     def __str__(self):
         return self.name or f"Plan from {self.start_date} to {self.end_date}"
 
+class PlanOrder(models.Model):
+    plan = models.OneToOneField(Plan, on_delete=models.CASCADE, related_name="plan_order")
+    order_json = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"Order for {self.plan.name}"
+
 class Parking(models.Model):
     events = models.ManyToManyField("Event", blank=True, related_name="parkings")
     poi = models.ForeignKey("POI", related_name="parkings", on_delete=models.CASCADE)

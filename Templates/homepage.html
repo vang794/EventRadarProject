@@ -19,30 +19,15 @@
   <link rel="stylesheet" href="{% static 'css/overlay.css' %}">
 
   <style>
-    #map-container {
-      width: 100%;
-      height: 500px;
-    }
-    .main-content {
-      position: relative;
-    }
+    #map-container { width:100%; height:500px; }
+    .main-content  { position:relative; }
     #loadingOverlay {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: rgba(255, 255, 255, 0.8);
-      z-index: 10;
-      display: none;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      font-size: 1.2em;
-      color: #333;
+      position:absolute; top:0; left:0; right:0; bottom:0;
+      background:rgba(255,255,255,.8); z-index:10; display:none;
+      justify-content:center; align-items:center; text-align:center;
+      font-size:1.2em; color:#333;
     }
-    #loadingOverlay i {
-      margin-bottom: 15px;
-      font-size: 2em;
-      animation: fa-spin 2s infinite linear;
-    }
+    #loadingOverlay i { margin-bottom:15px; font-size:2em; animation:fa-spin 2s linear infinite; }
   </style>
 </head>
 
@@ -53,24 +38,12 @@
       <img id="logo" src="{% static 'media/eventradar_logo2.png' %}" alt="Event Radar Logo">
     </div>
     <div class="nav-actions">
-      <a href="{% url 'app_approve' %}" class="settings-btn" id="approve-btn">
-        <i class="fa fa-check-square-o"></i> App Approval
-      </a>
-      <a href="{% url 'application' %}" class="settings-btn" id="event-app-btn">
-        <i class="fa fa-file-text"></i> Event Manager Application
-      </a>
-      <a href="{% url 'event_plan' %}" class="settings-btn" id="event-plan-btn">
-        <i class="fa fa-calendar"></i> Manage Plans
-      </a>
-      <a href="{% url 'my_plans' %}" class="settings-btn" id="my-plans-btn">
-        <i class="fa fa-folder-open"></i> View My Plans
-      </a>
-      <a href="#" class="settings-btn" onclick="openWeatherOverlay()">
-        <i class="fas fa-cloud"></i> Weather
-      </a>
-      <a href="{% url 'settings' %}" class="settings-btn">
-        <i class="fas fa-cog"></i> Settings
-      </a>
+      <a href="{% url 'app_approve' %}" class="settings-btn" id="approve-btn"><i class="fa fa-check-square-o"></i> App Approval</a>
+      <a href="{% url 'application' %}"  class="settings-btn" id="event-app-btn"><i class="fa fa-file-text"></i> Event Manager Application</a>
+      <a href="{% url 'event_plan' %}"   class="settings-btn" id="event-plan-btn"><i class="fa fa-calendar"></i> Manage Plans</a>
+      <a href="{% url 'my_plans' %}"     class="settings-btn" id="my-plans-btn"><i class="fa fa-folder-open"></i> View My Plans</a>
+      <a href="#"                        class="settings-btn" onclick="openWeatherOverlay()"><i class="fas fa-cloud"></i> Weather</a>
+      <a href="{% url 'settings' %}"     class="settings-btn"><i class="fas fa-cog"></i> Settings</a>
     </div>
   </div>
 
@@ -80,18 +53,14 @@
        data-longitude="{{ current_longitude|default_if_none:'null' }}"
        data-radius="{{ current_radius|default_if_none:'null' }}"
        data-location="{{ current_location|escapejs }}"
-       style="display: none;">
-  </div>
+       style="display:none;"></div>
 
   <div id="loadingOverlay">
-    <div>
-      <i class="fas fa-spinner"></i><br>
-      <p id="loadingText">Fetching events... Please hang tight!</p>
-    </div>
+    <div><i class="fas fa-spinner"></i><br><p id="loadingText">Fetching events… Please hang tight!</p></div>
   </div>
 
   <div class="main-content">
-    <div class="search-controls"></div>
+    <div class="search-controls">
       <form method="post" action="{% url 'homepage' %}">
         {% csrf_token %}
         <div class="search-bar">
@@ -105,27 +74,22 @@
             <span class="input-icon"><i class="fas fa-circle-notch"></i></span>
             <input type="number" id="radiusInput" name="radius"
                    placeholder="Radius (miles)"
-                   value="{{ current_radius|default:5 }}"
-                   min="1" max="50">
+                   value="{{ current_radius|default:5 }}" min="1" max="50">
           </div>
-            <!--Date start-->
-            <div class="input-group"> <label for="start_date_str">Start Date</label>
+          <div class="input-group">
+            <label for="start_date_str">Start Date</label>
             <input type="date" id="start_date_str" name="start_date_str"
-                   value="{{ event_date1|default:'Start Date' }}">
+                   value="{{ event_date1|default:'' }}">
           </div>
-            <!--Date end-->
-            <div class="input-group"> <label for="end_date_str">End Date</label>
+          <div class="input-group">
+            <label for="end_date_str">End Date</label>
             <input type="date" id="end_date_str" name="end_date_str"
-                   value="{{ event_date2|default:'End Date' }}">
+                   value="{{ event_date2|default:'' }}">
           </div>
-          <button type="submit" id="searchButton" class="search-btn">
-            <i class="fas fa-search"></i> Search
-          </button>
+          <button type="submit" id="searchButton" class="search-btn"><i class="fas fa-search"></i> Search</button>
         </div>
       </form>
-      {% if error %}
-           <div class="error">{{ error }}</div>
-        {% endif %}
+      {% if error %}<div class="error">{{ error }}</div>{% endif %}
     </div>
 
     <div class="content-container">
@@ -134,44 +98,43 @@
       <div class="events-list">
         <div class="sidebar-tabs">
           <button class="sidebar-tab active" onclick="showSidebarTab('user-events')">User Events</button>
-          <button class="sidebar-tab" onclick="showSidebarTab('pois')">POIs</button>
+          <button class="sidebar-tab"        onclick="showSidebarTab('pois')">POIs</button>
         </div>
 
-        <div id="sidebar-user-events" class="sidebar-tab-content" style="display: block;">
+        <div id="sidebar-user-events" class="sidebar-tab-content" style="display:block;">
           {% if user_events %}
             {% for event in user_events %}
-            <div class="event-card"
-                 data-event-id="user-{{ event.id }}"
-                 data-latitude="{{ event.latitude }}"
-                 data-longitude="{{ event.longitude }}"
-                 data-title="{{ event.title|escapejs }}"
-                 data-location="{{ event.location_name|escapejs }}"
-                 data-description="{{ event.description|escapejs }}"
-                 data-category="{{ event.category|default:'Uncategorized' }}">
-              <div class="event-header" onclick="toggleEventDetails('user-{{ event.id }}')">
-                <h4>{{ event.title }}</h4>
-                <span class="event-category">{{ event.category }}</span>
+              <div class="event-card"
+                   data-event-id="user-{{ event.id }}"
+                   data-latitude="{{ event.latitude }}"
+                   data-longitude="{{ event.longitude }}"
+                   data-title="{{ event.title|escapejs }}"
+                   data-location="{{ event.location_name|escapejs }}"
+                   data-description="{{ event.description|escapejs }}"
+                   data-category="{{ event.category|default:'Uncategorized' }}">
+                <div class="event-header" onclick="toggleEventDetails('user-{{ event.id }}')">
+                  <h4>{{ event.title }}</h4><span class="event-category">{{ event.category }}</span>
+                </div>
+                <div class="event-details" id="event-details-user-{{ event.id }}" style="display:none;">
+                  <p><strong>Date:</strong> {{ event.event_date|date:"F j, Y" }} at {{ event.event_date|date:"g:i A" }}</p>
+                  <p><strong>Location:</strong> {{ event.location_name }}</p>
+                  <p><strong>Description:</strong> {{ event.description }}</p>
+                  {% if event.id|stringformat:"s"|length == 36 %}
+                    <a href="{% url 'event_details_page' event.id %}" class="view-landmark-btn">View Details</a>
+                  {% endif %}
+                  <button class="btn btn-outline-primary btn-sm add-to-plan-btn"
+                          data-item-type="event"
+                          data-item-id="{{ event.id }}"
+                          onclick="showAddToPlanModal('event', '{{ event.id }}');">Add to Plan</button>
+                </div>
               </div>
-              <div class="event-details" id="event-details-user-{{ event.id }}" style="display: none;">
-                <p><strong>Date:</strong> {{ event.event_date|date:"F j, Y" }} at {{ event.event_date|date:"g:i A" }}</p>
-                <p><strong>Location:</strong> {{ event.location_name }}</p>
-                <p><strong>Description:</strong> {{ event.description }}</p>
-                {% if event.id|stringformat:"s"|length == 36 %}
-                  <a href="{% url 'event_details_page' event.id %}" class="view-landmark-btn">View Details</a>
-                {% endif %}
-                <button class="btn btn-outline-primary btn-sm add-to-plan-btn"
-                        onclick="event.stopPropagation(); showAddToPlanModal('event', '{{ event.id }}');">
-                  Add to Plan
-                </button>
-              </div>
-            </div>
             {% endfor %}
           {% else %}
             <p class="empty-msg">No user events hosted at this given time.</p>
           {% endif %}
         </div>
 
-        <div id="sidebar-pois" class="sidebar-tab-content" style="display: none;">
+        <div id="sidebar-pois" class="sidebar-tab-content" style="display:none;">
           {% if event_categories %}
             <div class="category-tabs">
               {% for category in event_categories %}
@@ -182,9 +145,7 @@
               {% endfor %}
             </div>
             {% for category in event_categories %}
-              <div id="category-{{ category.name|slugify }}"
-                   class="category-content"
-                   style="display: none;">
+              <div id="category-{{ category.name|slugify }}" class="category-content" style="display:none;">
                 <h3>{{ category.name }}</h3>
                 {% for event in category.events %}
                   <div class="event-card"
@@ -195,28 +156,19 @@
                        data-location="{{ event.location_name|escapejs }}"
                        data-description="{{ event.short_description|default_if_none:''|escapejs }}"
                        data-category="{{ event.category|default:'Uncategorized' }}">
-                    <div class="event-header"
-                         onclick="toggleEventDetails('{{ event.id }}')">
+                    <div class="event-header" onclick="toggleEventDetails('{{ event.id }}')">
                       <h4>{{ event.title }}</h4>
                     </div>
-                    <div class="event-details"
-                         id="event-details-{{ event.id }}"
-                         style="display: none;">
+                    <div class="event-details" id="event-details-{{ event.id }}" style="display:none;">
                       <p><strong>Address:</strong> {{ event.location_name }}</p>
                       <p><strong>Description:</strong> {{ event.short_description }}</p>
-                      {% if event.phone %}
-                        <p><strong>Phone:</strong> {{ event.phone }}</p>
-                      {% endif %}
-                      {% if event.website %}
-                        <p><strong>Website:</strong>
-                          <a href="{{ event.website }}" target="_blank">Visit</a>
-                        </p>
-                      {% endif %}
+                      {% if event.phone %}<p><strong>Phone:</strong> {{ event.phone }}</p>{% endif %}
+                      {% if event.website %}<p><strong>Website:</strong> <a href="{{ event.website }}" target="_blank">Visit</a></p>{% endif %}
                       <a href="{% url 'event_details_page' event.id %}" class="view-landmark-btn">View Landmark</a>
                       <button class="btn btn-outline-primary btn-sm add-to-plan-btn"
-                              onclick="event.stopPropagation(); showAddToPlanModal('poi', '{{ event.id }}');">
-                        Add to Plan
-                      </button>
+                              data-item-type="poi"
+                              data-item-id="{{ event.id }}"
+                              onclick="showAddToPlanModal('poi', '{{ event.id }}');">Add to Plan</button>
                     </div>
                   </div>
                 {% endfor %}
@@ -230,77 +182,12 @@
     </div>
   </div>
 
-  <div id="addToPlanModal" style="display:none"></div>
+  <div id="addToPlanModal" style="display:none;"></div>
 
-  <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin="">
-  </script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+          crossorigin=""></script>
   <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
-  <div id="weatherOverlay" class="weather-overlay">
-    <div class="overlay-content">
-        <div class="overlay-header">
-            <h2>Weather Forecast</h2>
-            <button class="close-btn" onclick="closeWeatherOverlay()">&times;</button>
-        </div>
-
-        <form id="weatherForm">
-            <div class="form-row">
-                <label>
-                    <input type="radio" name="locationType" value="city" checked> City
-                </label>
-                <label>
-                    <input type="radio" name="locationType" value="zip"> Zip Code
-                </label>
-                <label>
-                    <input type="radio" name="locationType" value="coords"> Coordinates
-                </label>
-            </div>
-
-            <div class="form-input-row">
-                <input type="text" id="locationInputWeather" placeholder="Enter location" required>
-            </div>
-
-            <div class="unit-toggle">
-                <span>°F</span>
-                <label class="switch">
-                    <input type="checkbox" id="unitToggle">
-                    <span class="slider round"></span>
-                </label>
-                <span>°C</span>
-            </div>
-
-            <div class="overlay-controls">
-                <button type="button" class="submit-btn" onclick="fetchWeather()">
-                    <i class="fas fa-cloud-sun"></i> Get Forecast
-                </button>
-                <button type="button" class="home-btn" onclick="closeWeatherOverlay()">
-                    <i class="fas fa-home"></i> Close
-                </button>
-            </div>
-        </form>
-
-        <div class="forecast-container">
-            <div id="forecastResults" class="forecast-results"></div>
-        </div>
-    </div>
-  </div>
-
-  <script>
-    function showSidebarTab(tab) {
-      document.querySelectorAll('.sidebar-tab').forEach(btn => btn.classList.remove('active'));
-      document.querySelectorAll('.sidebar-tab-content').forEach(div => div.style.display = 'none');
-      if (tab === 'user-events') {
-        document.querySelector('.sidebar-tab').classList.add('active');
-        document.getElementById('sidebar-user-events').style.display = 'block';
-      } else {
-        document.querySelectorAll('.sidebar-tab')[1].classList.add('active');
-        document.getElementById('sidebar-pois').style.display = 'block';
-      }
-    }
-    window.showSidebarTab = showSidebarTab;
-  </script>
 
   <script src="{% static 'js/weather.js' %}"></script>
   <script src="{% static 'js/permissions.js' %}"></script>

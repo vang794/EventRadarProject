@@ -88,7 +88,7 @@ function initMap() {
   const userLng = parseFloat(dataEl?.getAttribute('data-longitude')) || -87.9065;
   const userRadius = parseFloat(dataEl?.getAttribute('data-radius')) || 5;
 
-  window.map = L.map('map-container').setView([userLat, userLng], 12);
+  window.map = L.map('map-container').setView([userLat, userLng], 15);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
