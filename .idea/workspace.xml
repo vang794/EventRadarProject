@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="reworked eventplan to include start date and end date">
-      <change beforePath="$PROJECT_DIR$/Templates/eventplan.html" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/eventplan.html" afterDir="false" />
-    </list>
+    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="workspace update" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -460,7 +458,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745401189908</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="workspace update">
+      <option name="closed" value="true" />
+      <created>1745401635652</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1745401635652</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -478,7 +484,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="redid reset.py" />
     <MESSAGE value="redid password_reset.html and changing acceptance tests" />
     <MESSAGE value="redid views and made new file for customtokengenerator" />
     <MESSAGE value="Redone the views and added proper notes to unit tests" />
@@ -503,7 +508,8 @@
     <MESSAGE value="edited the html, added butto to homepage, added more css, added notes for views" />
     <MESSAGE value="reworked views to add notes" />
     <MESSAGE value="reworked eventplan to include start date and end date" />
-    <option name="LAST_COMMIT_MESSAGE" value="reworked eventplan to include start date and end date" />
+    <MESSAGE value="workspace update" />
+    <option name="LAST_COMMIT_MESSAGE" value="workspace update" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
