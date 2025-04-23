@@ -1135,9 +1135,11 @@ class EventPlan(SessionLoginRequiredMixin,View):
         })
     def post(self, request):
         #If create form
-            #title = request.POST.get('create_name')
-            #start_date_str = request.POST.get('start_date_str')
-            #end_date_str = request.POST.get('end_date_str')
+        #title = request.POST.get('create_name','')
+        #start_date_str = request.POST.get('start_date_str')
+        #end_date_str = request.POST.get('end_date_str')
+
+
 
         # If edit form
         # plan_id = request.POST.get('selected_plan')
