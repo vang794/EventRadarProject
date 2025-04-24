@@ -56,52 +56,68 @@
        style="display:none;"></div>
 
   <div id="loadingOverlay">
-    <div><i class="fas fa-spinner"></i><br><p id="loadingText">Fetching events… Please hang tight!</p></div>
+      <div><i class="fas fa-spinner"></i><br><p id="loadingText">Fetching events… Please hang tight!</p></div>
   </div>
 
   <div class="main-content">
-    <div class="search-controls">
-      <form method="post" action="{% url 'homepage' %}">
-        {% csrf_token %}
-        <div class="search-bar">
-          <div class="input-group">
-            <span class="input-icon"><i class="fas fa-map-marker-alt"></i></span>
-            <input type="text" id="locationInput" name="location"
-                   placeholder="Location"
-                   value="{{ current_location|default:'Milwaukee' }}">
-          </div>
-          <div class="input-group">
-            <span class="input-icon"><i class="fas fa-circle-notch"></i></span>
-            <input type="number" id="radiusInput" name="radius"
-                   placeholder="Radius (miles)"
-                   value="{{ current_radius|default:5 }}" min="1" max="50">
-          </div>
-          <div class="input-group">
-            <label for="start_date_str">Start Date</label>
-            <input type="date" id="start_date_str" name="start_date_str"
-                   value="{{ event_date1|default:'' }}">
-          </div>
-          <div class="input-group">
-            <label for="end_date_str">End Date</label>
-            <input type="date" id="end_date_str" name="end_date_str"
-                   value="{{ event_date2|default:'' }}">
-          </div>
-          <button type="submit" id="searchButton" class="search-btn"><i class="fas fa-search"></i> Search</button>
-        </div>
-      </form>
-      {% if error %}<div class="error">{{ error }}</div>{% endif %}
-    </div>
+      <div class="search-controls">
+          <form method="post" action="{% url 'homepage' %}">
+              {% csrf_token %}
+              <div class="search-bar">
+                  <div class="input-group">
+                      <span class="input-icon"><i class="fas fa-map-marker-alt"></i></span>
+                      <input type="text" id="locationInput" name="location"
+                             placeholder="Location"
+                             value="{{ current_location|default:'Milwaukee' }}">
+                  </div>
+                  <div class="input-group">
+                      <span class="input-icon"><i class="fas fa-circle-notch"></i></span>
+                      <input type="number" id="radiusInput" name="radius"
+                             placeholder="Radius (miles)"
+                             value="{{ current_radius|default:5 }}" min="1" max="50">
+                  </div>
+                  <div class="input-group">
+                      <label for="start_date_str">Start Date</label>
+                      <input type="date" id="start_date_str" name="start_date_str"
+                             value="{{ event_date1|default:'' }}">
+                  </div>
+                  <div class="input-group">
+                      <label for="end_date_str">End Date</label>
+                      <input type="date" id="end_date_str" name="end_date_str"
+                             value="{{ event_date2|default:'' }}">
+                  </div>
+                  <button type="submit" id="searchButton" class="search-btn">
+                      <i class="fas fa-search"></i> Search
+                  </button>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="event_type" value="Festival"> Festival</label>
+                    <label><input type="checkbox" name="event_type" value="Convention"> Convention</label>
+                    <label><input type="checkbox" name="event_type" value="Business"> Business</label>
+                    <label><input type="checkbox" name="event_type" value="Concert"> Concert</label>
+                    <label><input type="checkbox" name="event_type" value="Exhibition"> Exhibition</label>
+                    <label><input type="checkbox" name="event_type" value="Recreational"> Recreational</label>
+                    <label><input type="checkbox" name="event_type" value="Social"> Social</label>
+                    <label><input type="checkbox" name="event_type" value="Misc"> Misc</label>
+                </div>
+            </div>
+
+          </form>
+          {% if error %}<div class="error">{{ error }}</div>{% endif %}
+      </div>
 
     <div class="content-container">
       <div class="map-container" id="map-container"></div>
-
       <div class="events-list">
+          {% if filter_message %}
+              <div style="text-align: center; font-weight: bold;">
+                  {{ filter_message }}
+              </div>
+          {% endif %}
         <div class="sidebar-tabs">
           <button class="sidebar-tab active" onclick="showSidebarTab('user-events')">User Events</button>
           <button class="sidebar-tab"        onclick="showSidebarTab('pois')">POIs</button>
         </div>
-
-        <div id="sidebar-user-events" class="sidebar-tab-content" style="display:block;">
+          <div id="sidebar-user-events" class="sidebar-tab-content" style="display:block;">
           {% if user_events %}
             {% for event in user_events %}
               <div class="event-card"
