@@ -10,7 +10,7 @@ from django.views import View
 from django.core.exceptions import ValidationError
 from datetime import datetime, time, timedelta
 from django.utils import timezone
-
+import html
 
 #Login
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -67,6 +67,7 @@ import math
 from django.db.models import Max
 import time
 from django.conf import settings
+
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -512,7 +513,7 @@ class HomePage(SessionLoginRequiredMixin,View):
                 <h3>{poi.title}</h3>
                 <p><strong>Date:</strong> {event_date_str}</p>
                 <p><strong>Category:</strong> {poi.category or 'N/A'}</p>
-                <p>{poi.description or 'No description available.'}</p>
+                <p>{poi.description or "No description available."}</p>
             </div>
             """
 
