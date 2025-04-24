@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="updated filter to include start date and end date and edit the homepage with filter msg">
+    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="Completed filtering for event categories and events">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Templates/homepage.html" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/homepage.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/polls/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/polls/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -312,7 +310,7 @@
       <workItem from="1744301893571" duration="297000" />
       <workItem from="1745441372677" duration="606000" />
       <workItem from="1745442291135" duration="759000" />
-      <workItem from="1745455802332" duration="20788000" />
+      <workItem from="1745455802332" duration="22084000" />
     </task>
     <task id="LOCAL-00004" summary="Updated Workspace">
       <option name="closed" value="true" />
@@ -482,7 +480,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745478473169</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Completed filtering for event categories and events">
+      <option name="closed" value="true" />
+      <created>1745488709297</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1745488709297</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -500,7 +506,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="redid views and made new file for customtokengenerator" />
     <MESSAGE value="Redone the views and added proper notes to unit tests" />
     <MESSAGE value="edited login view" />
     <MESSAGE value="Updated Workspace" />
@@ -525,7 +530,8 @@
     <MESSAGE value="reworked eventplan to include start date and end date" />
     <MESSAGE value="workspace update" />
     <MESSAGE value="updated filter to include start date and end date and edit the homepage with filter msg" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated filter to include start date and end date and edit the homepage with filter msg" />
+    <MESSAGE value="Completed filtering for event categories and events" />
+    <option name="LAST_COMMIT_MESSAGE" value="Completed filtering for event categories and events" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -231,7 +231,7 @@ class HomePage(SessionLoginRequiredMixin,View):
             #Show events from today and onwards (to prevent overload from past events in case)
             user_events = [
                 event for event in user_events
-                if (event.end_date >= today) or (event.start_date >= today)
+                if (event.end_date>=today) or (event.start_date>=today)
             ]
             message = "Showing events starting from today and onward."
 
