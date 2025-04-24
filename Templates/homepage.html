@@ -94,14 +94,17 @@
 
     <div class="content-container">
       <div class="map-container" id="map-container"></div>
-
       <div class="events-list">
+          {% if filter_message %}
+              <div style="text-align: center; font-weight: bold;">
+                  {{ filter_message }}
+              </div>
+          {% endif %}
         <div class="sidebar-tabs">
           <button class="sidebar-tab active" onclick="showSidebarTab('user-events')">User Events</button>
           <button class="sidebar-tab"        onclick="showSidebarTab('pois')">POIs</button>
         </div>
-
-        <div id="sidebar-user-events" class="sidebar-tab-content" style="display:block;">
+          <div id="sidebar-user-events" class="sidebar-tab-content" style="display:block;">
           {% if user_events %}
             {% for event in user_events %}
               <div class="event-card"
