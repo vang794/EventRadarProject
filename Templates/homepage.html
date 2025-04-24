@@ -119,9 +119,6 @@
                   <p><strong>Date:</strong> {{ event.event_date|date:"F j, Y" }} at {{ event.event_date|date:"g:i A" }}</p>
                   <p><strong>Location:</strong> {{ event.location_name }}</p>
                   <p><strong>Description:</strong> {{ event.description }}</p>
-                  {% if event.id|stringformat:"s"|length == 36 %}
-                    <a href="{% url 'event_details_page' event.id %}" class="view-landmark-btn">View Details</a>
-                  {% endif %}
                   <button class="btn btn-outline-primary btn-sm add-to-plan-btn"
                           data-item-type="event"
                           data-item-id="{{ event.id }}"
@@ -164,7 +161,6 @@
                       <p><strong>Description:</strong> {{ event.short_description }}</p>
                       {% if event.phone %}<p><strong>Phone:</strong> {{ event.phone }}</p>{% endif %}
                       {% if event.website %}<p><strong>Website:</strong> <a href="{{ event.website }}" target="_blank">Visit</a></p>{% endif %}
-                      <a href="{% url 'event_details_page' event.id %}" class="view-landmark-btn">View Landmark</a>
                       <button class="btn btn-outline-primary btn-sm add-to-plan-btn"
                               data-item-type="poi"
                               data-item-id="{{ event.id }}"
