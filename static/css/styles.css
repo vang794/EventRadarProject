@@ -718,7 +718,7 @@ input[type="tel"]::placeholder {
 
 .map-container {
     flex: 2;
-    min-width: 300px;
+    min-width: 240px;
     height: 500px;
     background: white;
     border-radius: 10px;
@@ -733,7 +733,7 @@ input[type="tel"]::placeholder {
 }
 .events-list {
     flex: none;
-    width: 340px;
+    width: 400px;
     max-height: 700px;
     overflow-y: auto;
     background: #fff;
