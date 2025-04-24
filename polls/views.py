@@ -68,6 +68,10 @@ from django.db.models import Max
 import time
 from django.conf import settings
 
+from Methods.forms import EventForm
+
+from Methods.userPermissions import EventManagerRequiredMixin
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -1446,3 +1450,46 @@ def get_plan_map(request):
         return JsonResponse({'success': True, 'map_html': map_html})
     except Exception as e:
         return JsonResponse({'success': False, 'error': str(e)}, status=400)
+
+class ManageEventsView(EventManagerRequiredMixin, View):
+    def get(self, request):
+        user = User.objects.get(email=request.session.get("email"))
+        event_id = request.GET.get("edit")
+
+        if event_id: #if editing
+            event = get_object_or_404(Event, id=event_id, created_by=user)
+            form = EventForm(instance=event)
+        else: #empty form to create an event
+            form = EventForm()
+
+        user_events = Event.objects.filter(created_by=user) #gests all users events to display below
+
+        #pass to template
+        return render(request, "manage_events.html", {
+            "form": form,
+            "user_events": user_events,
+            "edit_event_id": event_id
+        })
+
+    def post(self, request):
+        user = User.objects.get(email=request.session.get("email"))
+        event_id = request.POST.get("event_id")
+
+        if event_id: #editing
+            event = get_object_or_404(Event, id=event_id, created_by=user)
+            form = EventForm(request.POST, instance=event)
+        else: #new event
+            form = EventForm(request.POST)
+
+        if form.is_valid(): #saves event, linked to current user
+            new_event = form.save(commit=False)
+            new_event.created_by = user
+            new_event.save()
+            return redirect("manage_events")
+
+        user_events = Event.objects.filter(created_by=user)
+        return render(request, "manage_events.html", {
+            "form": form,
+            "user_events": user_events,
+            "edit_event_id": event_id
+        })
