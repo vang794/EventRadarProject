@@ -506,6 +506,7 @@ class HomePage(SessionLoginRequiredMixin,View):
             except AttributeError:
                 event_date_str = "Date not available"
 
+
             popup_html = f"""
             <div class="event-popup">
                 <h3>{poi.title}</h3>

@@ -787,6 +787,7 @@ input[type="tel"]::placeholder {
     transition: background 0.15s, border 0.15s, box-shadow 0.15s;
     font-size: 0.97rem;
     position: relative;
+    overflow: hidden;
 }
 
 .event-card:hover {
@@ -831,6 +832,10 @@ input[type="tel"]::placeholder {
     font-size: 0.93rem;
     color: #555;
     display: none;
+    overflow: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
 }
 
 .event-card.selected-event {
@@ -871,13 +876,20 @@ input[type="tel"]::placeholder {
 }
 
 /* homepage side bar */
+
 .event-popup h3 {
-                color: #6c5ce7;
-                margin-bottom: 8px;
+    color: #6c5ce7;
+    margin-bottom: 8px;
+
+
 }
 .event-popup p {
-                margin: 5px 0;
+    margin: 5px 0;
+    max-width: 100%;
+
+
 }
+
 /* Weather Section Styles */
 
 .weather-section {
@@ -1283,6 +1295,7 @@ a.view-landmark-btn {
     background-color: #eee;
     padding: 20px;
     flex: 1;
+    overflow: hidden;
 }
 
 
@@ -1378,7 +1391,7 @@ a.view-landmark-btn {
     box-shadow:0 1px 4px rgba(122,59,218,.18);
 }
 .event-card-h h4{margin:0 0 4px;color:#4a2b7a;font-size:1rem}
-.event-card-h p{margin:2px 0;font-size:.85rem;color:#555}
+.event-card-h p{margin:2px 0;font-size:.85rem;color:#555;}
 
 .plan-map {
     width: 100%;
