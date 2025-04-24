@@ -202,6 +202,10 @@ class HomePage(SessionLoginRequiredMixin,View):
 
         user_events = self.get_events_within_radius2(location[0], location[1], radius, system_user)
 
+        selected_types = request.session.get('event_types')
+        if selected_types:
+            user_events = [event for event in user_events if event.category in selected_types]
+
         today = timezone.now()
 
         if start_date and end_date:
@@ -296,7 +300,8 @@ class HomePage(SessionLoginRequiredMixin,View):
             'user_role': user_role,
             'user_events': user_events,
             'error':error,
-            'filter_message':message
+            'filter_message':message,
+            'event_types' : selected_types
         }
 
         return render(request, "homepage.html", context)
@@ -367,23 +372,34 @@ class HomePage(SessionLoginRequiredMixin,View):
                     event for event in user_events
                     if event.start_date >= start_date and event.end_date <= end_date
                 ]
+                message = f"Filtered events that start or end between {start_date.strftime('%B %d, %Y')} and {end_date.strftime('%B %d, %Y')}."
             elif start_date:
                 # Only start date: Show events starting OR ending after or on the start date
                 user_events = [
                     event for event in user_events
                     if (event.end_date >= start_date) or (event.start_date >= start_date)
                 ]
+                message = f"Filtered events that start and end on or after {start_date.strftime('%B %d, %Y')}."
             elif end_date:
                 # Only end date: Show events from today up to the end date
                 user_events = [event for event in user_events if
                                event.start_date <= end_date and event.end_date >= today
                                ]
+                message = f"Filtered events that occur from today until {end_date.strftime('%B %d, %Y')}."
+
             else:
                 # Show events from today and onwards (to prevent overload from past events in case)
                 user_events = [
                     event for event in user_events
                     if (event.end_date >= today) or (event.start_date >= today)
                 ]
+                message = "Showing events starting from today and onward."
+
+            selected_types = request.POST.getlist('event_type')
+            if selected_types:
+                request.session['event_types'] = selected_types
+            else:
+                request.session.pop('event_types', None)
 
         return redirect("homepage")
 

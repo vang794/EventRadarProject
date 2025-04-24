@@ -666,7 +666,7 @@ input[type="tel"]::placeholder {
 .input-icon {
     position: absolute;
     left: 12px;
-    color: #7a3bda;
+    color: #7a3bda
 }
 
 .search-bar input {
@@ -693,7 +693,23 @@ input[type="tel"]::placeholder {
 .search-btn:hover {
     background: #6429c8;
 }
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    width: 100%;
+    margin-top: 20px;
+}
 
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+.checkbox-group input {
+    margin-right: 5px;
+    border-radius: 4px;
+}
 .content-container {
     display: flex;
     gap: 20px;
@@ -1095,7 +1111,10 @@ ul.messages li.error {
     border-radius: 8px;
     transition: background-color 0.2s;
 }
-
+/*To allow text to be white*/
+a.view-landmark-btn {
+      color: white;
+    }
 .view-landmark-btn:hover {
     background-color: #6429c8;
 }
