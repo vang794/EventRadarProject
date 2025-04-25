@@ -48,7 +48,7 @@ class VerifyAccount:
     #get account by email
     def find_acct(self,email):
         if self.email_find(email):
-            return User.objects.filter(email=email)
+            return User.objects.filter(email=email).first()
 
     #password is related to the email
 

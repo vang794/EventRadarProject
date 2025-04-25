@@ -8,9 +8,15 @@ class DeleteAcct(VerifyAccount):
         account=self.find_acct(email)
         if account is not None:
             account.delete()
+    #check that the password matches account password
+    def pass_verif(self,email,password):
+        account = self.find_acct(email)
+        acct_password= account.password
+        return check_password(password,acct_password)
+
 
     def del_acct(self,email,password1,password2):
-        if self.authenticate_email(email) and self.pass_exact(password1,password2):
+        if self.authenticate_email(email) and self.pass_exact(password1,password2) and self.pass_verif(email,password1):
             self.del_acct_action(email)
             return True
         else:
