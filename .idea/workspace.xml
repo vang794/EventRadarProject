@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="git merge main" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;vang794&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/vang794/EventRadarProject.git&quot;,
+    &quot;accountId&quot;: &quot;bd7338df-7938-48e6-89ad-4b612612348e&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2u6Gir4Dl4ih3livvg21Dnm6AER" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Django Server.Unnamed.executor": "Run",
+    "Django tests.Test: polls.tests.acceptance_tests.executor": "Run",
+    "Django tests.Test: polls.tests.acceptance_tests.test_acceptance_delete.executor": "Run",
+    "Django tests.Test: polls.tests.acceptance_tests.test_acceptance_reset.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_change_account_details.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_create_account.CreateAccountTests.test_create_account_missing_required_fields.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_map.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_mixin.MixinUnitTests.test_allows_access_if_authenticated.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_mixin.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_correct_email.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_find.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_not_blank.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_set_password.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_sign_out.SignOutTests.test_unauthenticated_user_redirect.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_sign_out.executor": "Run",
+    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "django.template.preview.state": "SHOW_EDITOR_AND_PREVIEW",
+    "git-widget-placeholder": "vang__updated__filter",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager" selected="Django Server.Unnamed">
+    <configuration name="Test: polls.tests.acceptance_tests" type="DjangoTestsConfigurationType" temporary="true">
+      <module name="EventRadarProject" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="TARGET" value="polls.tests.acceptance_tests" />
+      <option name="SETTINGS_FILE" value="" />
+      <option name="CUSTOM_SETTINGS" value="false" />
+      <option name="USE_OPTIONS" value="false" />
+      <option name="OPTIONS" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Test: polls.tests.acceptance_tests.test_acceptance_delete" type="DjangoTestsConfigurationType" temporary="true">
+      <module name="EventRadarProject" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="TARGET" value="polls.tests.acceptance_tests.test_acceptance_delete" />
+      <option name="SETTINGS_FILE" value="" />
+      <option name="CUSTOM_SETTINGS" value="false" />
+      <option name="USE_OPTIONS" value="false" />
+      <option name="OPTIONS" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Test: polls.tests.unit_tests" type="DjangoTestsConfigurationType" temporary="true">
+      <module name="EventRadarProject" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="TARGET" value="polls.tests.unit_tests" />
+      <option name="SETTINGS_FILE" value="" />
+      <option name="CUSTOM_SETTINGS" value="false" />
+      <option name="USE_OPTIONS" value="false" />
+      <option name="OPTIONS" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Test: polls.tests.unit_tests.test_unit_map" type="DjangoTestsConfigurationType" temporary="true">
+      <module name="EventRadarProject" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="TARGET" value="polls.tests.unit_tests.test_unit_map" />
+      <option name="SETTINGS_FILE" value="" />
+      <option name="CUSTOM_SETTINGS" value="false" />
+      <option name="USE_OPTIONS" value="false" />
+      <option name="OPTIONS" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Test: polls.tests.unit_tests.test_unit_verification" type="DjangoTestsConfigurationType" temporary="true">
+      <module name="EventRadarProject" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="TARGET" value="polls.tests.unit_tests.test_unit_verification" />
+      <option name="SETTINGS_FILE" value="" />
+      <option name="CUSTOM_SETTINGS" value="false" />
+      <option name="USE_OPTIONS" value="false" />
+      <option name="OPTIONS" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unnamed" type="Python.DjangoServer" factoryName="Django server">
+      <module name="EventRadarProject" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="DJANGO_SETTINGS_MODULE" value="EventRadarProject.settings" />
+        <env name="export DJANGO_SETTINGS_MODULE" value="EventRadarProject1.settings" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        </ENTRIES>
+      </EXTENSION>
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Django Server.Unnamed" />
+      <item itemvalue="Django tests.Test: polls.tests.acceptance_tests" />
+      <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_map" />
+      <item itemvalue="Django tests.Test: polls.tests.acceptance_tests.test_acceptance_delete" />
+      <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_verification" />
+      <item itemvalue="Django tests.Test: polls.tests.unit_tests" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Django tests.Test: polls.tests.unit_tests" />
+        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_map" />
+        <item itemvalue="Django tests.Test: polls.tests.acceptance_tests" />
+        <item itemvalue="Django tests.Test: polls.tests.acceptance_tests.test_acceptance_delete" />
+        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_verification" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-PY-243.23654.177" />
+        <option value="bundled-python-sdk-91d3a02ef49d-43b77aa2d136-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.23654.177" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task id="LOCAL-00001" summary="redid password_reset.html and changing acceptance tests">
+      <option name="closed" value="true" />
+      <created>1740706768890</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1740706768890</updated>
+    </task>
+    <task id="LOCAL-00002" summary="redid views and made new file for customtokengenerator">
+      <option name="closed" value="true" />
+      <created>1740707762786</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1740707762786</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Redone the views and added proper notes to unit tests">
+      <option name="closed" value="true" />
+      <created>1740720999803</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1740720999803</updated>
+    </task>
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="Redone the views and added proper notes to unit tests" />
+      <created>1740721531828</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1740721531828</updated>
+      <workItem from="1740721532462" duration="226000" />
+      <workItem from="1740721785792" duration="133000" />
+      <workItem from="1740721921456" duration="240000" />
+      <workItem from="1740722163921" duration="26000" />
+      <workItem from="1740725985306" duration="826000" />
+      <workItem from="1740726815716" duration="1904000" />
+      <workItem from="1741561756719" duration="6089000" />
+      <workItem from="1741635037115" duration="1970000" />
+      <workItem from="1741640816556" duration="220000" />
+      <workItem from="1741657350574" duration="4113000" />
+      <workItem from="1741744191544" duration="8933000" />
+      <workItem from="1741809842373" duration="2140000" />
+      <workItem from="1741812863722" duration="134000" />
+      <workItem from="1741828213282" duration="2407000" />
+      <workItem from="1743110889336" duration="1266000" />
+      <workItem from="1743112162595" duration="1783000" />
+      <workItem from="1743113952592" duration="1601000" />
+      <workItem from="1743728295120" duration="1498000" />
+      <workItem from="1743741893679" duration="1030000" />
+      <workItem from="1743742956796" duration="216000" />
+      <workItem from="1743756846670" duration="2564000" />
+      <workItem from="1744059240028" duration="954000" />
+      <workItem from="1744228364159" duration="2309000" />
+      <workItem from="1744232033711" duration="1432000" />
+      <workItem from="1744301893571" duration="297000" />
+      <workItem from="1745441372677" duration="606000" />
+      <workItem from="1745442291135" duration="759000" />
+      <workItem from="1745455802332" duration="23179000" />
+      <workItem from="1745525092237" duration="14836000" />
+    </task>
+    <task id="LOCAL-00004" summary="Updated Workspace">
+      <option name="closed" value="true" />
+      <created>1741914704127</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1741914704127</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Edited sign out test to reflect on actual settings page">
+      <option name="closed" value="true" />
+      <created>1741915212618</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1741915212618</updated>
+    </task>
+    <task id="LOCAL-00006" summary="test">
+      <option name="closed" value="true" />
+      <created>1741924040510</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1741924040510</updated>
+    </task>
+    <task id="LOCAL-00007" summary="I Changed The Change celsius to fahrenheit">
+      <option name="closed" value="true" />
+      <created>1741926829765</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1741926829765</updated>
+    </task>
+    <task id="LOCAL-00008" summary="I Changed changed c to F">
+      <option name="closed" value="true" />
+      <created>1741927258538</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1741927258538</updated>
+    </task>
+    <task id="LOCAL-00009" summary="I made the pop up work">
+      <option name="closed" value="true" />
+      <created>1743724993311</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1743724993311</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Merge main branch">
+      <option name="closed" value="true" />
+      <created>1743752824601</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1743752824601</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Changed htmls, confirmed app and adjusted settings and database">
+      <option name="closed" value="true" />
+      <created>1743756093287</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1743756093287</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Updated some html and views">
+      <option name="closed" value="true" />
+      <created>1744302191546</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1744302191546</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Reworked homepage and implemented methods in views.">
+      <option name="closed" value="true" />
+      <created>1744344354595</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1744344354595</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Implementing the event plan url and map">
+      <option name="closed" value="true" />
+      <created>1745293616905</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1745293616906</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Implementing the event plan url and map">
+      <option name="closed" value="true" />
+      <created>1745293623601</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1745293623601</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Altering the models for the project">
+      <option name="closed" value="true" />
+      <created>1745294571711</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1745294571711</updated>
+    </task>
+    <task id="LOCAL-00017" summary="git merge main">
+      <option name="closed" value="true" />
+      <created>1745361970348</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1745361970348</updated>
+    </task>
+    <task id="LOCAL-00018" summary="created java script for expanding a tab, edited the html and css of page and added temporary form">
+      <option name="closed" value="true" />
+      <created>1745388946245</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1745388946245</updated>
+    </task>
+    <task id="LOCAL-00019" summary="edited html and css, include javascript for switching between forms">
+      <option name="closed" value="true" />
+      <created>1745395253390</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1745395253390</updated>
+    </task>
+    <task id="LOCAL-00020" summary="edited the html, added butto to homepage, added more css, added notes for views">
+      <option name="closed" value="true" />
+      <created>1745398497896</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1745398497896</updated>
+    </task>
+    <task id="LOCAL-00021" summary="reworked views to add notes">
+      <option name="closed" value="true" />
+      <created>1745400879433</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1745400879433</updated>
+    </task>
+    <task id="LOCAL-00022" summary="reworked eventplan to include start date and end date">
+      <option name="closed" value="true" />
+      <created>1745401189908</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1745401189908</updated>
+    </task>
+    <task id="LOCAL-00023" summary="workspace update">
+      <option name="closed" value="true" />
+      <created>1745401635652</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1745401635652</updated>
+    </task>
+    <task id="LOCAL-00024" summary="updated filter to include start date and end date and edit the homepage with filter msg">
+      <option name="closed" value="true" />
+      <created>1745478473169</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1745478473169</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Completed filtering for event categories and events">
+      <option name="closed" value="true" />
+      <created>1745488709297</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1745488709297</updated>
+    </task>
+    <task id="LOCAL-00026" summary="editing views code and formatting">
+      <option name="closed" value="true" />
+      <created>1745490057190</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1745490057190</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Merged main code and additional changes">
+      <option name="closed" value="true" />
+      <created>1745490550971</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1745490550971</updated>
+    </task>
+    <task id="LOCAL-00028" summary="edited css for events to wrap long text, allowed breaks in event desc, and edited event descriptions">
+      <option name="closed" value="true" />
+      <created>1745531048892</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1745531048893</updated>
+    </task>
+    <task id="LOCAL-00029" summary="adjusted css of event app for textbox, adjusted event information">
+      <option name="closed" value="true" />
+      <created>1745538466163</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1745538466163</updated>
+    </task>
+    <task id="LOCAL-00030" summary="adjusted map unit tests, acceptance tests and delete method and verifcation class">
+      <option name="closed" value="true" />
+      <created>1745541821399</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1745541821399</updated>
+    </task>
+    <task id="LOCAL-00031" summary="edited leaflet popup for wrappering around the popups">
+      <option name="closed" value="true" />
+      <created>1745542547374</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1745542547374</updated>
+    </task>
+    <task id="LOCAL-00032" summary="git merge main">
+      <option name="closed" value="true" />
+      <created>1745542880313</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1745542880313</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="I Changed changed c to F" />
+    <MESSAGE value="I made the pop up work" />
+    <MESSAGE value="save workspace" />
+    <MESSAGE value="Merge main branch" />
+    <MESSAGE value="Changed htmls, confirmed app and adjusted settings and database" />
+    <MESSAGE value="Updated some html and views" />
+    <MESSAGE value="Reworked homepage and implemented methods in views." />
+    <MESSAGE value="Implementing the event plan url and map" />
+    <MESSAGE value="Altering the models for the project" />
+    <MESSAGE value="Make new migrations to include start and end date" />
+    <MESSAGE value="created java script for expanding a tab, edited the html and css of page and added temporary form" />
+    <MESSAGE value="edited html and css, include javascript for switching between forms" />
+    <MESSAGE value="edited the html, added butto to homepage, added more css, added notes for views" />
+    <MESSAGE value="reworked views to add notes" />
+    <MESSAGE value="reworked eventplan to include start date and end date" />
+    <MESSAGE value="workspace update" />
+    <MESSAGE value="updated filter to include start date and end date and edit the homepage with filter msg" />
+    <MESSAGE value="Completed filtering for event categories and events" />
+    <MESSAGE value="editing views code and formatting" />
+    <MESSAGE value="Merged main code and additional changes" />
+    <MESSAGE value="edited css for events to wrap long text, allowed breaks in event desc, and edited event descriptions" />
+    <MESSAGE value="adjusted css of event app for textbox, adjusted event information" />
+    <MESSAGE value="adjusted map unit tests, acceptance tests and delete method and verifcation class" />
+    <MESSAGE value="edited leaflet popup for wrappering around the popups" />
+    <MESSAGE value="git merge main" />
+    <option name="LAST_COMMIT_MESSAGE" value="git merge main" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/polls/tests/unit_tests/test_unit_reset.py</url>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/polls/tests/acceptance_tests/test_acceptance_create_account.py</url>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_reset_TestLogin_test_correct_email.coverage" NAME="Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_correct_email Coverage Results" MODIFIED="1740709830853" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_acceptance_tests.coverage" NAME="Test: polls.tests.acceptance_tests Coverage Results" MODIFIED="1745541518547" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_acceptance_tests_test_acceptance_delete.coverage" NAME="Test: polls.tests.acceptance_tests.test_acceptance_delete Coverage Results" MODIFIED="1745540803953" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$settings.coverage" NAME="settings Coverage Results" MODIFIED="1738890242422" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/EventRadarProject" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__acceptance_tests_login_accttest.coverage" NAME="Test: acceptance_tests.login_accttest Coverage Results" MODIFIED="1738950572880" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$urls.coverage" NAME="urls Coverage Results" MODIFIED="1738884262034" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/EventRadarProject" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_login.coverage" NAME="Test: polls.tests.unit_tests.test_unit_login Coverage Results" MODIFIED="1740157615241" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_mixin.coverage" NAME="Test: polls.tests.unit_tests.test_unit_mixin Coverage Results" MODIFIED="1741914190952" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$manage.coverage" NAME="manage Coverage Results" MODIFIED="1738904556915" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__EventRadarProject.coverage" NAME="Test: EventRadarProject Coverage Results" MODIFIED="1740130910564" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_login_accttest.coverage" NAME="Test: polls.login_accttest Coverage Results" MODIFIED="1738901068975" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_sign_out.coverage" NAME="Test: polls.tests.unit_tests.test_unit_sign_out Coverage Results" MODIFIED="1741913799112" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_acceptance_tests_test_acceptance_change_account_details.coverage" NAME="Test: polls.tests.acceptance_tests.test_acceptance_change_account_details Coverage Results" MODIFIED="1740525844888" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_acceptance_tests_test_acceptance_reset_ResetAcceptanceTests.coverage" NAME="Test: polls.tests.acceptance_tests.test_acceptance_reset.ResetAcceptanceTests Coverage Results" MODIFIED="1740116140386" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_reset_TestLogin_test_email_not_blank.coverage" NAME="Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_not_blank Coverage Results" MODIFIED="1740709834257" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Login.coverage" NAME="Login Coverage Results" MODIFIED="1738929846759" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Methods" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_acceptance_tests_test_acceptance_login.coverage" NAME="Test: polls.tests.acceptance_tests.test_acceptance_login Coverage Results" MODIFIED="1740157601080" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_confirm_email.coverage" NAME="Test: polls.tests.unit_tests.test_unit_confirm_email Coverage Results" MODIFIED="1740157610562" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_reset.coverage" NAME="Test: polls.tests.unit_tests.test_unit_reset Coverage Results" MODIFIED="1741913841405" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_map.coverage" NAME="Test: polls.tests.unit_tests.test_unit_map Coverage Results" MODIFIED="1745541746359" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__unit_tests_login_tests.coverage" NAME="Test: unit_tests.login_tests Coverage Results" MODIFIED="1738935163142" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_SignOutTests.coverage" NAME="Test: polls.tests.SignOutTests Coverage Results" MODIFIED="1738897198024" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__acceptance_tests_create_test.coverage" NAME="Test: acceptance_tests.create_test Coverage Results" MODIFIED="1738935183497" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_acceptance_tests_test_acceptance_create_account.coverage" NAME="Test: polls.tests.acceptance_tests.test_acceptance_create_account Coverage Results" MODIFIED="1740157598246" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_CreateAccountTests.coverage" NAME="Test: polls.tests.CreateAccountTests Coverage Results" MODIFIED="1738896882620" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_create_account_CreateAccountTests_test_create_account_missing_required_fields.coverage" NAME="Test: polls.tests.unit_tests.test_unit_create_account.CreateAccountTests.test_create_account_missing_required_fields Coverage Results" MODIFIED="1741914976347" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$views.coverage" NAME="views Coverage Results" MODIFIED="1740705481218" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/polls" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__.coverage" NAME="Test:  Coverage Results" MODIFIED="1738904573026" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_sign_out_SignOutTests_test_unauthenticated_user_redirect.coverage" NAME="Test: polls.tests.unit_tests.test_unit_sign_out.SignOutTests.test_unauthenticated_user_redirect Coverage Results" MODIFIED="1741915128131" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_reset_TestLogin_test_email_find.coverage" NAME="Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_find Coverage Results" MODIFIED="1740709817898" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_acceptance_tests_test_acceptance_reset.coverage" NAME="Test: polls.tests.acceptance_tests.test_acceptance_reset Coverage Results" MODIFIED="1740710302358" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_create_account.coverage" NAME="Test: polls.tests.unit_tests.test_unit_create_account Coverage Results" MODIFIED="1740157612743" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__unit_tests.coverage" NAME="Test: unit_tests Coverage Results" MODIFIED="1740083061137" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_mixin_MixinUnitTests_test_allows_access_if_authenticated.coverage" NAME="Test: polls.tests.unit_tests.test_unit_mixin.MixinUnitTests.test_allows_access_if_authenticated Coverage Results" MODIFIED="1741914447653" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$.coverage" NAME=" Coverage Results" MODIFIED="1738930041171" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/unit_tests" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__unit_tests_create_tests.coverage" NAME="Test: unit_tests.create_tests Coverage Results" MODIFIED="1738935171385" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_reset_TestLogin_test_set_password.coverage" NAME="Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_set_password Coverage Results" MODIFIED="1740710290030" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_change_account_details.coverage" NAME="Test: polls.tests.unit_tests.test_unit_change_account_details Coverage Results" MODIFIED="1741913812885" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_acceptance_tests_test_acceptance_confirm_email.coverage" NAME="Test: polls.tests.acceptance_tests.test_acceptance_confirm_email Coverage Results" MODIFIED="1740157595599" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests.coverage" NAME="Test: polls.tests.unit_tests Coverage Results" MODIFIED="1745541764615" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+  </component>
+</project>

@@ -17,7 +17,8 @@ class ChangeAccountDetailsAcceptanceTests(TestCase):
         )
 
         session = self.client.session
-        session["user_id"] = str(self.user.id) #login
+        #session["user_id"] = str(self.user.id) #login
+        session["email"] = self.user.email
         session.save()
 
     

@@ -21,13 +21,18 @@ from django.contrib.auth.views import PasswordResetCompleteView
 from django.urls import path
 
 from polls.views import LoginAuth, CreateAcct, SettingPage, SignOutView, HomePage, PasswordResetView, \
-    PasswordResetDoneView, PasswordResetConfirmView, WeatherView, DeleteView, DeleteCompleteView, fetch_and_save_events_api
+    PasswordResetDoneView, PasswordResetConfirmView, WeatherView, DeleteView, DeleteCompleteView, \
+    fetch_and_save_events_api, Application, Approval, App_Confirm, ApplicationClass, get_event_details, \
+    event_details_page, EventPlan, add_to_plan, get_user_plans, MyPlansView, save_plan_order, get_plan_map
 
 #for id
 import uuid
 
 from django.conf.urls.static import static
 from django.conf import settings
+
+#for manage events page
+from polls.views import ManageEventsView 
 
 urlpatterns = [
     path('', LoginAuth.as_view(), name='login'),
@@ -37,7 +42,10 @@ urlpatterns = [
     path('sign_out/', SignOutView.as_view(), name='sign_out'),
     path('admin/', admin.site.urls),
     path('weather/', WeatherView.as_view(), name='weather'),
-
+    path('application/', ApplicationClass.as_view(), name='application'),
+    #URL for Admins
+    path('app_confirmation/', App_Confirm.as_view(), name='app_confirmation'),
+    path('app_approve/', Approval.as_view(), name='app_approve'),
 
     #Urls for reset password
     path('reset_password/', PasswordResetView.as_view(), name='password_reset'),
@@ -50,5 +58,16 @@ urlpatterns = [
     path('delete_complete/', DeleteCompleteView.as_view(), name='delete_complete'),
 
     path('api/fetch_events/', fetch_and_save_events_api, name='fetch_events_api'),
+    path('api/event/<uuid:event_id>/', get_event_details, name='get_event_details'),
+    path('event/<uuid:event_id>/details/', event_details_page, name='event_details_page'),
+
+    path('event_plan/', EventPlan.as_view(), name='event_plan'),
+    path('my_plans/', MyPlansView.as_view(), name='my_plans'),
+    path('api/add_to_plan/', add_to_plan, name='add_to_plan'),
+    path('api/get_user_plans/', get_user_plans, name='get_user_plans'),
+    path('api/save_plan_order/', save_plan_order, name='save_plan_order'),
+    path('api/get_plan_map/', get_plan_map, name='get_plan_map'),
+
+    path('manage-events/', ManageEventsView.as_view(), name='manage_events'),
 ]
 
