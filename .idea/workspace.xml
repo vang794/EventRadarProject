@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="adjusted map unit tests, acceptance tests and delete method and verifcation class">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/styles.css" afterDir="false" />
-    </list>
+    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="edited leaflet popup for wrappering around the popups" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -314,7 +311,7 @@
       <workItem from="1745441372677" duration="606000" />
       <workItem from="1745442291135" duration="759000" />
       <workItem from="1745455802332" duration="23179000" />
-      <workItem from="1745525092237" duration="14175000" />
+      <workItem from="1745525092237" duration="14485000" />
     </task>
     <task id="LOCAL-00004" summary="Updated Workspace">
       <option name="closed" value="true" />
@@ -532,7 +529,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745541821399</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="edited leaflet popup for wrappering around the popups">
+      <option name="closed" value="true" />
+      <created>1745542547374</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1745542547374</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -550,7 +555,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="I Changed The Change celsius to fahrenheit" />
     <MESSAGE value="I Changed changed c to F" />
     <MESSAGE value="I made the pop up work" />
     <MESSAGE value="save workspace" />
@@ -575,7 +579,8 @@
     <MESSAGE value="edited css for events to wrap long text, allowed breaks in event desc, and edited event descriptions" />
     <MESSAGE value="adjusted css of event app for textbox, adjusted event information" />
     <MESSAGE value="adjusted map unit tests, acceptance tests and delete method and verifcation class" />
-    <option name="LAST_COMMIT_MESSAGE" value="adjusted map unit tests, acceptance tests and delete method and verifcation class" />
+    <MESSAGE value="edited leaflet popup for wrappering around the popups" />
+    <option name="LAST_COMMIT_MESSAGE" value="edited leaflet popup for wrappering around the popups" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
