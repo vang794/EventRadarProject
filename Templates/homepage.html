@@ -104,6 +104,27 @@
           </form>
           {% if error %}<div class="error">{{ error }}</div>{% endif %}
       </div>
+      <!-- WEATHER OVERLAY -->
+      <div id="weatherOverlay" class="weather-overlay">
+          <div class="overlay-content">
+              <button onclick="closeWeatherOverlay()" style="float: right;">✕</button>
+              <div class="weather-section">
+                  <h2>Weather Forecast</h2>
+                  <form id="weatherForm">
+                      <div>
+                          <label><input type="radio" name="locationType" value="city" checked> City</label>
+                          <label><input type="radio" name="locationType" value="zip"> Zip</label>
+                          <label><input type="radio" name="locationType" value="coords"> Coords</label>
+                      </div>
+                      <input type="text" id="locationInputWeather" placeholder="Enter location">
+                      <label><input type="checkbox" id="unitToggle"> Show °C</label>
+                      <button type="submit">Get Forecast</button>
+                  </form>
+                  <div id="forecastResults"></div>
+              </div>
+          </div>
+      </div>
+
 
     <div class="content-container">
       <div class="map-container" id="map-container"></div>
