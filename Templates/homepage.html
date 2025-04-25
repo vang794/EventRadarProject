@@ -132,6 +132,7 @@
                   <h4>{{ event.title }}</h4><span class="event-category">{{ event.category }}</span>
                 </div>
                 <div class="event-details" id="event-details-user-{{ event.id }}" style="display:none;">
+                  <p><strong>Hosted by:</strong> {{ event.created_by.username }}</p>
                   {% if event.start_date.date == event.end_date.date %}
                       <p><strong>Date:</strong> {{ event.start_date|date:"F j, Y" }}<br>
                           <strong>Time:</strong> {{ event.start_date|time:"g:i A" }} – {{ event.end_date|time:"g:i A" }}</p>
