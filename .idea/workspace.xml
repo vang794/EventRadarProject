@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="git merge main" />
+    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="git merge main">
+      <change afterPath="$PROJECT_DIR$/polls/migrations/0004_searchedarea_alter_user_options_alter_user_managers_and_more.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Templates/homepage.html" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/homepage.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,12 +40,12 @@
     &quot;assignee&quot;: &quot;vang794&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/vang794/EventRadarProject.git&quot;,
-    &quot;accountId&quot;: &quot;bd7338df-7938-48e6-89ad-4b612612348e&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/vang794/EventRadarProject.git",
+    "accountId": "6c6992d9-6889-441d-a5c7-6acebec26201"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -75,7 +80,7 @@
     "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "django.template.preview.state": "SHOW_EDITOR_AND_PREVIEW",
-    "git-widget-placeholder": "vang__updated__filter",
+    "git-widget-placeholder": "feature/weather",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -312,6 +317,7 @@
       <workItem from="1745442291135" duration="759000" />
       <workItem from="1745455802332" duration="23179000" />
       <workItem from="1745525092237" duration="14836000" />
+      <workItem from="1745544999622" duration="1694000" />
     </task>
     <task id="LOCAL-00004" summary="Updated Workspace">
       <option name="closed" value="true" />
@@ -545,7 +551,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745542880313</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="git merge main">
+      <option name="closed" value="true" />
+      <created>1745545475042</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1745545475042</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
