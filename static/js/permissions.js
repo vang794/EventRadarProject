@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const eventAppButton = document.getElementById('event-app-btn');
     const approveButton = document.getElementById('approve-btn');
+    const manageButton = document.getElementById('manage-event-btn');
 
     if (eventAppButton) eventAppButton.style.display = 'none';
     if (approveButton) approveButton.style.display = 'none';
@@ -22,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
     } if (userRole === 'Admin' || userRole === 'Event_Manager') {
         // If user is Admin or Event Manager, show the buttons
         //This is where the buttons for manage/add events would be
+        manageButton.style.display = 'inline-block';
     }
 
 });
