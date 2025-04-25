@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9dd08005-b7af-43a4-836a-77f6d6e4287d" name="Changes" comment="workspace.xml">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/polls/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/polls/views.py" afterDir="false" />
-    </list>
+    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="git merge main" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,7 +24,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="vang" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -78,7 +75,7 @@
     "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "django.template.preview.state": "SHOW_EDITOR_AND_PREVIEW",
-    "git-widget-placeholder": "vang__create__event",
+    "git-widget-placeholder": "vang__updated__filter",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -239,10 +236,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Django tests.Test: polls.tests.unit_tests" />
-        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_verification" />
-        <item itemvalue="Django tests.Test: polls.tests.acceptance_tests.test_acceptance_delete" />
         <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_map" />
         <item itemvalue="Django tests.Test: polls.tests.acceptance_tests" />
+        <item itemvalue="Django tests.Test: polls.tests.acceptance_tests.test_acceptance_delete" />
+        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_verification" />
       </list>
     </recent_temporary>
   </component>
@@ -281,7 +278,7 @@
       <updated>1740720999803</updated>
     </task>
     <task active="true" id="Default" summary="Default task">
-      <changelist id="9dd08005-b7af-43a4-836a-77f6d6e4287d" name="Changes" comment="git merge main" />
+      <changelist id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="Redone the views and added proper notes to unit tests" />
       <created>1740721531828</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -317,7 +314,6 @@
       <workItem from="1745525092237" duration="14836000" />
       <workItem from="1745544999622" duration="1694000" />
       <workItem from="1745563760308" duration="3750000" />
-      <workItem from="1745570516941" duration="13868000" />
     </task>
     <task id="LOCAL-00004" summary="Updated Workspace">
       <option name="closed" value="true" />
@@ -567,23 +563,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745551195853</updated>
     </task>
-    <task id="LOCAL-00035" summary="finished html and css and additional features like delete events">
+    <task id="LOCAL-00035" summary="git merge main">
       <option name="closed" value="true" />
-      <created>1745583368908</created>
+      <created>1745586472146</created>
       <option name="number" value="00035" />
       <option name="presentableId" value="LOCAL-00035" />
       <option name="project" value="LOCAL" />
-      <updated>1745583368908</updated>
+      <updated>1745586472146</updated>
     </task>
-    <task id="LOCAL-00036" summary="workspace.xml">
-      <option name="closed" value="true" />
-      <created>1745583655823</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1745583655823</updated>
-    </task>
-    <option name="localTasksCounter" value="37" />
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -601,6 +589,9 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="I Changed changed c to F" />
+    <MESSAGE value="I made the pop up work" />
+    <MESSAGE value="save workspace" />
     <MESSAGE value="Merge main branch" />
     <MESSAGE value="Changed htmls, confirmed app and adjusted settings and database" />
     <MESSAGE value="Updated some html and views" />
@@ -623,10 +614,7 @@
     <MESSAGE value="adjusted map unit tests, acceptance tests and delete method and verifcation class" />
     <MESSAGE value="edited leaflet popup for wrappering around the popups" />
     <MESSAGE value="git merge main" />
-    <MESSAGE value="made new migrations, added button for manage events, edited forms, edited permissons javascript and views for manageevents" />
-    <MESSAGE value="finished html and css and additional features like delete events" />
-    <MESSAGE value="workspace.xml" />
-    <option name="LAST_COMMIT_MESSAGE" value="workspace.xml" />
+    <option name="LAST_COMMIT_MESSAGE" value="git merge main" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
