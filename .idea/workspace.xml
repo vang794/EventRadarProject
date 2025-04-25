@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9dd08005-b7af-43a4-836a-77f6d6e4287d" name="Changes" comment="git merge main">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Templates/manage_events.html" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/manage_events.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/polls/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/polls/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/styles.css" afterDir="false" />
-    </list>
+    <list default="true" id="9dd08005-b7af-43a4-836a-77f6d6e4287d" name="Changes" comment="finished html and css and additional features like delete events" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -319,7 +314,7 @@
       <workItem from="1745525092237" duration="14836000" />
       <workItem from="1745544999622" duration="1694000" />
       <workItem from="1745563760308" duration="3750000" />
-      <workItem from="1745570516941" duration="11513000" />
+      <workItem from="1745570516941" duration="11865000" />
     </task>
     <task id="LOCAL-00004" summary="Updated Workspace">
       <option name="closed" value="true" />
@@ -569,7 +564,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745551195853</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="finished html and css and additional features like delete events">
+      <option name="closed" value="true" />
+      <created>1745583368908</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1745583368908</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -587,7 +590,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="I made the pop up work" />
     <MESSAGE value="save workspace" />
     <MESSAGE value="Merge main branch" />
     <MESSAGE value="Changed htmls, confirmed app and adjusted settings and database" />
@@ -612,7 +614,8 @@
     <MESSAGE value="edited leaflet popup for wrappering around the popups" />
     <MESSAGE value="git merge main" />
     <MESSAGE value="made new migrations, added button for manage events, edited forms, edited permissons javascript and views for manageevents" />
-    <option name="LAST_COMMIT_MESSAGE" value="made new migrations, added button for manage events, edited forms, edited permissons javascript and views for manageevents" />
+    <MESSAGE value="finished html and css and additional features like delete events" />
+    <option name="LAST_COMMIT_MESSAGE" value="finished html and css and additional features like delete events" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
