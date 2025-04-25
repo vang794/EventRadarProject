@@ -10,7 +10,7 @@ from django.views import View
 from django.core.exceptions import ValidationError
 from datetime import datetime, time, timedelta
 from django.utils import timezone
-
+import html
 
 #Login
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -71,6 +71,7 @@ from django.conf import settings
 from Methods.forms import EventForm
 
 from Methods.userPermissions import EventManagerRequiredMixin
+
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

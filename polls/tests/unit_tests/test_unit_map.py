@@ -16,14 +16,15 @@ class MapUnitTests(TestCase):
             first_name="Map",
             last_name="User"
         )
-        
+
         self.event = Event.objects.create(
             title="Test Event",
             description="This is a test event",
             location_name="Test Location",
             latitude=43.0389,
             longitude=-87.9065,
-            event_date=timezone.now() + timezone.timedelta(days=1),
+            start_date=timezone.now() + timezone.timedelta(days=1),
+            end_date=timezone.now() + timezone.timedelta(days=2),
             created_by=self.user,
             category="Test"
         )

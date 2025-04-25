@@ -132,10 +132,17 @@
                   <h4>{{ event.title }}</h4><span class="event-category">{{ event.category }}</span>
                 </div>
                 <div class="event-details" id="event-details-user-{{ event.id }}" style="display:none;">
-                  <p><strong>Date:</strong> {{ event.event_date|date:"F j, Y" }} at {{ event.event_date|date:"g:i A" }}</p>
-                  <p><strong>Location:</strong> {{ event.location_name }}</p>
-                  <p><strong>Description:</strong> {{ event.description }}</p>
-                  <button class="btn btn-outline-primary btn-sm add-to-plan-btn"
+                  <p><strong>Hosted by:</strong> {{ event.created_by.username }}</p>
+                  {% if event.start_date.date == event.end_date.date %}
+                      <p><strong>Date:</strong> {{ event.start_date|date:"F j, Y" }}<br>
+                          <strong>Time:</strong> {{ event.start_date|time:"g:i A" }} – {{ event.end_date|time:"g:i A" }}</p>
+                  {% else %}
+                      <p><strong>Starts:</strong> {{ event.start_date|date:"F j, Y" }} at {{ event.start_date|time:"g:i A" }}<br>
+                          <strong>Ends:</strong> {{ event.end_date|date:"F j, Y" }} at {{ event.end_date|time:"g:i A" }}</p>
+                  {% endif %}
+                    <p><strong>Location:</strong> {{ event.location_name }}</p>
+                    <p><strong>Description:</strong> {{ event.description|linebreaks }}</p>
+                    <button class="btn btn-outline-primary btn-sm add-to-plan-btn"
                           data-item-type="event"
                           data-item-id="{{ event.id }}"
                           onclick="showAddToPlanModal('event', '{{ event.id }}');">Add to Plan</button>
