@@ -31,6 +31,9 @@ import uuid
 from django.conf.urls.static import static
 from django.conf import settings
 
+#for manage events page
+from polls.views import ManageEventsView 
+
 urlpatterns = [
     path('', LoginAuth.as_view(), name='login'),
     path('create-account/', CreateAcct.as_view(), name='create_account'),
@@ -64,5 +67,7 @@ urlpatterns = [
     path('api/get_user_plans/', get_user_plans, name='get_user_plans'),
     path('api/save_plan_order/', save_plan_order, name='save_plan_order'),
     path('api/get_plan_map/', get_plan_map, name='get_plan_map'),
+
+    path('manage-events/', ManageEventsView.as_view(), name='manage_events'),
 ]
 

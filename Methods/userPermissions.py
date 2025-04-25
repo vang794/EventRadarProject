@@ -27,8 +27,8 @@ class RoleRequiredMixin(SessionLoginRequiredMixin):
 class AdminRequiredMixin(RoleRequiredMixin):
     required_role = ["Admin"]
 class EventManagerRequiredMixin(RoleRequiredMixin):
-    required_role = ["Event Manager"]
+    required_role = ["Event_Manager"]
 class AdminManagerRequiredMixin(RoleRequiredMixin):
-    required_role = ["Admin", "Event Manager"]
+    required_role = ["Admin", "Event_Manager"]
 class UserRequiredMixin(RoleRequiredMixin):
     required_role = ["Admin","User"]
