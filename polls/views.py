@@ -1504,7 +1504,7 @@ def get_plan_map(request):
     except Exception as e:
         return JsonResponse({'success': False, 'error': str(e)}, status=400)
 
-class ManageEventsView(EventManagerRequiredMixin, View):
+class ManageEventsView(AdminManagerRequiredMixin, View):
     def get(self, request):
         user = User.objects.get(email=request.session.get("email"))
         event_id = request.GET.get("edit")
@@ -1515,7 +1515,7 @@ class ManageEventsView(EventManagerRequiredMixin, View):
         else: #empty form to create an event
             form = EventForm()
 
-        user_events = Event.objects.filter(created_by=user) #gests all users events to display below
+        user_events = Event.objects.filter(created_by=user) #gets all users events to display below
 
         #pass to template
         return render(request, "manage_events.html", {
@@ -1528,18 +1528,37 @@ class ManageEventsView(EventManagerRequiredMixin, View):
         user = User.objects.get(email=request.session.get("email"))
         event_id = request.POST.get("event_id")
 
-        if event_id: #editing
+        if event_id:  # editing
             event = get_object_or_404(Event, id=event_id, created_by=user)
             form = EventForm(request.POST, instance=event)
-        else: #new event
+        else:  # creating new
             form = EventForm(request.POST)
 
-        if form.is_valid(): #saves event, linked to current user
+        if form.is_valid():
             new_event = form.save(commit=False)
+
+            address = form.cleaned_data.get('location_name')
+            geocoder = GeocodingService()
+            location_coords = geocoder.get_coordinates(address)
+            print(f"coordinates for '{address}': {location_coords}")
+
+            if not location_coords:
+                form.add_error('location_name', 'Could not find coordinates for the given address.')
+
+                user_events = Event.objects.filter(created_by=user)
+                return render(request, "manage_events.html", {
+                    "form": form,
+                    "user_events": user_events,
+                    "edit_event_id": event_id
+                })
+
+            new_event.latitude, new_event.longitude = location_coords
+            new_event.location_name = address
             new_event.created_by = user
             new_event.save()
             return redirect("manage_events")
 
+        # Form was not valid
         user_events = Event.objects.filter(created_by=user)
         return render(request, "manage_events.html", {
             "form": form,
