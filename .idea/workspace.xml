@@ -4,14 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="git merge main">
+    <list default="true" id="9dd08005-b7af-43a4-836a-77f6d6e4287d" name="Changes" comment="git merge main">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Methods/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/Methods/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Templates/homepage.html" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/homepage.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Templates/manage_events.html" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/manage_events.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/polls/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/polls/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/polls/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/polls/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/permissions.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/permissions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +29,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="vang" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -43,12 +40,12 @@
     &quot;assignee&quot;: &quot;vang794&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/vang794/EventRadarProject.git",
-    "accountId": "bd7338df-7938-48e6-89ad-4b612612348e"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/vang794/EventRadarProject.git&quot;,
+    &quot;accountId&quot;: &quot;bd7338df-7938-48e6-89ad-4b612612348e&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -58,39 +55,39 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Django Server.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.acceptance_tests.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.acceptance_tests.test_acceptance_delete.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.acceptance_tests.test_acceptance_reset.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_change_account_details.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_create_account.CreateAccountTests.test_create_account_missing_required_fields.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_map.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_mixin.MixinUnitTests.test_allows_access_if_authenticated.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_mixin.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_correct_email.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_find.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_not_blank.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_set_password.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_reset.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_sign_out.SignOutTests.test_unauthenticated_user_redirect.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: polls.tests.unit_tests.test_unit_sign_out.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.pycharm.django.structure.promotion.once.per.project&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR_AND_PREVIEW&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;vang__create__event&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Django Server.Unnamed.executor": "Run",
+    "Django tests.Test: polls.tests.acceptance_tests.executor": "Run",
+    "Django tests.Test: polls.tests.acceptance_tests.test_acceptance_delete.executor": "Run",
+    "Django tests.Test: polls.tests.acceptance_tests.test_acceptance_reset.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_change_account_details.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_create_account.CreateAccountTests.test_create_account_missing_required_fields.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_map.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_mixin.MixinUnitTests.test_allows_access_if_authenticated.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_mixin.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_correct_email.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_find.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_email_not_blank.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_set_password.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_reset.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_sign_out.SignOutTests.test_unauthenticated_user_redirect.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_sign_out.executor": "Run",
+    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "django.template.preview.state": "SHOW_EDITOR_AND_PREVIEW",
+    "git-widget-placeholder": "vang__create__event",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Django Server.Unnamed">
     <configuration name="Test: polls.tests.acceptance_tests" type="DjangoTestsConfigurationType" temporary="true">
       <module name="EventRadarProject" />
@@ -244,10 +241,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Django tests.Test: polls.tests.unit_tests" />
+        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_verification" />
+        <item itemvalue="Django tests.Test: polls.tests.acceptance_tests.test_acceptance_delete" />
         <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_map" />
         <item itemvalue="Django tests.Test: polls.tests.acceptance_tests" />
-        <item itemvalue="Django tests.Test: polls.tests.acceptance_tests.test_acceptance_delete" />
-        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_verification" />
       </list>
     </recent_temporary>
   </component>
@@ -286,7 +283,7 @@
       <updated>1740720999803</updated>
     </task>
     <task active="true" id="Default" summary="Default task">
-      <changelist id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="Redone the views and added proper notes to unit tests" />
+      <changelist id="9dd08005-b7af-43a4-836a-77f6d6e4287d" name="Changes" comment="git merge main" />
       <created>1740721531828</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -322,6 +319,7 @@
       <workItem from="1745525092237" duration="14836000" />
       <workItem from="1745544999622" duration="1694000" />
       <workItem from="1745563760308" duration="3750000" />
+      <workItem from="1745570516941" duration="11513000" />
     </task>
     <task id="LOCAL-00004" summary="Updated Workspace">
       <option name="closed" value="true" />
@@ -589,7 +587,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="I Changed changed c to F" />
     <MESSAGE value="I made the pop up work" />
     <MESSAGE value="save workspace" />
     <MESSAGE value="Merge main branch" />
@@ -614,7 +611,8 @@
     <MESSAGE value="adjusted map unit tests, acceptance tests and delete method and verifcation class" />
     <MESSAGE value="edited leaflet popup for wrappering around the popups" />
     <MESSAGE value="git merge main" />
-    <option name="LAST_COMMIT_MESSAGE" value="git merge main" />
+    <MESSAGE value="made new migrations, added button for manage events, edited forms, edited permissons javascript and views for manageevents" />
+    <option name="LAST_COMMIT_MESSAGE" value="made new migrations, added button for manage events, edited forms, edited permissons javascript and views for manageevents" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
