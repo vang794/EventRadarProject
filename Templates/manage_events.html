@@ -1,99 +1,105 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Create or Edit Event</title>
-  <style>
-    .form-container {
-      width: 100%;
-      max-width: 600px;
-      margin: 40px auto;
-      padding: 25px;
-      background: #f5f5f5;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>Create or Edit Event</title>
 
-    .form-container h2 {
-      text-align: center;
-      margin-bottom: 16px;
-      font-size: 24px;
-    }
-
-    .form-container form p {
-      margin-bottom: 12px;
-    }
-
-    .form-container button {
-      display: inline-block;
-      width: 100%;
-      padding: 10px;
-      background: #5a67d8;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .form-container button:hover {
-      background: #434190;
-    }
-
-    .event-card {
-      border: 1px solid #ccc;
-      padding: 12px;
-      margin: 15px auto;
-      max-width: 600px;
-      background: #fff;
-      border-radius: 5px;
-    }
-  </style>
 </head>
 <body>
 
-  <div class="form-container">
-    <h2>{% if edit_event_id %}Edit Event{% else %}Create Event{% endif %}</h2>
+<!--CODE HERE-->
+<div id="planner-top-header">
+    <div class="logo-container">
+        <img id="logo" src="{% static 'media/eventradar_logo2.png' %}" alt="Event Radar Logo">
+    </div>
+    <div style="text-align: right; margin: 10px 30px 0 0;">
+        <a href="{% url 'homepage' %}" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    </div>
 
-    <form method="post">
-      {% csrf_token %}
-      {% for field in form %}
-        {% if field.name != "image_url" %}
-          <p>
-            {{ field.label_tag }}<br>
-            {{ field }}
-            {% if field.errors %}
-              <span style="color:red;">{{ field.errors }}</span>
-            {% endif %}
-          </p>
-        {% endif %}
-      {% endfor %}
+    <div class="page-wrapper">
+        <div class="form-section">
+            <div class="manage-event-title">{% if edit_event_id %}Edit Event{% else %}Create Event{% endif %}</div>
+            <div class="form-section-inner">
+                <form method="post">
+                    {% csrf_token %}
+                    {% if form.non_field_errors %}
+                        <div style="color: red; margin-bottom: 10px;">
+                            {% for error in form.non_field_errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% for field in form %}
+                        {% if field.name != "image_url" %}
+                            <p>
+                                {{ field.label_tag }}<br>
+                                {{ field }}
+                                {% if field.errors %}
+                                    <span style="color:red;">{{ field.errors }}</span>
+                                {% endif %}
+                            </p>
+                        {% endif %}
+                    {% endfor %}
 
-      {% if edit_event_id %}
-        <input type="hidden" name="event_id" value="{{ edit_event_id }}">
-      {% endif %}
+                    {% if edit_event_id %}
+                        <input type="hidden" name="event_id" value="{{ edit_event_id }}">
+                    {% endif %}
+                    <div class="edit-delete">
+                        <button type="submit">
+                            {% if edit_event_id %}Update Event{% else %}Create Event{% endif %}
+                        </button>
 
-      <button type="submit">
-        {% if edit_event_id %}Update Event{% else %}Create Event{% endif %}
-      </button>
-    </form>
-  </div>
+                        {% if edit_event_id %}
+                            <button type="button">
+                                <a href="{% url 'manage_events' %}">
+                                    Cancel Edit / Create Event
+                                </a>
+                            </button>
+                        {% endif %}
+                    </div>
 
-  <hr>
+                </form>
+            </div>
+        </div>
 
-  <h3 style="text-align:center;">Your Events</h3>
-  <div>
-    {% for event in user_events %}
-      <div class="event-card">
-        <h4>{{ event.title }}</h4>
-        <p><strong>Date:</strong> {{ event.event_date }}</p>
-        <p><strong>Location:</strong> {{ event.location_name }}</p>
-        <a href="?edit={{ event.id }}">Edit</a>
-      </div>
-    {% empty %}
-      <p style="text-align:center;">You have no events yet.</p>
-    {% endfor %}
-  </div>
+
+        <div class="events-section">
+            <div class="manage-event-title">Your Events</div>
+            <div class="scrollable-container">
+                <div id="grid">
+                    {% for event in user_events %}
+                        <div class="manage-event-card">
+                            <h4>{{ event.title }}</h4>
+                            <p><strong>Hosted by:</strong> {{ event.created_by.username }}</p>
+                            {% if event.start_date.date == event.end_date.date %}
+                                <p><strong>Date:</strong> {{ event.start_date|date:"F j, Y" }}<br>
+                                    <strong>Time:</strong> {{ event.start_date|time:"g:i A" }} – {{ event.end_date|time:"g:i A" }}</p>
+                            {% else %}
+                                <p><strong>Starts:</strong> {{ event.start_date|date:"F j, Y" }} at {{ event.start_date|time:"g:i A" }}<br>
+                                <p><strong>Ends:</strong> {{ event.end_date|date:"F j, Y" }} at {{ event.end_date|time:"g:i A" }}</p>
+                            {% endif %}
+                            <p><strong>Category:</strong> {{ event.category }}</p>
+                            <p><strong>Description:</strong> <div class="manage-event-description">{{ event.description | linebreaks }}</div></p>
+                            <p><strong>Location:</strong> {{ event.location_name }}</p>
+                            <div class="edit-delete"><a href="?edit={{ event.id }}">Edit</a>
+                                <a href="?delete={{ event.id }}">Delete</a>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <p style="text-align:center;">You have no events yet.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+</div>
 
 </body>
 </html>

@@ -1508,6 +1508,12 @@ class ManageEventsView(AdminManagerRequiredMixin, View):
     def get(self, request):
         user = User.objects.get(email=request.session.get("email"))
         event_id = request.GET.get("edit")
+        delete_event_id = request.GET.get("delete")
+
+        if delete_event_id: #if delete the event
+            event = get_object_or_404(Event, id=delete_event_id, created_by=user)
+            event.delete()
+            return redirect("manage_events")
 
         if event_id: #if editing
             event = get_object_or_404(Event, id=event_id, created_by=user)
