@@ -4,33 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="adjusted css of event app for textbox, adjusted event information">
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_20_2025_1_04_PM_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_20_2025_1_04_PM_[Changes]1/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_20_2025_1_04_PM__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_21_2025_10_31_PM_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_21_2025_10_31_PM_[Changes]1/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_21_2025_10_31_PM__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_22_2025_1_56_PM_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_22_2025_1_56_PM_[Changes]1/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_22_2025_1_56_PM__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_22_2025_1_56_PM__Changes_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_22_2025_4_50_PM_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_22_2025_4_50_PM_[Changes]1/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_22_2025_4_50_PM__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_22_2025_5_06_PM_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_22_2025_5_06_PM__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_22_2025_5_45_PM_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_22_2025_5_45_PM_[Changes]1/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_22_2025_5_45_PM__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_23_2025_3_03_PM_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_23_2025_3_03_PM_[Changes]1/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_23_2025_3_03_PM__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_23_2025_3_03_PM__Changes_1.xml" afterDir="false" />
+    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="adjusted map unit tests, acceptance tests and delete method and verifcation class">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Methods/Delete.py" beforeDir="false" afterPath="$PROJECT_DIR$/Methods/Delete.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Methods/Verification.py" beforeDir="false" afterPath="$PROJECT_DIR$/Methods/Verification.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/delete.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/delete.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,6 +62,7 @@
     "Django tests.Test: polls.tests.unit_tests.executor": "Run",
     "Django tests.Test: polls.tests.unit_tests.test_unit_change_account_details.executor": "Run",
     "Django tests.Test: polls.tests.unit_tests.test_unit_create_account.CreateAccountTests.test_create_account_missing_required_fields.executor": "Run",
+    "Django tests.Test: polls.tests.unit_tests.test_unit_map.executor": "Run",
     "Django tests.Test: polls.tests.unit_tests.test_unit_mixin.MixinUnitTests.test_allows_access_if_authenticated.executor": "Run",
     "Django tests.Test: polls.tests.unit_tests.test_unit_mixin.executor": "Run",
     "Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_correct_email.executor": "Run",
@@ -109,7 +86,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Django tests.Test: polls.tests.unit_tests">
+  <component name="RunManager" selected="Django Server.Unnamed">
     <configuration name="Test: polls.tests.acceptance_tests" type="DjangoTestsConfigurationType" temporary="true">
       <module name="EventRadarProject" />
       <option name="ENV_FILES" value="" />
@@ -173,7 +150,7 @@
       <option name="OPTIONS" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_set_password" type="DjangoTestsConfigurationType" temporary="true">
+    <configuration name="Test: polls.tests.unit_tests.test_unit_map" type="DjangoTestsConfigurationType" temporary="true">
       <module name="EventRadarProject" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -187,7 +164,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="TARGET" value="polls.tests.unit_tests.test_unit_reset.TestLogin.test_set_password" />
+      <option name="TARGET" value="polls.tests.unit_tests.test_unit_map" />
       <option name="SETTINGS_FILE" value="" />
       <option name="CUSTOM_SETTINGS" value="false" />
       <option name="USE_OPTIONS" value="false" />
@@ -254,18 +231,18 @@
     <list>
       <item itemvalue="Django Server.Unnamed" />
       <item itemvalue="Django tests.Test: polls.tests.acceptance_tests" />
+      <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_map" />
       <item itemvalue="Django tests.Test: polls.tests.acceptance_tests.test_acceptance_delete" />
-      <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_set_password" />
       <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_verification" />
       <item itemvalue="Django tests.Test: polls.tests.unit_tests" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Django tests.Test: polls.tests.unit_tests" />
+        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_map" />
         <item itemvalue="Django tests.Test: polls.tests.acceptance_tests" />
         <item itemvalue="Django tests.Test: polls.tests.acceptance_tests.test_acceptance_delete" />
         <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_verification" />
-        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_set_password" />
       </list>
     </recent_temporary>
   </component>
@@ -337,7 +314,7 @@
       <workItem from="1745441372677" duration="606000" />
       <workItem from="1745442291135" duration="759000" />
       <workItem from="1745455802332" duration="23179000" />
-      <workItem from="1745525092237" duration="13485000" />
+      <workItem from="1745525092237" duration="14175000" />
     </task>
     <task id="LOCAL-00004" summary="Updated Workspace">
       <option name="closed" value="true" />
@@ -547,7 +524,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745538466163</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="adjusted map unit tests, acceptance tests and delete method and verifcation class">
+      <option name="closed" value="true" />
+      <created>1745541821399</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1745541821399</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -565,7 +550,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="test" />
     <MESSAGE value="I Changed The Change celsius to fahrenheit" />
     <MESSAGE value="I Changed changed c to F" />
     <MESSAGE value="I made the pop up work" />
@@ -590,7 +574,8 @@
     <MESSAGE value="Merged main code and additional changes" />
     <MESSAGE value="edited css for events to wrap long text, allowed breaks in event desc, and edited event descriptions" />
     <MESSAGE value="adjusted css of event app for textbox, adjusted event information" />
-    <option name="LAST_COMMIT_MESSAGE" value="adjusted css of event app for textbox, adjusted event information" />
+    <MESSAGE value="adjusted map unit tests, acceptance tests and delete method and verifcation class" />
+    <option name="LAST_COMMIT_MESSAGE" value="adjusted map unit tests, acceptance tests and delete method and verifcation class" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -626,6 +611,7 @@
     <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_acceptance_tests_test_acceptance_login.coverage" NAME="Test: polls.tests.acceptance_tests.test_acceptance_login Coverage Results" MODIFIED="1740157601080" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_confirm_email.coverage" NAME="Test: polls.tests.unit_tests.test_unit_confirm_email Coverage Results" MODIFIED="1740157610562" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_reset.coverage" NAME="Test: polls.tests.unit_tests.test_unit_reset Coverage Results" MODIFIED="1741913841405" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_map.coverage" NAME="Test: polls.tests.unit_tests.test_unit_map Coverage Results" MODIFIED="1745541746359" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/EventRadarProject$Test__unit_tests_login_tests.coverage" NAME="Test: unit_tests.login_tests Coverage Results" MODIFIED="1738935163142" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_SignOutTests.coverage" NAME="Test: polls.tests.SignOutTests Coverage Results" MODIFIED="1738897198024" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/EventRadarProject$Test__acceptance_tests_create_test.coverage" NAME="Test: acceptance_tests.create_test Coverage Results" MODIFIED="1738935183497" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
@@ -645,6 +631,6 @@
     <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_reset_TestLogin_test_set_password.coverage" NAME="Test: polls.tests.unit_tests.test_unit_reset.TestLogin.test_set_password Coverage Results" MODIFIED="1740710290030" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests_test_unit_change_account_details.coverage" NAME="Test: polls.tests.unit_tests.test_unit_change_account_details Coverage Results" MODIFIED="1741913812885" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_acceptance_tests_test_acceptance_confirm_email.coverage" NAME="Test: polls.tests.acceptance_tests.test_acceptance_confirm_email Coverage Results" MODIFIED="1740157595599" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests.coverage" NAME="Test: polls.tests.unit_tests Coverage Results" MODIFIED="1741915001090" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/EventRadarProject$Test__polls_tests_unit_tests.coverage" NAME="Test: polls.tests.unit_tests Coverage Results" MODIFIED="1745541764615" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>
