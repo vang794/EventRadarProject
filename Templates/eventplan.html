@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Plans</title>
+    <meta id="user_role" data-role="{{ user_role|default:'User' }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/overlay.css' %}">
+</head>
+<body>
+    <div id="planner-top-header">
+        <div class="logo-container">
+            <img id="logo" src="{% static 'media/eventradar_logo2.png' %}" alt="Event Radar Logo">
+        </div>
+        <div style="text-align: right; margin: 10px 30px 0 0;">
+            <a href="{% url 'homepage' %}" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        </div>
+
+        <div class="planner-form-wrapper">
+            <div class="planner-form-title">Manage Plans</div>
+
+            <!-- Action buttons -->
+            <div style="display:flex; gap:10px; justify-content:center; margin:20px 0;">
+                <button type="button" class="btn btn-create" onclick="showForm('create')">Create a Plan</button>
+                <button type="button" class="btn btn-edit"   onclick="showForm('edit')">Edit a Plan</button>
+                <button type="button" class="btn btn-danger" onclick="showForm('delete')">Delete a Plan</button>
+            </div>
+
+            <div class="planner-form-box">
+                {% if success %}
+                    <div class="success-message"><p>{{ success }}</p></div>
+                {% endif %}
+                {% if error %}
+                    <div class="error"><p>{{ error }}</p></div>
+                {% endif %}
+
+                <form id="create-form" method="post" style="display:block;">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="create_name">Title:</label>
+                        <input type="text" id="create_name" name="create_name" required>
+                    </div>
+                    <div>
+                        <label for="start_date_str">Start Date</label>
+                        <input type="date" id="start_date_str" name="start_date_str" value="{{ event_date1|default:'' }}">
+                    </div>
+                    <div>
+                        <label for="end_date_str">End Date</label>
+                        <input type="date" id="end_date_str" name="end_date_str" value="{{ event_date2|default:'' }}">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create Plan">
+                    </div>
+                </form>
+
+                <form id="edit-form" method="post" style="display:none;">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="selected_plan">Choose a Plan:</label>
+                        <select id="selected_plan" name="selected_plan" required onchange="populateEditFields(this)">
+                            <option value="">-- Select a Plan --</option>
+                            {% for plan in user_plans %}
+                                <option value="{{ plan.id }}"
+                                        data-name="{{ plan.name }}"
+                                        data-start="{{ plan.start_date|date:'Y-m-d' }}"
+                                        data-end="{{ plan.end_date|date:'Y-m-d' }}">
+                                    {{ plan.name }} ({{ plan.start_date|date:'M j, Y' }} - {{ plan.end_date|date:'M j, Y' }})
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_name">Title:</label>
+                        <input type="text" id="edit_name" name="edit_name" required>
+                    </div>
+                    <div>
+                        <label for="edit_start_date">Start Date</label>
+                        <input type="date" id="edit_start_date" name="edit_start_date">
+                    </div>
+                    <div>
+                        <label for="edit_end_date">End Date</label>
+                        <input type="date" id="edit_end_date" name="edit_end_date">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Edit Plan">
+                    </div>
+                </form>
+
+                <form id="delete-form" method="post" style="display:none;">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="del_selected">Choose a Plan:</label>
+                        <select id="del_selected" name="del_selected" required>
+                            <option value="">-- Select a Plan --</option>
+                            {% for plan in user_plans %}
+                                <option value="{{ plan.id }}">
+                                    {{ plan.name }} ({{ plan.start_date|date:'M j, Y' }} - {{ plan.end_date|date:'M j, Y' }})
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Delete Plan">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/eventplanbtn.js' %}"></script>
+    <script>
+        function populateEditFields(select) {
+            const selected = select.options[select.selectedIndex];
+            document.getElementById('edit_name').value       = selected.getAttribute('data-name')  || '';
+            document.getElementById('edit_start_date').value = selected.getAttribute('data-start') || '';
+            document.getElementById('edit_end_date').value   = selected.getAttribute('data-end')   || '';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const select = document.getElementById('selected_plan');
+            if (select && select.value) populateEditFields(select);
+        });
+    </script>
+
+    <style>
+        .btn-edit   { background:#7a3bda!important; color:#fff!important; }
+        .btn-create { background:#28a745!important; color:#fff!important; }
+    </style>
+</body>
+</html>

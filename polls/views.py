@@ -10,7 +10,7 @@ from django.views import View
 from django.core.exceptions import ValidationError
 from datetime import datetime, time, timedelta
 from django.utils import timezone
-
+import html
 
 #Login
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -22,7 +22,7 @@ from Methods.Login import Login
 from Methods.Verification import VerifyAccount
 from Methods.forms import CreateAccountForm
 
-from polls.models import User, POI, Event, SearchedArea, Application, ApplicationStatus
+from polls.models import User, POI, Event, SearchedArea, Application, ApplicationStatus, Plan, PlanOrder
 from Methods.sendgrid_reset import CustomTokenGenerator, send_reset_email
 from EventRadarProject.settings import EVENT_API_KEY
 import re
@@ -44,7 +44,8 @@ from Methods.sendgrid_email import send_confirmation_email
 
 
 import folium
-from folium.plugins import MarkerCluster
+from folium import DivIcon
+from folium.plugins import MarkerCluster, PolyLineTextPath
 
 from polls.geocoding import GeocodingService
 from django.contrib.auth.hashers import make_password
@@ -59,13 +60,18 @@ import json
 # Create your views here.
 import logging
 from django.http import JsonResponse
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST, require_GET
 from django.views.decorators.csrf import csrf_exempt
 from polls.config.category_mapping import category_mapping
 import math
 from django.db.models import Max
 import time
 from django.conf import settings
+
+from Methods.forms import EventForm
+
+from Methods.userPermissions import EventManagerRequiredMixin
+
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -199,65 +205,41 @@ class HomePage(SessionLoginRequiredMixin,View):
                 role="Admin"
             )
 
-        #checking user made events in dates
-        user_events=self.get_events_within_radius2(location[0],location[1],radius,system_user)
+        user_events = self.get_events_within_radius2(location[0], location[1], radius, system_user)
 
-        if not user_events:
-            now = timezone.now()
-            user_events = [
-                type('Event', (), {
-                    'id': 'placeholder-1',
-                    'title': 'Music in the Park',
-                    'description': 'Enjoy live music at Cathedral Square Park.',
-                    'location_name': 'Cathedral Square Park, Milwaukee, WI',
-                    'latitude': 43.0437,
-                    'longitude': -87.9065,
-                    'event_date': now + timedelta(days=2, hours=18),
-                    'category': 'Music',
-                })(),
-                type('Event', (), {
-                    'id': 'placeholder-2',
-                    'title': 'Food Festival',
-                    'description': 'Sample delicious foods from local vendors.',
-                    'location_name': 'Milwaukee Public Market, Milwaukee, WI',
-                    'latitude': 43.0336,
-                    'longitude': -87.9076,
-                    'event_date': now + timedelta(days=5, hours=12),
-                    'category': 'Festival',
-                })(),
-                type('Event', (), {
-                    'id': 'placeholder-3',
-                    'title': 'Art Exhibition',
-                    'description': 'See works from local artists.',
-                    'location_name': 'Milwaukee Art Museum, Milwaukee, WI',
-                    'latitude': 43.0392,
-                    'longitude': -87.8977,
-                    'event_date': now + timedelta(days=7, hours=15),
-                    'category': 'Art',
-                })(),
-                type('Event', (), {
-                    'id': 'placeholder-4',
-                    'title': 'Tech Meetup',
-                    'description': 'Networking for tech professionals.',
-                    'location_name': 'Ward4, Milwaukee, WI',
-                    'latitude': 43.0389,
-                    'longitude': -87.9065,
-                    'event_date': now + timedelta(days=10, hours=18),
-                    'category': 'Networking',
-                })(),
-            ]
-        #check is user event is between start or end date
+        selected_types = request.session.get('event_types')
+        if selected_types:
+            user_events = [event for event in user_events if event.category in selected_types]
+
+        today = timezone.now()
+
         if start_date and end_date:
-            user_events = [event for event in user_events if start_date <= event.event_date <= end_date]
-            print(user_events)
+            user_events = [
+                event for event in user_events
+                if event.start_date >= start_date and event.end_date <= end_date
+            ]
+            message = f"Filtered events that start or end between {start_date.strftime('%B %d, %Y')} and {end_date.strftime('%B %d, %Y')}."
         elif start_date:
-            user_events = [event for event in user_events if event.event_date >= start_date]
-            print(user_events)
+            # Only start date: Show events starting OR ending after or on the start date
+            user_events = [
+                event for event in user_events
+                if (event.end_date >= start_date) or (event.start_date >= start_date)
+            ]
+            message = f"Filtered events that start and end on or after {start_date.strftime('%B %d, %Y')}."
         elif end_date:
-            user_events = [event for event in user_events if event.event_date <= end_date]
-            print(user_events)
+            # Only end date: Show events from today up to the end date
+            user_events = [event for event in user_events if event.start_date <= end_date and event.end_date >= today
+            ]
+            message = f"Filtered events that occur from today until {end_date.strftime('%B %d, %Y')}."
+
         else:
-            user_events = user_events
+            #Show events from today and onwards (to prevent overload from past events in case)
+            user_events = [
+                event for event in user_events
+                if (event.end_date>=today) or (event.start_date>=today)
+            ]
+            message = "Showing events starting from today and onward."
+
 
         categorized_pois = {}
         for poi in pois:
@@ -322,7 +304,9 @@ class HomePage(SessionLoginRequiredMixin,View):
             'needs_fetch': needs_fetch,
             'user_role': user_role,
             'user_events': user_events,
-            'error':error
+            'error':error,
+            'filter_message':message,
+            'event_types' : selected_types
         }
 
         return render(request, "homepage.html", context)
@@ -386,18 +370,42 @@ class HomePage(SessionLoginRequiredMixin,View):
             user_events = self.get_events_within_radius2(location_coords[0], location_coords[1], radius, system_user)
 
             # Filter user-made events based on the start and end date
+            today = timezone.now()
+
             if start_date and end_date:
-                user_events = [event for event in user_events if start_date <= event.event_date <= end_date]
-                print(user_events)
+                user_events = [
+                    event for event in user_events
+                    if event.start_date >= start_date and event.end_date <= end_date
+                ]
+                message = f"Filtered events that start or end between {start_date.strftime('%B %d, %Y')} and {end_date.strftime('%B %d, %Y')}."
             elif start_date:
-                user_events = [event for event in user_events if event.event_date >= start_date]
-                print(user_events)
+                # Only start date: Show events starting OR ending after or on the start date
+                user_events = [
+                    event for event in user_events
+                    if (event.end_date >= start_date) or (event.start_date >= start_date)
+                ]
+                message = f"Filtered events that start and end on or after {start_date.strftime('%B %d, %Y')}."
             elif end_date:
-                user_events = [event for event in user_events if event.event_date <= end_date]
-                print(user_events)
+                # Only end date: Show events from today up to the end date
+                user_events = [event for event in user_events if
+                               event.start_date <= end_date and event.end_date >= today
+                               ]
+                message = f"Filtered events that occur from today until {end_date.strftime('%B %d, %Y')}."
+
             else:
-                user_events = []
-                print("NO EVENTS")
+                # Show events from today and onwards (to prevent overload from past events in case)
+                user_events = [
+                    event for event in user_events
+                    if (event.end_date >= today) or (event.start_date >= today)
+                ]
+                message = "Showing events starting from today and onward."
+
+            selected_types = request.POST.getlist('event_type')
+            if selected_types:
+                request.session['event_types'] = selected_types
+            else:
+                request.session.pop('event_types', None)
+
         return redirect("homepage")
 
     def get_pois_within_radius(self, center_lat, center_lon, radius_miles):
@@ -479,7 +487,7 @@ class HomePage(SessionLoginRequiredMixin,View):
         return distance
 
     def generate_map(self, center_lat, center_lon, radius_miles, pois):
-        m = folium.Map(location=[center_lat, center_lon], zoom_start=12)
+        m = folium.Map(location=[center_lat, center_lon], zoom_start=15)
         radius_in_meters = radius_miles * 1609.34
 
         folium.Circle(
@@ -493,7 +501,11 @@ class HomePage(SessionLoginRequiredMixin,View):
         ).add_to(m)
         marker_cluster = MarkerCluster().add_to(m)
 
+        # Only show non-parking POIs by default
         for poi in pois:
+            if (poi.category or '').lower() == 'parking':
+                continue  # Skip parking POIs for default map display
+
             try:
                 event_date_str = poi.event_date.strftime('%B %d, %Y at %I:%M %p')
             except AttributeError:
@@ -885,31 +897,27 @@ def fetch_and_save_events_api(request):
                         
                         api_categories = [str(cat) for cat in api_categories]
                         
-                        if api_categories:
-                            for cat in api_categories:
-                                if cat in category_mapping:
-                                    category_label = category_mapping[cat]
-                                    break
-                        
+                        for cat in reversed(api_categories):
+                            if cat in category_mapping:
+                                category_label = category_mapping[cat]
+                                break
+
                         if not category_label and api_categories:
-                            for cat in api_categories:
-                                cat_prefix = cat.split('.')[0]
-                                for map_key, map_value in category_mapping.items():
-                                    if map_key.startswith(cat_prefix):
-                                        category_label = map_value
+                            for cat in reversed(api_categories):
+                                cat_parts = cat.split('.')
+                                for i in range(len(cat_parts), 0, -1):
+                                    prefix = '.'.join(cat_parts[:i])
+                                    if prefix in category_mapping:
+                                        category_label = category_mapping[prefix]
                                         break
                                 if category_label:
                                     break
-                        
+
                         if not category_label and api_categories:
-                            main_parts = api_categories[0].split('.')
-                            
-                            if len(main_parts) > 1:
-                                specific_type = main_parts[-1].replace('_', ' ').title()
-                                category_label = specific_type
-                            else:
-                                category_label = main_parts[0].replace('_', ' ').title()
-                        
+                            last_cat = api_categories[-1]
+                            last_segment = last_cat.split('.')[-1]
+                            category_label = last_segment.replace('_', ' ').title()
+
                         if not category_label:
                             category_label = 'Point of Interest'
                         
@@ -1125,3 +1133,416 @@ def fetch_place_details(place_id):
         logger.error(f"Failed to fetch place details: {e}")
     return None
 
+class EventPlan(SessionLoginRequiredMixin, View):
+    def get(self, request):
+        email = request.session.get("email")
+        user = User.objects.get(email=email)  # Find user by email
+        plans = Plan.objects.filter(user=user).prefetch_related('events')
+        user_plans = plans
+        return render(request, "eventplan.html", {
+            'plans': plans,
+            'user_plans': user_plans,
+        })
+
+    def post(self, request):
+        email = request.session.get("email")
+        user = User.objects.get(email=email)
+        plans = Plan.objects.filter(user=user).prefetch_related('events')
+        user_plans = plans
+
+        # Handle create form
+        if "create_name" in request.POST:
+            name = request.POST.get("create_name", "").strip()
+            start_date_str = request.POST.get("start_date_str", "").strip()
+            end_date_str = request.POST.get("end_date_str", "").strip()
+            error = None
+
+            if not name or not start_date_str or not end_date_str:
+                error = "All fields are required."
+            else:
+                try:
+                    start_date = datetime.strptime(start_date_str, "%Y-%m-%d").date()
+                    end_date = datetime.strptime(end_date_str, "%Y-%m-%d").date()
+                    if start_date > end_date:
+                        error = "Start date must be before or equal to end date."
+                except ValueError:
+                    error = "Invalid date format."
+
+            if not error:
+                Plan.objects.create(
+                    user=user,
+                    name=name,
+                    start_date=start_date,
+                    end_date=end_date
+                )
+                plans = Plan.objects.filter(user=user).prefetch_related('events')
+                user_plans = plans
+                return render(request, "eventplan.html", {
+                    'plans': plans,
+                    'user_plans': user_plans,
+                    'success': "Plan created successfully!"
+                })
+            else:
+                return render(request, "eventplan.html", {
+                    'plans': plans,
+                    'user_plans': user_plans,
+                    'error': error
+                })
+
+        # Handle edit form
+        elif "edit_name" in request.POST:
+            plan_id = request.POST.get("selected_plan")
+            new_name = request.POST.get("edit_name", "").strip()
+            new_start = request.POST.get("edit_start_date", "").strip()
+            new_end = request.POST.get("edit_end_date", "").strip()
+            error = None
+
+            if not plan_id or not new_name or not new_start or not new_end:
+                error = "All fields are required."
+            else:
+                try:
+                    plan = Plan.objects.get(id=plan_id, user=user)
+                    start_date = datetime.strptime(new_start, "%Y-%m-%d").date()
+                    end_date = datetime.strptime(new_end, "%Y-%m-%d").date()
+                    if start_date > end_date:
+                        error = "Start date must be before or equal to end date."
+                    else:
+                        plan.name = new_name
+                        plan.start_date = start_date
+                        plan.end_date = end_date
+                        plan.save()
+                except Plan.DoesNotExist:
+                    error = "Plan not found."
+                except ValueError:
+                    error = "Invalid date format."
+
+            plans = Plan.objects.filter(user=user).prefetch_related('events')
+            user_plans = plans
+            if not error:
+                return render(request, "eventplan.html", {
+                    'plans': plans,
+                    'user_plans': user_plans,
+                    'success': "Plan updated successfully!",
+                    'edit_mode': True
+                })
+            else:
+                return render(request, "eventplan.html", {
+                    'plans': plans,
+                    'user_plans': user_plans,
+                    'error': error,
+                    'edit_mode': True
+                })
+
+        # Handle delete form
+        elif "del_selected" in request.POST:
+            plan_id = request.POST.get("del_selected")
+            error = None
+            if not plan_id:
+                error = "Please select a plan to delete."
+            else:
+                try:
+                    plan = Plan.objects.get(id=plan_id, user=user)
+                    plan.delete()
+                except Plan.DoesNotExist:
+                    error = "Plan not found."
+
+            plans = Plan.objects.filter(user=user).prefetch_related('events')
+            user_plans = plans
+            if not error:
+                return render(request, "eventplan.html", {
+                    'plans': plans,
+                    'user_plans': user_plans,
+                    'success': "Plan deleted successfully!",
+                    'delete_mode': True
+                })
+            else:
+                return render(request, "eventplan.html", {
+                    'plans': plans,
+                    'user_plans': user_plans,
+                    'error': error,
+                    'delete_mode': True
+                })
+
+        # Fallback
+        return render(request, "eventplan.html", {
+            'plans': plans,
+            'user_plans': user_plans,
+            'error': "Invalid message"
+        })
+
+@csrf_exempt
+@require_POST
+def add_to_plan(request):
+    """
+    Add a POI or Event to a user's plan.
+    POST data: plan_id, item_type ('poi' or 'event'), item_id
+    """
+    user_email = request.session.get("email")
+    if not user_email:
+        return JsonResponse({'success': False, 'error': 'Not authenticated'}, status=403)
+    user = User.objects.get(email=user_email)
+    plan_id = request.POST.get('plan_id')
+    item_type = request.POST.get('item_type')
+    item_id = request.POST.get('item_id')
+    if not (plan_id and item_type and item_id):
+        return JsonResponse({'success': False, 'error': 'Missing data'}, status=400)
+    try:
+        plan = Plan.objects.get(id=plan_id, user=user)
+        if item_type == 'event':
+            event = Event.objects.get(id=item_id)
+            plan.events.add(event)
+        elif item_type == 'poi':
+            poi = POI.objects.get(id=item_id)
+            plan.pois.add(poi)
+        else:
+            return JsonResponse({'success': False, 'error': 'Invalid item type'}, status=400)
+        return JsonResponse({'success': True})
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)}, status=400)
+
+@csrf_exempt
+def get_user_plans(request):
+    user_email = request.session.get("email")
+    if not user_email:
+        return JsonResponse({'success': False, 'error': 'Not authenticated'}, status=403)
+    user = User.objects.get(email=user_email)
+    plans = Plan.objects.filter(user=user)
+    return JsonResponse({
+        'plans': [
+            {'id': str(plan.id), 'name': plan.name, 'start_date': str(plan.start_date), 'end_date': str(plan.end_date)}
+            for plan in plans
+        ]
+    })
+
+class MyPlansView(SessionLoginRequiredMixin, View):
+    def get(self, request):
+        user = User.objects.get(email=request.session["email"])
+        plans = (
+            Plan.objects.filter(user=user)
+            .prefetch_related("events", "pois")
+            .order_by("-start_date")
+        )
+
+        selected_plan_id = request.GET.get("plan_id")
+        selected_plan = plans.filter(id=selected_plan_id).first() if selected_plan_id else None
+
+        merged_items: list = []
+        if selected_plan:
+            order = getattr(selected_plan, "plan_order", None)
+            if order and order.order_json:
+                try:
+                    import json
+                    order_list = json.loads(order.order_json)
+                    items_by_id = {str(obj.id): obj for obj in list(selected_plan.events.all()) + list(selected_plan.pois.all())}
+                    merged_items = [items_by_id[iid] for iid in order_list if iid in items_by_id]
+                    for obj in list(selected_plan.events.all()) + list(selected_plan.pois.all()):
+                        if str(obj.id) not in order_list:
+                            merged_items.append(obj)
+                except Exception:
+                    merged_items = sorted(
+                        list(selected_plan.events.all()) + list(selected_plan.pois.all()),
+                        key=lambda obj: getattr(obj, "start_date", None) or getattr(obj, "event_date", None) or timezone.now(),
+                    )
+            else:
+                for e in selected_plan.events.all():
+                    e._plan_date = e.start_date
+                for p in selected_plan.pois.all():
+                    p._plan_date = p.event_date
+                merged_items = sorted(
+                    list(selected_plan.events.all()) + list(selected_plan.pois.all()),
+                    key=lambda obj: getattr(obj, "_plan_date", None) or timezone.now(),
+                )
+
+        map_html = None
+        if selected_plan and merged_items:
+            coords = [
+                (obj.latitude, obj.longitude)
+                for obj in merged_items
+                if obj.latitude is not None and obj.longitude is not None
+            ]
+            centre = coords[0] if coords else (43.0389, -87.9065)
+
+            fm = folium.Map(location=centre, zoom_start=15, control_scale=True)
+            mcluster = MarkerCluster().add_to(fm)
+
+            for idx, obj in enumerate(merged_items, start=1):
+                folium.Marker(
+                    location=[obj.latitude, obj.longitude],
+                    tooltip=f"{idx}. {obj.title}",
+                    popup=folium.Popup(f"<b>{obj.title}</b><br>{obj.location_name}", max_width=280),
+                    icon=DivIcon(
+                        icon_size=(28, 28),
+                        icon_anchor=(14, 14),
+                        html=(
+                            f'<div style="background:#7a3bda;color:#fff;'
+                            f'border-radius:50%;width:28px;height:28px;'
+                            f'line-height:28px;text-align:center;font-weight:bold;">{idx}</div>'
+                        ),
+                    ),
+                ).add_to(mcluster)
+
+            if len(coords) > 1:
+                base_line = folium.PolyLine(
+                    coords, color="#7a3bda", weight=4, opacity=0.85
+                ).add_to(fm)
+                try:
+                    PolyLineTextPath(
+                        base_line,
+                        "   ➔   ",
+                        repeat=True,
+                        offset=6,
+                        attributes={"font-size": "14", "fill": "#7a3bda"},
+                    ).add_to(fm)
+                except Exception:
+                    pass
+
+            map_html = fm._repr_html_()
+
+        return render(
+            request,
+            "myplans.html",
+            {
+                "plans": plans,
+                "selected_plan": selected_plan,
+                "merged_items": merged_items,
+                "map_html": map_html,
+            },
+        )
+
+@csrf_exempt
+@require_POST
+def save_plan_order(request):
+    import json
+    user_email = request.session.get("email")
+    if not user_email:
+        return JsonResponse({'success': False, 'error': 'Not authenticated'}, status=403)
+    user = User.objects.get(email=user_email)
+    plan_id = request.POST.get('plan_id')
+    order_json = request.POST.get('order')
+    if not (plan_id and order_json):
+        return JsonResponse({'success': False, 'error': 'Missing data'}, status=400)
+    try:
+        plan = Plan.objects.get(id=plan_id, user=user)
+        plan_order, _ = PlanOrder.objects.get_or_create(plan=plan)
+        plan_order.order_json = order_json
+        plan_order.save()
+        return JsonResponse({'success': True})
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)}, status=400)
+
+@csrf_exempt
+@require_GET
+def get_plan_map(request):
+    user_email = request.session.get("email")
+    if not user_email:
+        return JsonResponse({'success': False, 'error': 'Not authenticated'}, status=403)
+    user = User.objects.get(email=user_email)
+    plan_id = request.GET.get('plan_id')
+    if not plan_id:
+        return JsonResponse({'success': False, 'error': 'Missing plan_id'}, status=400)
+    try:
+        plan = Plan.objects.get(id=plan_id, user=user)
+        order = getattr(plan, "plan_order", None)
+        if order and order.order_json:
+            import json
+            order_list = json.loads(order.order_json)
+            items_by_id = {str(obj.id): obj for obj in list(plan.events.all()) + list(plan.pois.all())}
+            merged_items = [items_by_id[iid] for iid in order_list if iid in items_by_id]
+            for obj in list(plan.events.all()) + list(plan.pois.all()):
+                if str(obj.id) not in order_list:
+                    merged_items.append(obj)
+        else:
+            for e in plan.events.all():
+                e._plan_date = e.start_date
+            for p in plan.pois.all():
+                p._plan_date = p.event_date
+            merged_items = sorted(
+                list(plan.events.all()) + list(plan.pois.all()),
+                key=lambda obj: getattr(obj, "_plan_date", None) or timezone.now(),
+            )
+        map_html = None
+        if merged_items:
+            coords = [
+                (obj.latitude, obj.longitude)
+                for obj in merged_items
+                if obj.latitude is not None and obj.longitude is not None
+            ]
+            centre = coords[0] if coords else (43.0389, -87.9065)
+            fm = folium.Map(location=centre, zoom_start=15, control_scale=True)
+            mcluster = MarkerCluster().add_to(fm)
+            for idx, obj in enumerate(merged_items, start=1):
+                folium.Marker(
+                    location=[obj.latitude, obj.longitude],
+                    tooltip=f"{idx}. {obj.title}",
+                    popup=folium.Popup(f"<b>{obj.title}</b><br>{obj.location_name}", max_width=280),
+                    icon=DivIcon(
+                        icon_size=(28, 28),
+                        icon_anchor=(14, 14),
+                        html=(
+                            f'<div style="background:#7a3bda;color:#fff;'
+                            f'border-radius:50%;width:28px;height:28px;'
+                            f'line-height:28px;text-align:center;font-weight:bold;">{idx}</div>'
+                        ),
+                    ),
+                ).add_to(mcluster)
+            if len(coords) > 1:
+                base_line = folium.PolyLine(
+                    coords, color="#7a3bda", weight=4, opacity=0.85
+                ).add_to(fm)
+                try:
+                    PolyLineTextPath(
+                        base_line,
+                        "   ➔   ",
+                        repeat=True,
+                        offset=6,
+                        attributes={"font-size": "14", "fill": "#7a3bda"},
+                    ).add_to(fm)
+                except Exception:
+                    pass
+            map_html = fm._repr_html_()
+        return JsonResponse({'success': True, 'map_html': map_html})
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)}, status=400)
+
+class ManageEventsView(EventManagerRequiredMixin, View):
+    def get(self, request):
+        user = User.objects.get(email=request.session.get("email"))
+        event_id = request.GET.get("edit")
+
+        if event_id: #if editing
+            event = get_object_or_404(Event, id=event_id, created_by=user)
+            form = EventForm(instance=event)
+        else: #empty form to create an event
+            form = EventForm()
+
+        user_events = Event.objects.filter(created_by=user) #gests all users events to display below
+
+        #pass to template
+        return render(request, "manage_events.html", {
+            "form": form,
+            "user_events": user_events,
+            "edit_event_id": event_id
+        })
+
+    def post(self, request):
+        user = User.objects.get(email=request.session.get("email"))
+        event_id = request.POST.get("event_id")
+
+        if event_id: #editing
+            event = get_object_or_404(Event, id=event_id, created_by=user)
+            form = EventForm(request.POST, instance=event)
+        else: #new event
+            form = EventForm(request.POST)
+
+        if form.is_valid(): #saves event, linked to current user
+            new_event = form.save(commit=False)
+            new_event.created_by = user
+            new_event.save()
+            return redirect("manage_events")
+
+        user_events = Event.objects.filter(created_by=user)
+        return render(request, "manage_events.html", {
+            "form": form,
+            "user_events": user_events,
+            "edit_event_id": event_id
+        })
