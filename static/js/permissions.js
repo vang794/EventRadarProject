@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (eventAppButton) eventAppButton.style.display = 'none';
     if (approveButton) approveButton.style.display = 'none';
+    if (manageButton) manageButton.style.display = 'none';
 
     if (userRole === 'User' || userRole === 'Admin') {
         if (eventAppButton) {

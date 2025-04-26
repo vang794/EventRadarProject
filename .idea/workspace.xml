@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="git merge main" />
+    <list default="true" id="e8e0712f-9f06-49b7-a40c-f49ee55d611b" name="Changes" comment="git merge main">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -236,10 +238,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Django tests.Test: polls.tests.unit_tests" />
+        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_verification" />
+        <item itemvalue="Django tests.Test: polls.tests.acceptance_tests.test_acceptance_delete" />
         <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_map" />
         <item itemvalue="Django tests.Test: polls.tests.acceptance_tests" />
-        <item itemvalue="Django tests.Test: polls.tests.acceptance_tests.test_acceptance_delete" />
-        <item itemvalue="Django tests.Test: polls.tests.unit_tests.test_unit_verification" />
       </list>
     </recent_temporary>
   </component>
@@ -314,6 +316,8 @@
       <workItem from="1745525092237" duration="14836000" />
       <workItem from="1745544999622" duration="1694000" />
       <workItem from="1745563760308" duration="3750000" />
+      <workItem from="1745597911092" duration="1562000" />
+      <workItem from="1745691071925" duration="1130000" />
     </task>
     <task id="LOCAL-00004" summary="Updated Workspace">
       <option name="closed" value="true" />
