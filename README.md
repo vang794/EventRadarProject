@@ -54,7 +54,7 @@ Event Radar is a website for travelers and active locals looking to explore loca
       DB_PASSWORD = EventRadarPass123!  
       DB_HOST = eventradar.chqo2mui2hfr.us-east-2.rds.amazonaws.com  
       DB_PORT = 3306  
-      SENDGRID_API_KEY = SG.VwlxFmJsTnCde4Vm039S0Q.-6yVf6RdTpMufPmmEHwplG00DPI3hEYL-AfG2ynncs
+      SENDGRID_API_KEY = [refer to Testing Plan document for API key]
       ```
 
    d. Set Up Virtual Environment
