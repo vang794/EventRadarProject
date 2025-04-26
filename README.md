@@ -88,7 +88,7 @@ Event Radar is a website for travelers and active locals looking to explore loca
 
    a. Normal User Login 
 
-      i. Email: EventRaderOfficial@gmail.com  
+      i. Email: EventRadarOfficial@gmail.com  
       
       ii. Password: Test123!  
 
