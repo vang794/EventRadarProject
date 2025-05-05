@@ -51,7 +51,7 @@ Event Radar is a website for travelers and active locals looking to explore loca
       ```
       DB_NAME = EventRadar  
       DB_USER = admin  
-      DB_PASSWORD = EventRadarPass123!  
+      DB_PASSWORD = [refer to Testing Plan document for DB Password]
       DB_HOST = eventradar.chqo2mui2hfr.us-east-2.rds.amazonaws.com  
       DB_PORT = 3306  
       SENDGRID_API_KEY = [refer to Testing Plan document for API key]
